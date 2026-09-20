@@ -8,54 +8,79 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
 <style>
-:root{--bg:#10271d;--panel:#172f24;--text:#f4f7f5;--muted:#b7c9bf;--line:rgba(255,255,255,.12);--ok:#27925c;--bad:#c74253;--red:#c93545;--blue:#1767b7;--yellow:#9b7208;--green:#2b7d3b}
+:root{--bg:#10271d;--panel:#172f24;--text:#f4f7f5;--muted:#b7c9bf;--line:rgba(255,255,255,.12);--ok:#27925c;--bad:#c74253}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
-body{background:radial-gradient(90% 70% at 110% 5%,rgba(47,94,67,.55),transparent 55%),radial-gradient(80% 60% at -10% 95%,rgba(39,78,57,.45),transparent 55%),linear-gradient(180deg,#163427 0%,#102d21 52%,#10271d 100%)}
-button,input{font:inherit}.app{width:min(780px,100%);margin:0 auto;min-height:100dvh}.screen{min-height:100dvh;padding:16px 12px calc(24px + env(safe-area-inset-bottom));display:flex;flex-direction:column}.hidden{display:none!important}
-.panel{background:rgba(17,38,28,.94);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.18)}.center{justify-content:center}
-.kicker{font-size:12px;font-weight:950;letter-spacing:.12em;text-transform:uppercase;color:#c9ddd1}h1{font-size:clamp(40px,10vw,64px);line-height:.94;margin:8px 0 10px;letter-spacing:-.045em}.subtitle{font-size:18px;font-weight:800;color:#d9e7df;margin:0 0 18px}
-.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:18px 0}.mode{border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(255,255,255,.07);color:#fff;padding:16px;text-align:left;cursor:pointer}.mode b{display:block;font-size:25px}.mode span{display:block;color:var(--muted);font-size:12px;margin-top:5px;line-height:1.35}.mode:hover{background:rgba(255,255,255,.11)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.stat{padding:10px 7px;border-radius:10px;background:rgba(0,0,0,.15);text-align:center}.stat b{display:block;font-size:22px}.stat span{font-size:9px;color:var(--muted);font-weight:900;letter-spacing:.06em}
-.toprow{display:grid;grid-template-columns:86px 1fr 86px;align-items:center;gap:8px}.timer{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#fff var(--timer-angle,360deg),rgba(255,255,255,.14) 0);position:relative}.timer:after{content:"";position:absolute;inset:5px;border-radius:50%;background:#173126}.timer strong{position:relative;z-index:1;font-size:22px;font-variant-numeric:tabular-nums}.timer.overtime{background:conic-gradient(var(--bad) 360deg,rgba(255,255,255,.14) 0)}
-.qmeta{text-align:center}.qmeta b{display:block;font-size:45px;line-height:.9}.qmeta span{font-size:10px;color:var(--muted);font-weight:950;letter-spacing:.08em}.parttag{text-align:right;font-weight:950}.parttag small{display:block;color:var(--muted)}
-.progress{height:5px;border-radius:999px;background:rgba(255,255,255,.15);overflow:hidden;margin-top:12px}.progress i{display:block;height:100%;background:#fff;width:0}
-.playfield{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 0}.source{font-size:12px;color:var(--muted);font-weight:800;margin-bottom:8px}.question{background:rgba(14,31,23,.88);border:1px solid rgba(255,255,255,.18);border-radius:11px;padding:18px 16px;margin-bottom:10px}.question h2{margin:0;font-size:clamp(23px,5.5vw,36px);line-height:1.16}.stem{font-size:15px;color:#d8e6dd;line-height:1.45;margin-top:10px}
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:8px}.answer{border:0;border-radius:9px;color:#fff;min-height:105px;padding:15px 12px;font-size:clamp(21px,5vw,31px);font-weight:900;cursor:pointer}.answer:nth-child(1){background:var(--red)}.answer:nth-child(2){background:var(--blue)}.answer:nth-child(3){background:var(--yellow)}.answer:nth-child(4){background:var(--green)}.answer.dim{opacity:.33}.answer.good{background:var(--ok)!important;outline:4px solid #fff}.answer.bad{background:var(--bad)!important;outline:4px solid #fff}
-.typebox{display:flex;gap:8px}.typebox input{flex:1;min-width:0;border:2px solid rgba(255,255,255,.18);border-radius:10px;background:rgba(0,0,0,.22);color:#fff;padding:18px 15px;font-size:25px;font-weight:850;outline:none}.typebox input:focus{border-color:#fff}.submit{border:0;border-radius:10px;background:#f4f7f5;color:#13251c;padding:0 20px;font-weight:950;cursor:pointer}
-.keyword{display:inline-block;padding:4px 8px;border-radius:7px;background:#f4f7f5;color:#13251c;font-weight:950;margin:7px 0}.hint{font-size:12px;color:var(--muted);margin-top:8px}
-.feedback{position:fixed;z-index:10;left:50%;top:22%;transform:translate(-50%,-50%) rotate(-3deg) scale(.9);width:min(108vw,820px);padding:18px;text-align:center;font-size:clamp(40px,11vw,72px);font-weight:950;text-transform:uppercase;opacity:0;pointer-events:none;transition:.1s;border-radius:6px}.feedback.show{opacity:1;transform:translate(-50%,-50%) rotate(-3deg) scale(1.03)}.feedback.ok{background:var(--ok)}.feedback.no{background:var(--bad)}.feedback small{display:block;font-size:13px;margin-top:6px}
-.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}.result-card{padding:14px;border-radius:11px;background:rgba(0,0,0,.15);text-align:center}.result-card b{display:block;font-size:31px}.result-card span{font-size:10px;color:var(--muted);font-weight:900}.actions{display:flex;gap:8px;flex-wrap:wrap}.primary,.secondary{border:0;border-radius:11px;padding:13px 16px;font-weight:950;cursor:pointer}.primary{background:#f4f7f5;color:#13251c;flex:1}.secondary{background:rgba(255,255,255,.12);color:#fff}.note{font-size:12px;line-height:1.45;color:var(--muted);margin-top:14px}
-@media(max-width:520px){.panel{padding:18px 14px}.mode-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.toprow{grid-template-columns:72px 1fr 72px}.timer{width:64px;height:64px}.question h2{font-size:clamp(22px,6.5vw,30px)}.answer{min-height:96px}.typebox input{font-size:21px;padding:15px 12px}.submit{padding:0 14px}}
+body{font-size:18px;background:radial-gradient(90% 70% at 110% 5%,rgba(47,94,67,.55),transparent 55%),radial-gradient(80% 60% at -10% 95%,rgba(39,78,57,.45),transparent 55%),linear-gradient(180deg,#163427 0%,#102d21 52%,#10271d 100%)}
+button,input,select{font:inherit}.app{width:min(980px,100%);margin:0 auto;min-height:100dvh}.screen{min-height:100dvh;padding:18px 14px calc(28px + env(safe-area-inset-bottom));display:flex;flex-direction:column}.hidden{display:none!important}
+.panel{background:rgba(17,38,28,.95);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 22px 56px rgba(0,0,0,.2)}.center{justify-content:center}
+.kicker{font-size:13px;font-weight:950;letter-spacing:.12em;text-transform:uppercase;color:#c9ddd1}h1{font-size:clamp(44px,9vw,70px);line-height:.95;margin:8px 0 12px;letter-spacing:-.045em}.subtitle{font-size:20px;font-weight:800;color:#d9e7df;margin:0 0 20px}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:20px 0}.mode{border:1px solid rgba(255,255,255,.09);border-radius:14px;background:rgba(255,255,255,.07);color:#fff;padding:18px;text-align:left;cursor:pointer}.mode b{display:block;font-size:28px}.mode span{display:block;color:var(--muted);font-size:14px;margin-top:6px;line-height:1.4}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.stat{padding:12px 8px;border-radius:11px;background:rgba(0,0,0,.15);text-align:center}.stat b{display:block;font-size:25px}.stat span{font-size:10px;color:var(--muted);font-weight:900;letter-spacing:.06em}
+.topbar{position:sticky;top:0;z-index:5;margin:-2px -2px 18px;padding:10px 2px 12px;background:linear-gradient(180deg,#153125 70%,rgba(21,49,37,0));backdrop-filter:blur(8px)}
+.toprow{display:grid;grid-template-columns:92px 1fr 110px;align-items:center;gap:10px}.timer{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#fff var(--timer-angle,360deg),rgba(255,255,255,.14) 0);position:relative}.timer:after{content:"";position:absolute;inset:6px;border-radius:50%;background:#173126}.timer strong{position:relative;z-index:1;font-size:22px;font-variant-numeric:tabular-nums}.timer.overtime{background:conic-gradient(var(--bad) 360deg,rgba(255,255,255,.14) 0)}
+.partmeta{text-align:center}.partmeta b{display:block;font-size:34px}.partmeta span{display:block;font-size:12px;color:var(--muted);font-weight:900;letter-spacing:.06em}.target{text-align:right;font-size:13px;font-weight:950}.target small{display:block;color:var(--muted);font-size:11px}
+.progress{height:6px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden;margin-top:10px}.progress i{display:block;height:100%;background:#fff;width:0}
+.exam-card{background:rgba(14,31,23,.88);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:24px}.instruction{font-size:16px;line-height:1.5;color:#dce8e1;margin:0 0 22px}.passage{font-size:clamp(20px,2.5vw,24px);line-height:1.78;font-weight:580;letter-spacing:.002em}.gap{display:inline-flex;align-items:center;gap:5px;vertical-align:baseline;white-space:nowrap;margin:0 2px}.gap-number{font-size:.65em;font-weight:950;color:#a9c9b7;vertical-align:super}
+.gap-select{appearance:none;background:#f4f7f5;color:#13251c;border:0;border-radius:8px;padding:5px 30px 5px 10px;font-size:.9em;font-weight:900;max-width:220px;background-image:linear-gradient(45deg,transparent 50%,#13251c 50%),linear-gradient(135deg,#13251c 50%,transparent 50%);background-position:calc(100% - 14px) 50%,calc(100% - 9px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.gap-input{width:130px;max-width:42vw;background:#f4f7f5;color:#13251c;border:0;border-radius:8px;padding:5px 8px;font-size:.9em;font-weight:900;text-align:center}.word-gap{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.baseword{font-size:.62em;font-weight:950;letter-spacing:.06em;color:#bcd3c6}
+.gap.correct select,.gap.correct input,.word-gap.correct input{outline:4px solid var(--ok)}.gap.wrong select,.gap.wrong input,.word-gap.wrong input{outline:4px solid var(--bad)}
+.transform-list{display:grid;gap:16px}.transform{padding:18px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)}.transform-head{display:flex;gap:10px;align-items:flex-start}.qbadge{min-width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1);font-weight:950}.first-sentence{font-size:20px;line-height:1.45;font-weight:700}.keyword{display:inline-block;margin:10px 0 7px;padding:5px 9px;border-radius:7px;background:#f4f7f5;color:#13251c;font-weight:950}.second-sentence{font-size:20px;line-height:1.6}.transform input{width:min(360px,100%);background:#f4f7f5;color:#13251c;border:0;border-radius:8px;padding:8px 10px;font-weight:900;font-size:19px;margin:0 5px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.primary,.secondary{border:0;border-radius:11px;padding:14px 18px;font-weight:950;cursor:pointer;font-size:16px}.primary{background:#f4f7f5;color:#13251c;flex:1}.secondary{background:rgba(255,255,255,.12);color:#fff}.summary{margin-top:16px;padding:15px;border-radius:12px;background:rgba(0,0,0,.16);font-size:16px;line-height:1.5}.summary b{font-size:22px}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0}.result-card{padding:14px;border-radius:11px;background:rgba(0,0,0,.15);text-align:center}.result-card b{display:block;font-size:32px}.result-card span{font-size:10px;color:var(--muted);font-weight:900}.note{font-size:13px;line-height:1.5;color:var(--muted);margin-top:14px}
+@media(max-width:620px){body{font-size:18px}.screen{padding:12px 10px 22px}.panel{padding:20px 14px}.mode-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.toprow{grid-template-columns:72px 1fr 86px}.timer{width:64px;height:64px}.timer strong{font-size:18px}.partmeta b{font-size:28px}.target{font-size:12px}.exam-card{padding:18px 14px}.instruction{font-size:15px}.passage{font-size:20px;line-height:1.72}.gap-select{font-size:.86em;max-width:185px}.gap-input{width:112px;max-width:45vw}.transform{padding:15px 12px}.first-sentence,.second-sentence{font-size:19px}.transform input{font-size:18px;width:min(300px,72vw);margin:4px 2px}.result-grid{grid-template-columns:1fr 1fr 1fr}}
 </style>
 </head>
 <body>
 <div class="app">
 <section id="startScreen" class="screen center"><div class="panel">
-<div class="kicker">B2 First · Cambridge practice</div><h1>Adaptive<br>Exam</h1>
-<p class="subtitle">Exact task mechanics. Faster execution. Less friction.</p>
+<div class="kicker">B2 First · Reading & Use of English</div>
+<h1>Adaptive<br>Exam</h1>
+<p class="subtitle">Practice the actual Cambridge task shape, not a simplified quiz version.</p>
 <div class="mode-grid">
-<button class="mode" data-part="1"><b>Part 1</b><span>Multiple-choice cloze · 4 options · target 25 s</span></button>
-<button class="mode" data-part="2"><b>Part 2</b><span>Open cloze · type the missing word · target 30 s</span></button>
-<button class="mode" data-part="3"><b>Part 3</b><span>Word formation · type the transformed word · target 30 s</span></button>
-<button class="mode" data-part="4"><b>Part 4</b><span>Key word transformation · type the answer · target 75 s</span></button>
-<button class="mode" data-part="mixed"><b>Mixed Practice</b><span>Parts 1–4 shuffled with each part's own target time</span></button>
-<button class="mode" data-part="paper"><b>Paper Mode</b><span>Parts 1–4 in Cambridge order · global practice flow</span></button>
+<button class="mode" data-mode="1"><b>Part 1</b><span>One complete text · 8 gaps · four options inside the text · target 8 min</span></button>
+<button class="mode" data-mode="2"><b>Part 2</b><span>One complete text · 8 gaps · type one word in each gap · target 8 min</span></button>
+<button class="mode" data-mode="3"><b>Part 3</b><span>One complete text · 8 gaps · type the transformed word · target 10 min</span></button>
+<button class="mode" data-mode="4"><b>Part 4</b><span>6 transformations · type the missing words · target 12 min</span></button>
+<button class="mode" data-mode="paper"><b>Parts 1–4</b><span>Run the four complete parts in Cambridge order</span></button>
 </div>
 <div id="lifetimeStats" class="stats"></div>
-<p class="note">MVP bank uses original placeholder items. Real exam material will live in <b>data/private/</b> and stay outside the public codebase.</p>
+<p class="note">The public demo uses original prototype texts. Your private exam bank will plug into the same layout without changing the Cambridge mechanics.</p>
 </div></section>
+
 <section id="gameScreen" class="screen hidden">
-<div class="toprow"><div id="timer" class="timer"><strong id="timerText">25</strong></div><div class="qmeta"><b id="qNumber">1</b><span id="qTotal">/ 10</span></div><div class="parttag"><span id="partName">PART 1</span><small id="targetLabel">25 s target</small></div></div>
+<div class="topbar">
+<div class="toprow">
+<div id="timer" class="timer"><strong id="timerText">8:00</strong></div>
+<div class="partmeta"><b id="partTitle">Part 1</b><span id="partSubtitle">MULTIPLE-CHOICE CLOZE</span></div>
+<div class="target"><span id="targetText">8 min target</span><small id="paperProgress">1 / 1</small></div>
+</div>
 <div class="progress"><i id="progressFill"></i></div>
-<div class="playfield"><div id="sourceLabel" class="source"></div><div id="questionCard" class="question"></div><div id="answerHost"></div></div>
+</div>
+<div class="exam-card">
+<p id="instruction" class="instruction"></p>
+<div id="exerciseHost"></div>
+<div id="partSummary" class="summary hidden"></div>
+<div class="actions">
+<button id="checkBtn" class="primary">CHECK PART</button>
+<button id="nextBtn" class="primary hidden">NEXT PART</button>
+<button id="homeGameBtn" class="secondary">HOME</button>
+</div>
+</div>
 </section>
+
 <section id="resultScreen" class="screen center hidden"><div class="panel">
-<div class="kicker">Session complete</div><h1>Result</h1><p id="resultSubtitle" class="subtitle"></p>
-<div class="result-grid"><div class="result-card"><b id="scoreResult">0%</b><span>ACCURACY</span></div><div class="result-card"><b id="timeResult">0s</b><span>AVG TIME</span></div><div class="result-card"><b id="overResult">0</b><span>OVERTIME</span></div></div>
+<div class="kicker">Practice complete</div>
+<h1>Result</h1>
+<p id="resultSubtitle" class="subtitle"></p>
+<div class="result-grid">
+<div class="result-card"><b id="scoreResult">0%</b><span>ACCURACY</span></div>
+<div class="result-card"><b id="timeResult">0:00</b><span>TOTAL TIME</span></div>
+<div class="result-card"><b id="overResult">0</b><span>PARTS OVERTIME</span></div>
+</div>
 <div class="actions"><button id="againBtn" class="primary">AGAIN</button><button id="homeBtn" class="secondary">HOME</button></div>
 </div></section>
 </div>
-<div id="feedback" class="feedback"></div>
 <script src="./data/sample-bank.js"></script>
 <script src="./app.js"></script>
-</body></html>
+</body>
+</html>

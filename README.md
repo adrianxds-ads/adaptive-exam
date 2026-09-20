@@ -1,22 +1,16 @@
 # Adaptive Exam · B2 First
 
-Practice app for Cambridge B2 First task mechanics, using the visual language of Adaptive English.
+Cambridge B2 First practice app using the visual language of Adaptive English.
 
-## v0.1 MVP
-- Part 1: four-option multiple-choice cloze.
-- Part 2: typed open cloze.
-- Part 3: typed word formation.
-- Part 4: typed key word transformations.
-- Target timers: 25 / 30 / 30 / 75 seconds.
-- Mixed Practice and Paper Mode.
-- Local stats: accuracy, average response time and overtime.
-- PWA shell using Adrián Visual System.
+## v0.2
+- Part 1 is a complete passage with 8 inline A/B/C/D gaps.
+- Part 2 is a complete passage with 8 typed one-word gaps.
+- Part 3 is a complete passage with 8 typed word-formation gaps and visible base words.
+- Part 4 shows the 6 key-word transformations together.
+- Target timer is per complete part, not per isolated question.
+- Parts 1–4 mode runs the four tasks in Cambridge order.
+- Typography and reading width are tuned for phone use.
 
-## Content architecture
-The public repository contains only original placeholder questions.
+## Private content
+Tracked code contains only original prototype material.
 Private exam material belongs in `data/private/` or `data/imported/`, both excluded from Git.
-
-## Core rule
-Cambridge mechanics are not simplified for the game.
-If the exam requires typing, the app requires typing.
-If Cambridge gives four options, the app gives four options.
