@@ -1,65 +1,69 @@
-window.ADAPTIVE_EXAM_PARTS = [
-{
-  part:1,
-  id:"p1-prototype-01",
-  title:"Part 1 · Multiple-choice cloze",
-  instruction:"For questions 1–8, read the text and decide which answer (A, B, C or D) best fits each gap.",
-  targetSec:480,
-  text:`Learning a new skill can feel slow at first, but regular practice often [[1]] a much bigger role than people expect. A short session every day can be more useful than a long session once a week because it helps the brain [[2]] information active. It also gives learners more chances to notice patterns and [[3]] connections between ideas. When progress seems difficult, it is easy to [[4]] up too soon. However, small improvements usually become clearer over time. One useful approach is to [[5]] a simple record of what you have practised and what still feels difficult. This can [[6]] your attention to weak areas without making the whole process feel negative. It is also important to [[7]] realistic goals. If the target is too ambitious, motivation may fall. A good routine should be challenging enough to keep you interested but flexible enough to [[8]] into everyday life.`,
-  gaps:[
-    {n:1,options:["does","makes","plays","takes"],answer:"plays"},
-    {n:2,options:["remain","keep","hold","stay"],answer:"keep"},
-    {n:3,options:["make","do","set","put"],answer:"make"},
-    {n:4,options:["give","turn","take","put"],answer:"give"},
-    {n:5,options:["keep","save","hold","store"],answer:"keep"},
-    {n:6,options:["draw","pull","bring","carry"],answer:"draw"},
-    {n:7,options:["set","place","mark","fix"],answer:"set"},
-    {n:8,options:["fit","match","join","enter"],answer:"fit"}
-  ]
-},
-{
-  part:2,
-  id:"p2-prototype-01",
-  title:"Part 2 · Open cloze",
-  instruction:"For questions 9–16, read the text and write the word which best fits each gap. Use only one word in each gap.",
-  targetSec:480,
-  text:`People often think that good study habits depend [[9]] having plenty of free time. In reality, it is usually more important to decide exactly [[10]] you are going to do before you begin. A clear plan makes it easier to start, especially on days [[11]] motivation is low. It can also prevent you [[12]] spending too long on one task. Some learners find that they work better [[13]] they set a short time limit and concentrate fully until it ends. This does not mean that every session has [[14]] be difficult. In fact, alternating demanding tasks with easier ones can make a routine easier to maintain. The important thing is to return to the material often enough [[15]] that it remains familiar. Over time, this kind of consistency can make a bigger difference [[16]] occasional bursts of intensive study.`,
-  gaps:[
-    {n:9,answer:"on"},{n:10,answer:"what"},{n:11,answer:"when"},{n:12,answer:"from"},
-    {n:13,answer:"if"},{n:14,answer:"to"},{n:15,answer:"so"},{n:16,answer:"than"}
-  ]
-},
-{
-  part:3,
-  id:"p3-prototype-01",
-  title:"Part 3 · Word formation",
-  instruction:"For questions 17–24, use the word given in capitals at the end of each line to form a word that fits the gap.",
-  targetSec:600,
-  text:`A well-designed learning routine should be both practical and [[17]]. If a plan is too complicated, it may become [[18]] after only a few days. It is therefore useful to choose activities that can be repeated with very little [[19]]. Another important factor is variety. Doing exactly the same thing every day can make practice feel [[20]], even when the material itself is useful. A small amount of [[21]] can make a routine much easier to sustain. Progress is also easier to notice when learners keep a simple record of their [[22]]. This does not need to be highly detailed. Even a brief weekly review can provide [[23]] information about what is improving and what still needs attention. Most importantly, the routine should remain [[24]] enough to adapt when circumstances change.`,
-  gaps:[
-    {n:17,base:"EFFECT",answer:"effective"},
-    {n:18,base:"MANAGE",answer:"unmanageable"},
-    {n:19,base:"PREPARE",answer:"preparation"},
-    {n:20,base:"REPEAT",answer:"repetitive"},
-    {n:21,base:"VARY",answer:"variation"},
-    {n:22,base:"PERFORM",answer:"performance"},
-    {n:23,base:"VALUE",answer:"valuable"},
-    {n:24,base:"FLEXIBILITY",answer:"flexible"}
-  ]
-},
-{
-  part:4,
-  id:"p4-prototype-01",
-  title:"Part 4 · Key word transformations",
-  instruction:"For questions 25–30, complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given. Use between two and five words.",
-  targetSec:720,
-  items:[
-    {n:25,first:"Perhaps Owen expected guests.",keyword:"MUST",secondBefore:"Owen ",secondAfter:" guests.",answers:["must have expected"]},
-    {n:26,first:"I regret not studying harder for the exam.",keyword:"SHOULD",secondBefore:"I ",secondAfter:" harder for the exam.",answers:["should have studied"]},
-    {n:27,first:"It isn't necessary for you to come early.",keyword:"HAVE",secondBefore:"You ",secondAfter:" early.",answers:["don't have to come","do not have to come"]},
-    {n:28,first:"This is the first time I have visited Cambridge.",keyword:"NEVER",secondBefore:"I ",secondAfter:" Cambridge before.",answers:["have never visited"]},
-    {n:29,first:"The train left before we reached the station.",keyword:"BY",secondBefore:"The train ",secondAfter:" we reached the station.",answers:["had left by the time"]},
-    {n:30,first:"The film was so boring that we left early.",keyword:"SUCH",secondBefore:"It was ",secondAfter:" that we left early.",answers:["such a boring film"]}
-  ]
-}
-];
+window.ADAPTIVE_EXAM_PAPERS=[{
+id:"prototype-01",label:"Prototype Paper 01",source:"Original prototype · Cambridge-shaped",
+parts:{
+1:{title:"Part 1 · Multiple-choice cloze",subtitle:"Questions 1–8",instructions:"Read the text and choose the answer (A, B, C or D) that best fits each gap.",targetSec:200,segments:[
+"City walks have become increasingly popular with travellers who want to understand a place rather than simply photograph it. A good guide has to ",
+{n:1,options:["pay","draw","bring","make"],answer:"draw"},
+" the group's attention without sounding as if every sentence has been memorised. This is harder than it looks. Visitors quickly ",
+{n:2,options:["notice","realise","regard","recognise"],answer:"notice"},
+" when a story is being repeated mechanically, so experienced guides learn to adapt their material to the people in front of them. They may ",
+{n:3,options:["leave","miss","drop","lose"],answer:"drop"},
+" a long historical explanation if the group seems tired, or spend more time on a detail that has unexpectedly ",
+{n:4,options:["raised","caught","held","kept"],answer:"caught"},
+" everyone's interest. Timing matters too. A guide who gives people no chance to look around can easily ",
+{n:5,options:["turn","make","cause","put"],answer:"make"},
+" the experience feel like a lecture. The best walks therefore include short pauses and moments when visitors can ask questions. Guides also have to ",
+{n:6,options:["deal","solve","manage","handle"],answer:"deal"},
+" with distractions such as traffic, weather and crowded streets. None of these can be completely controlled, but they can be ",
+{n:7,options:["taken","brought","kept","put"],answer:"taken"},
+" into account when the route is planned. In the end, successful guiding depends less on knowing every possible fact than on being able to ",
+{n:8,options:["read","watch","see","look"],answer:"read"},
+" the group and respond to it."
+]},
+2:{title:"Part 2 · Open cloze",subtitle:"Questions 9–16",instructions:"Read the text and think of the word which best fits each gap. Use only one word in each gap.",targetSec:240,segments:[
+"Many people assume that concentration depends entirely on willpower, but research suggests that the environment matters just ",
+{n:9,answer:"as"},
+" much. A task that feels difficult in a noisy room may become surprisingly manageable once distractions have ",
+{n:10,answer:"been"},
+" removed. This does not mean that silence is always necessary. Some people work better with music, provided ",
+{n:11,answer:"that"},
+" it is familiar enough not to demand attention. What seems to matter most is whether the background competes ",
+{n:12,answer:"for"},
+" the same mental resources as the task itself. Reading, for example, becomes harder when nearby conversations are clear enough to understand. There is also evidence ",
+{n:13,answer:"that"},
+" brief changes of setting can help. Moving to another desk or taking a short walk may be more useful ",
+{n:14,answer:"than"},
+" continuing to stare at the same page. The aim is not to avoid effort, but to create conditions in ",
+{n:15,answer:"which"},
+" effort can be used effectively. For many learners, this is one of the simplest ways ",
+{n:16,answer:"to"},
+" improve the quality of a study session."
+]},
+3:{title:"Part 3 · Word formation",subtitle:"Questions 17–24",instructions:"Use the word given in capitals at the end of each gap to form a word that fits the gap.",targetSec:240,segments:[
+"Small museums often provide a very different experience from large national institutions. Their greatest ",
+{n:17,base:"STRONG",answer:"strength"},
+" is usually the close relationship they have with the local community. Exhibitions may focus on objects that would seem ",
+{n:18,base:"IMPORTANCE",answer:"unimportant"},
+" elsewhere but have a powerful meaning for local visitors. This can create an immediate sense of ",
+{n:19,base:"CONNECT",answer:"connection"},
+" between the collection and the place in which it is shown. Limited budgets can sometimes restrict the ",
+{n:20,base:"CHOOSE",answer:"choice"},
+" of technology available, yet this may encourage greater ",
+{n:21,base:"CREATE",answer:"creativity"},
+" in the way stories are presented. Volunteers are also extremely ",
+{n:22,base:"VALUE",answer:"valuable"},
+" because they often bring personal knowledge that no catalogue could provide. For tourists, these museums can offer an ",
+{n:23,base:"EXPECT",answer:"unexpected"},
+" view of an area and make a visit considerably more ",
+{n:24,base:"MEMORY",answer:"memorable"},
+" than they had imagined."
+]},
+4:{title:"Part 4 · Key word transformations",subtitle:"Questions 25–30",instructions:"Complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given.",targetSec:450,items:[
+{n:25,first:"Perhaps Owen expected guests.",keyword:"MUST",secondBefore:"Owen ",secondAfter:" guests.",answers:["must have expected"],display:"must have expected"},
+{n:26,first:"I regret not studying harder for the exam.",keyword:"SHOULD",secondBefore:"I ",secondAfter:" harder for the exam.",answers:["should have studied"],display:"should have studied"},
+{n:27,first:"It isn't necessary for you to arrive early.",keyword:"HAVE",secondBefore:"You ",secondAfter:" early.",answers:["don't have to arrive","do not have to arrive"],display:"don't have to arrive"},
+{n:28,first:"This is the first time I have visited Cambridge.",keyword:"NEVER",secondBefore:"I ",secondAfter:" Cambridge before.",answers:["have never visited"],display:"have never visited"},
+{n:29,first:"The last time Mia called me was on Monday.",keyword:"SINCE",secondBefore:"Mia ",secondAfter:" Monday.",answers:["hasn't called me since","has not called me since"],display:"hasn't called me since"},
+{n:30,first:"The storm prevented us from leaving the island.",keyword:"ABLE",secondBefore:"Because of the storm, we ",secondAfter:" the island.",answers:["were not able to leave","weren't able to leave"],display:"were not able to leave"}
+]}
+}}];
