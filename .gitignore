@@ -1,0 +1,5 @@
+data/private/
+data/imported/
+*.private.json
+.DS_Store
+Thumbs.db
