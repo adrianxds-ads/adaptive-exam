@@ -41,7 +41,7 @@ function renderPart(){
 }
 function renderBody(p){
   if(activePart===4){
-    return "<div class='transform-list'>"+p.items.map(it=>"<article class='transform'><div class='n'>QUESTION "+it.n+"</div><div class='first'>"+it.first+"</div><div class='keyword'>"+it.keyword+"</div><div class='second'>"+it.secondBefore+"<input class='transform-input' data-n='"+it.n+"' autocomplete='off' spellcheck='false' aria-label='Question "+it.n+"'>"+it.secondAfter+"</div></article>").join("")+"</div>";
+    return "<div class='transform-list'>"+p.items.map(it=>"<article class='transform'><div class='n'>QUESTION "+it.n+"</div><div class='first'>"+it.first+"</div><div class='keyword'>"+it.keyword+"</div><div class='second'>"+it.secondBefore+"<input class='transform-input' data-n='"+it.n+"' data-ad-keyboard='en' inputmode='none' autocomplete='off' autocorrect='off' autocapitalize='none' spellcheck='false' aria-label='Question "+it.n+"'>"+it.secondAfter+"</div></article>").join("")+"</div>";
   }
   return "<div class='exam-text'><p>"+p.segments.map(seg=>typeof seg==="string"?seg:gapHtml(seg)).join("")+"</p></div>";
 }
@@ -52,7 +52,7 @@ function gapHtml(seg){
     return "<span class='gap-wrap'><span class='gap-num'>"+seg.n+"</span><button class='gap-choice "+(val?"":"empty")+"' data-n='"+seg.n+"'>"+label+" ▾</button></span>";
   }
   const base=activePart===3?"<span class='base-pill'>"+seg.base+"</span>":"";
-  return "<span class='gap-wrap'><span class='gap-num'>"+seg.n+"</span><input class='inline-input' data-n='"+seg.n+"' value='"+escapeAttr(val)+"' autocomplete='off' spellcheck='false'>"+base+"</span>";
+  return "<span class='gap-wrap'><span class='gap-num'>"+seg.n+"</span><input class='inline-input' data-n='"+seg.n+"' data-ad-keyboard='en' inputmode='none' value='"+escapeAttr(val)+"' autocomplete='off' autocorrect='off' autocapitalize='none' spellcheck='false'>"+base+"</span>";
 }
 function bindInputs(){
   if(activePart===1){
