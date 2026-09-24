@@ -1,10 +1,9 @@
 const PAPERS=window.ADAPTIVE_EXAM_PAPERS||[];
 const $=id=>document.getElementById(id);
-let activePart=null,activePaper=null,activeExerciseId=null,answers={},timerId=null,startMs=0,checked=false;
+let activePart=null,activePaper=null,activeExerciseId=null,answers={},checked=false;
 const statsKey="cambridgeB2ExerciseStatsV3";
 
 function norm(v){return String(v||"").toLowerCase().replace(/[’‘]/g,"'").trim().replace(/\s+/g," ");}
-function fmt(sec){sec=Math.max(0,Math.round(sec));const m=Math.floor(sec/60),s=sec%60;return m+":"+String(s).padStart(2,"0");}
 function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
 function showScreen(id){["startScreen","paperScreen","resultScreen"].forEach(x=>$(x).classList.toggle("hidden",x!==id));}
 function exerciseId(paper,part){return paper.id+"-p"+part;}
@@ -13,14 +12,14 @@ function currentPart(){return activePaper?.parts?.[activePart];}
 function getSource(paper,part){return paper.parts?.[part]?.source||paper.source||{type:"unknown",label:"Fuente no especificada",detail:"No hay información de procedencia registrada."};}
 function sourceLine(src){return [src.type,src.label].filter(Boolean).join(" · ");}
 
-function loadStats(){try{const x=JSON.parse(localStorage.getItem(statsKey));return x&&Array.isArray(x.attempts)?x:{attempts:[]};}catch(e){return{attempts:[]};}}
+function loadStats(){try{const x=JSON.parse(localStorage.getItem(statsKey)),s=x&&Array.isArray(x.attempts)?x:{attempts:[]};let dirty=false;s.attempts.forEach(a=>{if("sec" in a){delete a.sec;dirty=true;}if("targetSec" in a){delete a.targetSec;dirty=true;}});if(dirty)localStorage.setItem(statsKey,JSON.stringify(s));return s;}catch(e){return{attempts:[]};}}
 function saveAttempt(result,details){
   const s=loadStats(),src=getSource(activePaper,activePart);
   s.attempts.push({
     id:crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random(),
     exerciseId:activeExerciseId,paperId:activePaper.id,paperLabel:activePaper.label,
     part:activePart,title:currentPart().title,correct:result.correct,total:result.total,
-    sec:Math.round(result.sec),targetSec:currentPart().targetSec,completedAt:new Date().toISOString(),
+    completedAt:new Date().toISOString(),
     source:{type:src.type||"",label:src.label||"",detail:src.detail||"",url:src.url||""},
     items:details
   });
@@ -29,8 +28,8 @@ function saveAttempt(result,details){
 function exerciseAttempts(id){return loadStats().attempts.filter(a=>a.exerciseId===id);}
 function completedIds(){return new Set(loadStats().attempts.map(a=>a.exerciseId));}
 function aggregate(attempts){
-  const total=attempts.reduce((n,a)=>n+a.total,0),correct=attempts.reduce((n,a)=>n+a.correct,0),sec=attempts.reduce((n,a)=>n+a.sec,0);
-  return {runs:attempts.length,total,correct,accuracy:total?Math.round(correct/total*100):0,avgSec:attempts.length?sec/attempts.length:0,errors:total-correct};
+  const total=attempts.reduce((n,a)=>n+a.total,0),correct=attempts.reduce((n,a)=>n+a.correct,0);
+  return {runs:attempts.length,total,correct,accuracy:total?Math.round(correct/total*100):0,errors:total-correct};
 }
 
 function renderHome(){
@@ -39,7 +38,7 @@ function renderHome(){
   $("globalStats").innerHTML=
     statCell(done.size+"/"+exercises.length,"COMPLETADOS")+
     statCell(g.total?g.accuracy+"%":"—","ACIERTO GLOBAL")+
-    statCell(g.runs?fmt(g.avgSec):"—","TIEMPO MEDIO")+
+    statCell(g.runs,"INTENTOS TOTALES")+
     statCell(g.errors,"FALLOS REGISTRADOS");
   const host=$("exerciseList");host.innerHTML="";
   exercises.forEach(ex=>{
@@ -48,7 +47,7 @@ function renderHome(){
     b.innerHTML="<div class='exercise-top'><span class='exercise-part'>PART "+ex.part+"</span><span class='exercise-state "+(at.length?"done":"pending")+"'>"+(at.length?"HECHO":"PENDIENTE")+"</span></div>"+
       "<b>"+esc(ex.data.title.replace(/^Part \d+ · /,""))+"</b>"+
       "<span class='exercise-source'>Fuente: "+esc(sourceLine(src))+"</span>"+
-      "<span class='exercise-meta'>"+(at.length?("Intentos "+a.runs+" · "+a.accuracy+"% acumulado · último "+last.correct+"/"+last.total+" · "+fmt(last.sec)):("Sin resultados · objetivo "+fmt(ex.data.targetSec)))+"</span>";
+      "<span class='exercise-meta'>"+(at.length?("Intentos "+a.runs+" · "+a.accuracy+"% acumulado · último "+last.correct+"/"+last.total):"Sin resultados")+"</span>";
     b.onclick=()=>startExercise(ex.id);host.appendChild(b);
   });
   const complete=done.size===exercises.length&&exercises.length>0;
@@ -59,18 +58,10 @@ function statCell(value,label){return "<div class='stat'><b>"+value+"</b><span>"
 function startExercise(id){
   const ex=allExercises().find(x=>x.id===id);if(!ex)return;
   activePaper=ex.paper;activePart=ex.part;activeExerciseId=id;answers={};checked=false;
-  const p=currentPart(),src=getSource(activePaper,activePart);
+  const src=getSource(activePaper,activePart);
   $("headPart").textContent="Part "+activePart;
   $("headSource").textContent=sourceLine(src);
-  $("timerTarget").textContent="TARGET "+fmt(p.targetSec);
-  showScreen("paperScreen");renderPart();startTimer(p.targetSec);window.scrollTo(0,0);
-}
-function startTimer(target){
-  clearInterval(timerId);startMs=performance.now();$("timerBox").classList.remove("overtime");
-  const tick=()=>{const elapsed=(performance.now()-startMs)/1000,remaining=target-elapsed;
-    if(remaining>=0)$("timerText").textContent=fmt(remaining);
-    else{$("timerText").textContent="+"+fmt(-remaining);$("timerBox").classList.add("overtime");}
-  };tick();timerId=setInterval(tick,250);
+  showScreen("paperScreen");renderPart();window.scrollTo(0,0);
 }
 function renderPart(){
   const p=currentPart(),src=getSource(activePaper,activePart),host=$("paperHost");
@@ -109,20 +100,20 @@ function closeSheet(){$("choiceSheet").classList.add("hidden");}
 function collectAnswers(){document.querySelectorAll("input[data-n]").forEach(inp=>answers[Number(inp.dataset.n)]=inp.value);}
 function expected(it){return activePart===4?(it.display||it.answers?.[0]||""):it.answer;}
 function checkPart(){
-  if(checked)return;checked=true;clearInterval(timerId);collectAnswers();
+  if(checked)return;checked=true;collectAnswers();
   const p=currentPart(),items=activePart===4?p.items:p.segments.filter(x=>typeof x==="object");
   let correct=0;
   const details=items.map(it=>{
     const valid=activePart===4?it.answers:[it.answer],user=answers[it.n]||"",ok=valid.map(norm).includes(norm(user));if(ok)correct++;
     return {question:it.n,correct:ok,userAnswer:user,expected:expected(it),explanation:it.explanation||"Sin explicación específica registrada.",skill:it.skill||"sin clasificar",base:it.base||null,keyword:it.keyword||null};
   });
-  const sec=(performance.now()-startMs)/1000;saveAttempt({correct,total:items.length,sec},details);renderCorrection({correct,total:items.length,sec},details);
+  saveAttempt({correct,total:items.length},details);renderCorrection({correct,total:items.length},details);
 }
 function renderCorrection(result,details){
-  const p=currentPart(),src=getSource(activePaper,activePart),pct=Math.round(result.correct/result.total*100);
+  const src=getSource(activePaper,activePart),pct=Math.round(result.correct/result.total*100);
   $("resultTitle").textContent="Corrección · Part "+activePart;
   $("resultSource").textContent=sourceLine(src);
-  $("reviewSummary").innerHTML="<div class='review-score'><b>"+result.correct+" / "+result.total+"</b><span>"+pct+"% · "+fmt(result.sec)+" · "+(result.sec<=p.targetSec?"dentro del objetivo":"fuera del objetivo")+"</span></div>"+
+  $("reviewSummary").innerHTML="<div class='review-score'><b>"+result.correct+" / "+result.total+"</b><span>"+pct+"% de acierto</span></div>"+
     "<div class='source-box'><b>FUENTE DEL EJERCICIO</b><span>"+esc(sourceLine(src))+"</span><small>"+esc(src.detail||"")+"</small></div>";
   $("reviewHost").innerHTML=details.map(d=>"<article class='review-item "+(d.correct?"review-ok":"review-bad")+"'>"+
     "<div class='review-q'><b>Pregunta "+d.question+"</b><span>"+(d.correct?"CORRECTA":"FALLO")+"</span></div>"+
@@ -137,7 +128,7 @@ function renderCorrection(result,details){
   showScreen("resultScreen");renderHome();window.scrollTo(0,0);
 }
 function nextPendingExercise(){const done=completedIds();return allExercises().find(ex=>!done.has(ex.id))||null;}
-function goHome(){clearInterval(timerId);closeSheet();renderHome();showScreen("startScreen");window.scrollTo(0,0);}
+function goHome(){closeSheet();renderHome();showScreen("startScreen");window.scrollTo(0,0);}
 
 $("backBtn").onclick=goHome;$("resultBackBtn").onclick=goHome;$("sheetClose").onclick=closeSheet;
 $("choiceSheet").addEventListener("click",e=>{if(e.target===$("choiceSheet"))closeSheet();});

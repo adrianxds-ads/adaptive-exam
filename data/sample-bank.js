@@ -2,7 +2,7 @@ window.ADAPTIVE_EXAM_PAPERS=[{
 id:"prototype-01",label:"Prototype Paper 01",
 source:{type:"Banco propio",label:"Prototipo original Cambridge-shaped",detail:"Ejercicio creado específicamente para practicar el formato B2 First. No procede de un examen oficial de Cambridge."},
 parts:{
-1:{title:"Part 1 · Multiple-choice cloze",subtitle:"Questions 1–8",instructions:"Read the text and choose the answer (A, B, C or D) that best fits each gap.",targetSec:200,segments:[
+1:{title:"Part 1 · Multiple-choice cloze",subtitle:"Questions 1–8",instructions:"Read the text and choose the answer (A, B, C or D) that best fits each gap.",segments:[
 "City walks have become increasingly popular with travellers who want to understand a place rather than simply photograph it. A good guide has to ",
 {n:1,options:["pay","draw","bring","make"],answer:"draw",skill:"collocation · draw attention",explanation:"The fixed collocation is “draw someone’s attention”. The other verbs do not form the standard expression here."},
 " the group's attention without sounding as if every sentence has been memorised. This is harder than it looks. Visitors quickly ",
@@ -21,7 +21,7 @@ parts:{
 {n:8,options:["read","watch","see","look"],answer:"read",skill:"idiomatic verb · read the group",explanation:"“Read the group” means interpret the group’s mood, reactions or needs and respond accordingly."},
 " the group and respond to it."
 ]},
-2:{title:"Part 2 · Open cloze",subtitle:"Questions 9–16",instructions:"Read the text and think of the word which best fits each gap. Use only one word in each gap.",targetSec:240,segments:[
+2:{title:"Part 2 · Open cloze",subtitle:"Questions 9–16",instructions:"Read the text and think of the word which best fits each gap. Use only one word in each gap.",segments:[
 "Many people assume that concentration depends entirely on willpower, but research suggests that the environment matters just ",
 {n:9,answer:"as",skill:"comparison · just as much",explanation:"The comparison is “just as much”: the environment matters to the same degree."},
 " much. A task that feels difficult in a noisy room may become surprisingly manageable once distractions have ",
@@ -40,7 +40,7 @@ parts:{
 {n:16,answer:"to",skill:"infinitive · way to do",explanation:"The standard pattern is “a way to + infinitive”: a way to improve something."},
 " improve the quality of a study session."
 ]},
-3:{title:"Part 3 · Word formation",subtitle:"Questions 17–24",instructions:"Use the word given in capitals at the end of each gap to form a word that fits the gap.",targetSec:240,segments:[
+3:{title:"Part 3 · Word formation",subtitle:"Questions 17–24",instructions:"Use the word given in capitals at the end of each gap to form a word that fits the gap.",segments:[
 "Small museums often provide a very different experience from large national institutions. Their greatest ",
 {n:17,base:"STRONG",answer:"strength",skill:"word formation · adjective → noun",explanation:"After “greatest” the sentence needs a noun. STRONG changes to the noun “strength”."},
 " is usually the close relationship they have with the local community. Exhibitions may focus on objects that would seem ",
@@ -59,7 +59,7 @@ parts:{
 {n:24,base:"MEMORY",answer:"memorable",skill:"word formation · noun → adjective",explanation:"After “more” the sentence needs an adjective: MEMORY → memorable."},
 " than they had imagined."
 ]},
-4:{title:"Part 4 · Key word transformations",subtitle:"Questions 25–30",instructions:"Complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given.",targetSec:450,items:[
+4:{title:"Part 4 · Key word transformations",subtitle:"Questions 25–30",instructions:"Complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given.",items:[
 {n:25,first:"Perhaps Owen expected guests.",keyword:"MUST",secondBefore:"Owen ",secondAfter:" guests.",answers:["must have expected"],display:"must have expected",skill:"modal deduction · must have + participle",explanation:"For a strong deduction about the past, use “must have + past participle”: must have expected."},
 {n:26,first:"I regret not studying harder for the exam.",keyword:"SHOULD",secondBefore:"I ",secondAfter:" harder for the exam.",answers:["should have studied"],display:"should have studied",skill:"past regret · should have + participle",explanation:"A past action that would have been better is expressed with “should have + past participle”."},
 {n:27,first:"It isn't necessary for you to arrive early.",keyword:"HAVE",secondBefore:"You ",secondAfter:" early.",answers:["don't have to arrive","do not have to arrive"],display:"don't have to arrive",skill:"lack of necessity · don't have to",explanation:"“It isn’t necessary” is equivalent to “don’t have to”. It expresses lack of necessity, not prohibition."},
