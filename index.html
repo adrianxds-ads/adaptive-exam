@@ -4,72 +4,48 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#10271d">
-<title>Adaptive Exam · B2 First</title>
+<title>Adaptive Exam · Cambridge B2</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
 <style>
-:root{--bg:#10271d;--panel:#172f24;--paper:#f8f7f2;--ink:#17211c;--muted:#b7c9bf;--line:rgba(255,255,255,.13);--ok:#27925c;--bad:#c74253;--accent:#e7efe9}
+:root{--bg:#10271d;--panel:#172f24;--paper:#f8f7f2;--ink:#17211c;--muted:#b7c9bf;--line:rgba(255,255,255,.13);--ok:#27925c;--bad:#c74253}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:#f4f7f5}
 body{background:radial-gradient(90% 70% at 110% 5%,rgba(47,94,67,.55),transparent 55%),radial-gradient(80% 60% at -10% 95%,rgba(39,78,57,.45),transparent 55%),linear-gradient(180deg,#163427 0%,#102d21 52%,#10271d 100%)}
 button,input{font:inherit}.app{width:min(900px,100%);margin:0 auto;min-height:100dvh}.screen{min-height:100dvh;padding:18px 14px calc(28px + env(safe-area-inset-bottom));display:flex;flex-direction:column}.hidden{display:none!important}
 .panel{background:rgba(17,38,28,.95);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 20px 55px rgba(0,0,0,.20)}.center{justify-content:center}
-.kicker{font-size:13px;font-weight:950;letter-spacing:.13em;text-transform:uppercase;color:#c9ddd1}h1{font-size:clamp(42px,10vw,68px);line-height:.94;margin:8px 0 10px;letter-spacing:-.045em}.subtitle{font-size:19px;line-height:1.4;font-weight:750;color:#d9e7df;margin:0 0 20px}
-.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mode{border:1px solid rgba(255,255,255,.09);border-radius:14px;background:rgba(255,255,255,.075);color:#fff;padding:18px;text-align:left;cursor:pointer}.mode b{display:block;font-size:27px}.mode span{display:block;color:var(--muted);font-size:14px;line-height:1.45;margin-top:6px}.mode:hover{background:rgba(255,255,255,.11)}
-.mini-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:14px}.stat{padding:11px 7px;border-radius:10px;background:rgba(0,0,0,.15);text-align:center}.stat b{display:block;font-size:23px}.stat span{font-size:10px;color:var(--muted);font-weight:900;letter-spacing:.05em}
-.paper-head{position:sticky;top:0;z-index:7;margin:-18px -14px 14px;padding:12px 14px 10px;background:rgba(16,39,29,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.09)}.paper-head-row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
-.back{width:46px;height:46px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(0,0,0,.15);color:#fff;font-size:20px;cursor:pointer}.paper-title{text-align:center}.paper-title b{display:block;font-size:20px}.paper-title span{font-size:11px;color:var(--muted);font-weight:900;letter-spacing:.08em}
-.timer{min-width:88px;text-align:right}.timer strong{display:block;font-size:25px;font-variant-numeric:tabular-nums}.timer span{font-size:10px;color:var(--muted);font-weight:900}.timer.overtime strong{color:#ff9baa}
-.paper{background:var(--paper);color:var(--ink);border-radius:18px;padding:clamp(20px,5vw,42px);box-shadow:0 24px 60px rgba(0,0,0,.22)}.part-label{font-size:13px;font-weight:950;letter-spacing:.12em;text-transform:uppercase;color:#53645b}.paper h2{font-size:clamp(32px,7vw,48px);line-height:1;margin:5px 0 8px}.paper .sub{font-size:18px;font-weight:850;margin-bottom:12px}.instructions{font-size:17px;line-height:1.55;padding:15px 16px;border-radius:11px;background:#ecebe5;margin:0 0 24px;border-left:5px solid #86988e}
-.exam-text{font-family:Georgia,"Times New Roman",serif;font-size:clamp(21px,3.3vw,25px);line-height:1.75;letter-spacing:.003em}.exam-text p{margin:0}.gap-wrap{display:inline-flex;align-items:center;vertical-align:baseline;gap:5px;margin:0 3px;white-space:nowrap}.gap-num{font-family:Inter,Roboto,sans-serif;font-size:11px;font-weight:950;color:#53645b;align-self:flex-start;margin-top:4px}
-.gap-choice{border:0;border-bottom:3px solid #375546;background:#e5ece7;color:#173126;border-radius:7px;padding:3px 8px 4px;font-family:Inter,Roboto,sans-serif;font-size:.82em;font-weight:900;cursor:pointer;min-width:62px}.gap-choice.empty{background:#edf0ed;color:#647269}.gap-choice.wrong{background:#f8dfe2;border-color:var(--bad)}.gap-choice.correct{background:#dff1e7;border-color:var(--ok)}
-.inline-input{width:150px;max-width:40vw;border:0;border-bottom:3px solid #375546;border-radius:4px 4px 0 0;background:#eef1ee;color:#173126;padding:3px 8px 4px;font-family:Inter,Roboto,sans-serif;font-size:.82em;font-weight:850;outline:none}.inline-input:focus{background:#fff;border-color:#0f2a1e}.inline-input.wrong{background:#f8dfe2;border-color:var(--bad)}.inline-input.correct{background:#dff1e7;border-color:var(--ok)}
-.base-pill{font-family:Inter,Roboto,sans-serif;font-size:11px;font-weight:950;letter-spacing:.05em;background:#dde3de;color:#43534a;padding:4px 7px;border-radius:999px;margin-left:4px}
-.transform-list{display:grid;gap:16px}.transform{border:1px solid #d9ddd9;border-radius:12px;padding:18px;background:#fff}.transform .n{font-size:12px;font-weight:950;color:#68766f}.transform .first{font-size:20px;line-height:1.4;font-weight:700;margin:6px 0 10px}.keyword{display:inline-block;background:#173126;color:#fff;border-radius:7px;padding:5px 9px;font-weight:950;letter-spacing:.05em;margin-bottom:10px}.second{font-size:20px;line-height:1.55}.transform-input{width:min(330px,100%);border:0;border-bottom:3px solid #375546;background:#eef1ee;padding:5px 8px;font-size:19px;font-weight:800;outline:none}.transform-input.correct{background:#dff1e7;border-color:var(--ok)}.transform-input.wrong{background:#f8dfe2;border-color:var(--bad)}
-.paper-actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}.primary,.secondary{border:0;border-radius:11px;padding:14px 18px;font-weight:950;cursor:pointer;font-size:16px}.primary{background:#173126;color:#fff;flex:1}.secondary{background:#e6e8e6;color:#25342c}.answer-note{margin-top:18px;padding:14px 16px;border-radius:10px;background:#ecebe5;font-size:16px;line-height:1.5}.answer-note.good{border-left:5px solid var(--ok)}.answer-note.bad{border-left:5px solid var(--bad)}
-.sheet{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center;padding:14px}.sheet-card{width:min(760px,100%);background:#173126;color:#fff;border-radius:20px;padding:18px;box-shadow:0 30px 80px rgba(0,0,0,.4)}.sheet-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.sheet-top b{font-size:21px}.sheet-close{border:0;background:rgba(255,255,255,.1);color:#fff;width:40px;height:40px;border-radius:50%;font-size:20px}.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.option{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.08);color:#fff;border-radius:11px;padding:16px;text-align:left;font-size:20px;font-weight:850;cursor:pointer}.option strong{margin-right:8px}.option:hover{background:rgba(255,255,255,.14)}
-.result-strip{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.result-cell{padding:11px;border-radius:10px;background:#ecebe5;text-align:center}.result-cell b{display:block;font-size:24px}.result-cell span{font-size:10px;font-weight:950;color:#65736b}
-@media(max-width:640px){.screen{padding:12px 10px 22px}.panel{padding:19px 15px}.mode-grid{grid-template-columns:1fr}.mini-stats{grid-template-columns:1fr 1fr}.paper-head{margin:-12px -10px 12px;padding:10px}.paper-head-row{grid-template-columns:46px 1fr 76px}.paper-title b{font-size:18px}.timer strong{font-size:21px}.paper{border-radius:14px;padding:20px 15px}.paper h2{font-size:34px}.paper .sub{font-size:17px}.instructions{font-size:16px;padding:13px}.exam-text{font-size:20px;line-height:1.68}.gap-choice{font-size:.85em;min-width:56px;padding:3px 6px}.inline-input{width:118px;max-width:46vw;font-size:.86em}.base-pill{font-size:10px}.option-grid{grid-template-columns:1fr}.option{font-size:19px;padding:15px}.transform{padding:15px}.transform .first,.second{font-size:18px}.transform-input{font-size:18px;width:100%;display:block;margin:8px 0}.result-strip{grid-template-columns:1fr 1fr 1fr}}
+.kicker{font-size:13px;font-weight:950;letter-spacing:.13em;text-transform:uppercase;color:#c9ddd1}h1{font-size:clamp(42px,10vw,68px);line-height:.94;margin:8px 0 10px;letter-spacing:-.045em}.subtitle{font-size:18px;line-height:1.45;font-weight:750;color:#d9e7df;margin:0 0 16px}
+.bank-progress{font-size:13px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;color:#c9ddd1;margin:10px 0}.mini-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:10px 0 16px}.stat{padding:11px 7px;border-radius:10px;background:rgba(0,0,0,.15);text-align:center}.stat b{display:block;font-size:22px}.stat span{font-size:9px;color:var(--muted);font-weight:900;letter-spacing:.04em}
+.exercise-list{display:grid;gap:10px}.exercise-card{border:1px solid rgba(255,255,255,.10);border-radius:14px;background:rgba(255,255,255,.075);color:#fff;padding:16px;text-align:left;cursor:pointer}.exercise-card:hover{background:rgba(255,255,255,.11)}.exercise-card>b{display:block;font-size:22px;margin:5px 0}.exercise-top{display:flex;justify-content:space-between;gap:10px}.exercise-part,.exercise-state{font-size:11px;font-weight:950;letter-spacing:.08em}.exercise-state.done{color:#8fe0b4}.exercise-state.pending{color:#e8c986}.exercise-source,.exercise-meta{display:block;color:var(--muted);font-size:13px;line-height:1.4;margin-top:5px}.phase-note{margin-top:14px;padding:13px;border-radius:11px;background:rgba(39,146,92,.15);border:1px solid rgba(143,224,180,.25);font-size:14px;line-height:1.45}
+.paper-head{position:sticky;top:0;z-index:7;margin:-18px -14px 14px;padding:12px 14px 10px;background:rgba(16,39,29,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.09)}.paper-head-row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}.back{width:46px;height:46px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(0,0,0,.15);color:#fff;font-size:20px;cursor:pointer}.paper-title{text-align:center}.paper-title b{display:block;font-size:20px}.paper-title span{font-size:11px;color:var(--muted);font-weight:900;letter-spacing:.04em}.timer{min-width:88px;text-align:right}.timer strong{display:block;font-size:25px;font-variant-numeric:tabular-nums}.timer span{font-size:10px;color:var(--muted);font-weight:900}.timer.overtime strong{color:#ff9baa}
+.paper{background:var(--paper);color:var(--ink);border-radius:18px;padding:clamp(20px,5vw,42px);box-shadow:0 24px 60px rgba(0,0,0,.22)}.part-label{font-size:13px;font-weight:950;letter-spacing:.12em;text-transform:uppercase;color:#53645b}.paper h2{font-size:clamp(30px,7vw,46px);line-height:1;margin:5px 0 8px}.paper .sub{font-size:18px;font-weight:850;margin-bottom:12px}.instructions,.source-box{font-size:16px;line-height:1.5;padding:14px 16px;border-radius:11px;background:#ecebe5;margin:0 0 18px}.instructions{border-left:5px solid #86988e}.source-box{display:grid;gap:3px;background:#e4ece7}.source-box b{font-size:10px;letter-spacing:.09em;color:#506158}.source-box span{font-weight:900}.source-box small{color:#64736b}
+.exam-text{font-family:Georgia,"Times New Roman",serif;font-size:clamp(21px,3.3vw,25px);line-height:1.75}.exam-text p{margin:0}.gap-wrap{display:inline-flex;align-items:center;vertical-align:baseline;gap:5px;margin:0 3px;white-space:nowrap}.gap-num{font-family:Inter,Roboto,sans-serif;font-size:11px;font-weight:950;color:#53645b;align-self:flex-start;margin-top:4px}.gap-choice{border:0;border-bottom:3px solid #375546;background:#e5ece7;color:#173126;border-radius:7px;padding:3px 8px 4px;font-family:Inter,Roboto,sans-serif;font-size:.82em;font-weight:900;cursor:pointer;min-width:62px}.gap-choice.empty{background:#edf0ed;color:#647269}
+.inline-input{width:150px;max-width:40vw;border:0;border-bottom:3px solid #375546;border-radius:4px 4px 0 0;background:#eef1ee;color:#173126;padding:3px 8px 4px;font-family:Inter,Roboto,sans-serif;font-size:.82em;font-weight:850;outline:none}.inline-input:focus{background:#fff;border-color:#0f2a1e}.base-pill{font-family:Inter,Roboto,sans-serif;font-size:11px;font-weight:950;letter-spacing:.05em;background:#dde3de;color:#43534a;padding:4px 7px;border-radius:999px;margin-left:4px}
+.transform-list{display:grid;gap:16px}.transform{border:1px solid #d9ddd9;border-radius:12px;padding:18px;background:#fff}.transform .n{font-size:12px;font-weight:950;color:#68766f}.transform .first{font-size:20px;line-height:1.4;font-weight:700;margin:6px 0 10px}.keyword{display:inline-block;background:#173126;color:#fff;border-radius:7px;padding:5px 9px;font-weight:950;letter-spacing:.05em;margin-bottom:10px}.second{font-size:20px;line-height:1.55}.transform-input{width:min(330px,100%);border:0;border-bottom:3px solid #375546;background:#eef1ee;padding:5px 8px;font-size:19px;font-weight:800;outline:none}
+.paper-actions,.review-actions{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}.primary,.secondary{border:0;border-radius:11px;padding:14px 18px;font-weight:950;cursor:pointer;font-size:16px}.primary{background:#173126;color:#fff;flex:1}.secondary{background:#e6e8e6;color:#25342c}
+.review-score{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid #d5dcd7}.review-score b{font-size:42px}.review-score span{font-size:14px;font-weight:850;color:#617068}.review-list{display:grid;gap:12px}.review-item{border-radius:12px;padding:16px;background:#fff;border:1px solid #d8ddd9}.review-item.review-bad{border-left:6px solid var(--bad)}.review-item.review-ok{border-left:6px solid var(--ok)}.review-q{display:flex;justify-content:space-between;gap:10px;margin-bottom:12px}.review-q span{font-size:11px;font-weight:950;letter-spacing:.07em}.review-ok .review-q span{color:#147747}.review-bad .review-q span{color:#a92639}.review-answer{display:grid;gap:2px;margin:8px 0}.review-answer small{font-size:9px;font-weight:950;letter-spacing:.08em;color:#68766f}.review-answer b{font-size:18px}.review-item p{font-size:16px;line-height:1.45;margin:12px 0}.skill{display:inline-block;border-radius:999px;background:#edf0ed;padding:5px 8px;font-size:10px;font-weight:950;color:#526158;letter-spacing:.04em}
+.sheet{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center;padding:14px}.sheet-card{width:min(760px,100%);background:#173126;color:#fff;border-radius:20px;padding:18px;box-shadow:0 30px 80px rgba(0,0,0,.4)}.sheet-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.sheet-top b{font-size:21px}.sheet-close{border:0;background:rgba(255,255,255,.1);color:#fff;width:40px;height:40px;border-radius:50%;font-size:20px}.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.option{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.08);color:#fff;border-radius:11px;padding:16px;text-align:left;font-size:20px;font-weight:850;cursor:pointer}.option strong{margin-right:8px}
+@media(max-width:640px){.screen{padding:12px 10px 22px}.panel{padding:19px 15px}.mini-stats{grid-template-columns:1fr 1fr}.paper-head{margin:-12px -10px 12px;padding:10px}.paper-head-row{grid-template-columns:46px 1fr 76px}.paper-title b{font-size:18px}.paper-title span{font-size:9px}.timer strong{font-size:21px}.paper{border-radius:14px;padding:20px 15px}.paper h2{font-size:32px}.instructions{font-size:16px;padding:13px}.exam-text{font-size:20px;line-height:1.68}.inline-input{width:118px;max-width:46vw}.option-grid{grid-template-columns:1fr}.transform{padding:15px}.transform .first,.second{font-size:18px}.transform-input{font-size:18px;width:100%;display:block;margin:8px 0}.review-score{align-items:start;flex-direction:column}.review-score b{font-size:38px}}
 </style>
 </head>
 <body>
 <div class="app">
-<section id="startScreen" class="screen center">
-<div class="panel">
-<div class="kicker">B2 First · paper-first practice</div>
-<h1>Adaptive<br>Exam</h1>
-<p class="subtitle">The whole Cambridge task stays intact. The app only makes it easier to practise, time and review.</p>
-<div class="mode-grid">
-<button class="mode" data-part="1"><b>Part 1</b><span>Complete text · 8 gaps · tap each gap for A/B/C/D · target 3:20</span></button>
-<button class="mode" data-part="2"><b>Part 2</b><span>Complete text · 8 open gaps · type one word · target 4:00</span></button>
-<button class="mode" data-part="3"><b>Part 3</b><span>Complete text · 8 word formations · type the word · target 4:00</span></button>
-<button class="mode" data-part="4"><b>Part 4</b><span>6 full transformations · type each answer · target 7:30</span></button>
-</div>
-<div id="lifetimeStats" class="mini-stats"></div>
-</div>
-</section>
-
+<section id="startScreen" class="screen center"><div class="panel">
+<div class="kicker">CAMBRIDGE B2 EXAM</div><h1>Adaptive<br>Exam</h1>
+<p class="subtitle">Haz cada ejercicio completo. Al terminar aparece su corrección explicada y el resultado queda guardado para construir después la fase adaptativa.</p>
+<div id="bankProgress" class="bank-progress"></div><div id="globalStats" class="mini-stats"></div>
+<div id="exerciseList" class="exercise-list"></div>
+<div id="phaseNote" class="phase-note hidden"><b>Banco base completado.</b> El historial de respuestas y fallos ya está preparado para diseñar la siguiente fase de ejercicios generados.</div>
+</div></section>
 <section id="paperScreen" class="screen hidden">
-<header class="paper-head">
-<div class="paper-head-row">
-<button id="backBtn" class="back" aria-label="Back">←</button>
-<div class="paper-title"><b id="headPart">Part 1</b><span id="headSource">Prototype Paper</span></div>
-<div id="timerBox" class="timer"><strong id="timerText">3:20</strong><span id="timerTarget">TARGET</span></div>
+<header class="paper-head"><div class="paper-head-row"><button id="backBtn" class="back" aria-label="Back">←</button><div class="paper-title"><b id="headPart">Part 1</b><span id="headSource"></span></div><div id="timerBox" class="timer"><strong id="timerText">0:00</strong><span id="timerTarget">TARGET</span></div></div></header>
+<main id="paperHost" class="paper"></main></section>
+<section id="resultScreen" class="screen hidden">
+<header class="paper-head"><div class="paper-head-row"><button id="resultBackBtn" class="back" aria-label="Back">←</button><div class="paper-title"><b id="resultTitle">Corrección</b><span id="resultSource"></span></div><div></div></div></header>
+<main class="paper"><div id="reviewSummary"></div><div id="reviewHost" class="review-list"></div><div id="reviewActions" class="review-actions"></div></main></section>
 </div>
-</header>
-<main id="paperHost" class="paper"></main>
-</section>
-</div>
-
-<div id="choiceSheet" class="sheet hidden">
-<div class="sheet-card">
-<div class="sheet-top"><b id="sheetTitle">Question 1</b><button id="sheetClose" class="sheet-close">×</button></div>
-<div id="optionGrid" class="option-grid"></div>
-</div>
-</div>
-
+<div id="choiceSheet" class="sheet hidden"><div class="sheet-card"><div class="sheet-top"><b id="sheetTitle">Question 1</b><button id="sheetClose" class="sheet-close">×</button></div><div id="optionGrid" class="option-grid"></div></div></div>
 <script src="./data/sample-bank.js"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-keyboard.js?v=4"></script>
 <script src="./app.js"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/hub-nav.js?v=6"></script>
-</body>
-</html>
+</body></html>
