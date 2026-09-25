@@ -1,11 +1,17 @@
 const PAPERS=window.ADAPTIVE_EXAM_PAPERS||[];
 const $=id=>document.getElementById(id);
-let activePart=null,activePaper=null,activeExerciseId=null,answers={},checked=false;
+let activePart=null,activePaper=null,activeExerciseId=null,menuPart=null,answers={},checked=false;
 const statsKey="cambridgeB2ExerciseStatsV3";
+const PART_INFO={
+  1:{name:"Multiple-choice cloze",desc:"Choose A, B, C or D for each gap."},
+  2:{name:"Open cloze",desc:"Write the missing word in each gap."},
+  3:{name:"Word formation",desc:"Transform the base word to fit each gap."},
+  4:{name:"Key word transformations",desc:"Rewrite each sentence using the key word."}
+};
 
 function norm(v){return String(v||"").toLowerCase().replace(/[’‘]/g,"'").trim().replace(/\s+/g," ");}
 function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
-function showScreen(id){["startScreen","paperScreen","resultScreen"].forEach(x=>$(x).classList.toggle("hidden",x!==id));}
+function showScreen(id){["startScreen","partScreen","paperScreen","resultScreen"].forEach(x=>$(x).classList.toggle("hidden",x!==id));}
 function exerciseId(paper,part){return paper.id+"-p"+part;}
 function allExercises(){return PAPERS.flatMap(p=>Object.keys(p.parts||{}).map(k=>({paper:p,part:Number(k),data:p.parts[k],id:exerciseId(p,Number(k))})));}
 function currentPart(){return activePaper?.parts?.[activePart];}
@@ -34,26 +40,48 @@ function aggregate(attempts){
 
 function renderHome(){
   const exercises=allExercises(),attempts=loadStats().attempts,done=completedIds(),g=aggregate(attempts);
-  $("bankProgress").textContent=done.size+" de "+exercises.length+" ejercicios completados";
+  $("bankProgress").textContent=done.size+" de "+exercises.length+" ejercicios base completados";
   $("globalStats").innerHTML=
     statCell(done.size+"/"+exercises.length,"COMPLETADOS")+
     statCell(g.total?g.accuracy+"%":"—","ACIERTO GLOBAL")+
     statCell(g.runs,"INTENTOS TOTALES")+
     statCell(g.errors,"FALLOS REGISTRADOS");
-  const host=$("exerciseList");host.innerHTML="";
-  exercises.forEach(ex=>{
-    const at=exerciseAttempts(ex.id),a=aggregate(at),last=at[at.length-1],src=getSource(ex.paper,ex.part);
-    const b=document.createElement("button");b.className="exercise-card";b.dataset.id=ex.id;
-    b.innerHTML="<div class='exercise-top'><span class='exercise-part'>PART "+ex.part+"</span><span class='exercise-state "+(at.length?"done":"pending")+"'>"+(at.length?"HECHO":"PENDIENTE")+"</span></div>"+
-      "<b>"+esc(ex.data.title.replace(/^Part \d+ · /,""))+"</b>"+
-      "<span class='exercise-source'>Fuente: "+esc(sourceLine(src))+"</span>"+
-      "<span class='exercise-meta'>"+(at.length?("Intentos "+a.runs+" · "+a.accuracy+"% acumulado · último "+last.correct+"/"+last.total):"Sin resultados")+"</span>";
-    b.onclick=()=>startExercise(ex.id);host.appendChild(b);
+  const host=$("partList");host.innerHTML="";
+  [1,2,3,4].forEach(part=>{
+    const list=exercises.filter(ex=>ex.part===part),partDone=list.filter(ex=>done.has(ex.id)).length;
+    const partAttempts=attempts.filter(a=>a.part===part),a=aggregate(partAttempts),info=PART_INFO[part];
+    const b=document.createElement("button");b.className="part-card";
+    b.innerHTML="<div class='exercise-top'><span class='exercise-part'>PART "+part+"</span><span class='part-count'>"+partDone+" / "+list.length+"</span></div>"+
+      "<b>"+esc(info.name)+"</b><span class='part-desc'>"+esc(info.desc)+"</span>"+
+      "<span class='exercise-meta'>"+(a.runs?("Acierto "+a.accuracy+"% · "+a.runs+" intentos · "+a.errors+" fallos"):"Sin ejercicios realizados")+"</span>";
+    b.onclick=()=>openPartMenu(part);host.appendChild(b);
   });
-  const complete=done.size===exercises.length&&exercises.length>0;
-  $("phaseNote").classList.toggle("hidden",!complete);
+  const complete=done.size===exercises.length&&exercises.length>0,remaining=Math.max(0,exercises.length-done.size);
+  $("phaseNote").classList.remove("hidden");
+  $("phaseNote").innerHTML=complete
+    ?"<b>Banco base completado.</b> La fase adaptativa ya puede construirse a partir de tus errores reales."
+    :"<b>FASE ADAPTATIVA BLOQUEADA.</b> Se activará únicamente cuando completes todos los ejercicios base. Quedan "+remaining+".";
 }
 function statCell(value,label){return "<div class='stat'><b>"+value+"</b><span>"+label+"</span></div>";}
+
+function openPartMenu(part){
+  menuPart=Number(part);renderPartMenu();showScreen("partScreen");window.scrollTo(0,0);
+}
+function renderPartMenu(){
+  const list=allExercises().filter(ex=>ex.part===menuPart),done=completedIds(),attempts=loadStats().attempts.filter(a=>a.part===menuPart),g=aggregate(attempts),info=PART_INFO[menuPart];
+  $("partMenuTitle").textContent="Part "+menuPart+" · "+info.name;
+  $("partMenuSubtitle").textContent=list.filter(ex=>done.has(ex.id)).length+" de "+list.length+" completados · "+(g.total?g.accuracy+"% de acierto acumulado":"sin resultados todavía");
+  const host=$("exerciseList");host.innerHTML="";
+  list.forEach((ex,i)=>{
+    const at=exerciseAttempts(ex.id),a=aggregate(at),last=at[at.length-1],src=getSource(ex.paper,ex.part);
+    const b=document.createElement("button");b.className="exercise-card";b.dataset.id=ex.id;
+    b.innerHTML="<div class='exercise-top'><span class='exercise-number'>EJERCICIO "+String(i+1).padStart(2,"0")+"</span><span class='exercise-state "+(at.length?"done":"pending")+"'>"+(at.length?"COMPLETADO":"PENDIENTE")+"</span></div>"+
+      "<b>"+esc(ex.paper.label||("Ejercicio "+(i+1)))+"</b>"+
+      "<span class='exercise-source'>Fuente: "+esc(sourceLine(src))+"</span>"+
+      "<span class='exercise-meta'>"+(at.length?("Intentos "+a.runs+" · acierto "+a.accuracy+"% · último "+last.correct+"/"+last.total+" · fallos acumulados "+a.errors):"Todavía no realizado")+"</span>";
+    b.onclick=()=>startExercise(ex.id);host.appendChild(b);
+  });
+}
 
 function startExercise(id){
   const ex=allExercises().find(x=>x.id===id);if(!ex)return;
@@ -120,19 +148,20 @@ function renderCorrection(result,details){
     "<div class='review-answer'><small>TU RESPUESTA</small><b>"+esc(d.userAnswer||"—")+"</b></div>"+
     "<div class='review-answer'><small>RESPUESTA CORRECTA</small><b>"+esc(d.expected)+"</b></div>"+
     "<p>"+esc(d.explanation)+"</p><div class='skill'>PATRÓN · "+esc(d.skill)+"</div></article>").join("");
-  const next=nextPendingExercise();
-  $("reviewActions").innerHTML=(next?"<button id='nextBtn' class='primary'>SIGUIENTE PENDIENTE</button>":"<button id='homeBtn' class='primary'>VOLVER AL RESUMEN</button>")+
+  const next=nextPendingInPart(activePart);
+  $("reviewActions").innerHTML=(next?"<button id='nextBtn' class='primary'>SIGUIENTE PENDIENTE DE ESTA PART</button>":"<button id='partBtn' class='primary'>VOLVER A PART "+activePart+"</button>")+
     "<button id='repeatBtn' class='secondary'>REPETIR EJERCICIO</button>";
-  if(next)$("nextBtn").onclick=()=>startExercise(next.id);else $("homeBtn").onclick=goHome;
+  if(next)$("nextBtn").onclick=()=>startExercise(next.id);else $("partBtn").onclick=()=>openPartMenu(activePart);
   $("repeatBtn").onclick=()=>startExercise(activeExerciseId);
   showScreen("resultScreen");renderHome();window.scrollTo(0,0);
 }
-function nextPendingExercise(){const done=completedIds();return allExercises().find(ex=>!done.has(ex.id))||null;}
+function nextPendingInPart(part){const done=completedIds();return allExercises().find(ex=>ex.part===part&&!done.has(ex.id))||null;}
 function goHome(){closeSheet();renderHome();showScreen("startScreen");window.scrollTo(0,0);}
+function backToPart(){closeSheet();openPartMenu(activePart||menuPart||1);}
 
-$("backBtn").onclick=goHome;$("resultBackBtn").onclick=goHome;$("sheetClose").onclick=closeSheet;
+$("backBtn").onclick=backToPart;$("resultBackBtn").onclick=backToPart;$("partBackBtn").onclick=goHome;$("sheetClose").onclick=closeSheet;
 $("choiceSheet").addEventListener("click",e=>{if(e.target===$("choiceSheet"))closeSheet();});
 renderHome();
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));
 const requestedPart=new URLSearchParams(location.search).get("part");
-if(["1","2","3","4"].includes(requestedPart)){const ex=allExercises().find(x=>x.part===Number(requestedPart));if(ex)startExercise(ex.id);}
+if(["1","2","3","4"].includes(requestedPart))openPartMenu(Number(requestedPart));
