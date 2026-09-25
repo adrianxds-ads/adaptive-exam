@@ -1,4 +1,4 @@
-const PAPERS=window.ADAPTIVE_EXAM_PAPERS||[];
+const PAPERS=[...(window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].sort((a,b)=>(Number(a.examNumber)||99)-(Number(b.examNumber)||99));
 const $=id=>document.getElementById(id);
 let activePart=null,activePaper=null,activeExerciseId=null,menuPart=null,answers={},checked=false;
 const statsKey="cambridgeB2ExerciseStatsV3";
@@ -20,6 +20,82 @@ function paperByNumber(n){return PAPERS.find(p=>Number(p.examNumber)===Number(n)
 function currentPart(){return activePaper?.parts?.[activePart];}
 function getSource(paper,part){return paper.parts?.[part]?.source||paper.source||{type:"unknown",label:"Fuente no especificada",detail:"No hay información de procedencia registrada."};}
 function sourceLine(src){return [src.type,src.label].filter(Boolean).join(" · ");}
+
+function partItems(p=currentPart()){
+  if(!p)return [];
+  return Array.isArray(p.items)?p.items:(p.segments||[]).filter(x=>typeof x==="object");
+}
+function answeredCount(){return partItems().filter(it=>norm(answers[it.n])).length;}
+function updateAnswerProgress(message=""){
+  const el=$("answerProgress");if(!el)return;
+  const total=partItems().length,done=answeredCount(),left=Math.max(0,total-done);
+  el.classList.toggle("warning",!!message);
+  el.innerHTML="<span>"+(message||("PART "+activePart+" · progreso"))+"</span><strong>"+done+" / "+total+(left?" · faltan "+left:" · completa")+"</strong>";
+}
+function firstMissingQuestion(){
+  const it=partItems().find(x=>!norm(answers[x.n]));
+  return it?it.n:null;
+}
+function focusQuestion(n){
+  if(n==null)return;
+  const choice=document.querySelector(".worksheet-choice[data-n='"+n+"'],.scan-choice[data-n='"+n+"']");
+  if(choice){choice.scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>choice.focus({preventScroll:true}),180);return;}
+  if(activePart===1){openChoices(n);return;}
+  const el=document.querySelector("input[data-n='"+n+"']");
+  if(!el)return;
+  el.scrollIntoView({behavior:"smooth",block:"center"});
+  setTimeout(()=>{el.focus({preventScroll:true});window.AdrianKeyboard?.open?.(el);},180);
+}
+function choiceContext(n){
+  const segs=currentPart()?.segments||[],i=segs.findIndex(x=>typeof x==="object"&&Number(x.n)===Number(n));
+  if(i<0)return "";
+  const before=typeof segs[i-1]==="string"?segs[i-1]:"",after=typeof segs[i+1]==="string"?segs[i+1]:"";
+  const left=before.replace(/\s+/g," ").trim().slice(-95),right=after.replace(/\s+/g," ").trim().slice(0,95);
+  return (left?left+" ":"")+"[…]"+(right?" "+right:"");
+}
+function openScanViewer(src){
+  if(!$("scanViewer")||!src)return;
+  $("scanViewerImg").src=src;$("scanViewer").classList.remove("hidden");$("scanViewer").setAttribute("aria-hidden","false");document.body.classList.add("cambridge-scan-open");
+}
+function closeScanViewer(){
+  if(!$("scanViewer"))return;
+  $("scanViewer").classList.add("hidden");$("scanViewer").setAttribute("aria-hidden","true");$("scanViewerImg").removeAttribute("src");document.body.classList.remove("cambridge-scan-open");
+}
+
+let lastExamInput=null;
+function examInputs(){return Array.from(document.querySelectorAll("#paperHost input[data-n]"));}
+function moveExamInput(delta){
+  const list=examInputs();if(!list.length)return;
+  let i=Math.max(0,list.indexOf(lastExamInput));i=Math.max(0,Math.min(list.length-1,i+delta));
+  const next=list[i];if(!next)return;
+  next.scrollIntoView({behavior:"smooth",block:"center"});
+  setTimeout(()=>{next.focus({preventScroll:true});lastExamInput=next;window.AdrianKeyboard?.open?.(next);},130);
+}
+function insertExamText(text){
+  const el=lastExamInput;if(!el)return;
+  const s=el.selectionStart??el.value.length,e=el.selectionEnd??s;
+  el.value=el.value.slice(0,s)+text+el.value.slice(e);const p=s+text.length;el.setSelectionRange?.(p,p);
+  el.dispatchEvent(new Event("input",{bubbles:true}));el.dispatchEvent(new Event("change",{bubbles:true}));
+  el.focus({preventScroll:true});
+}
+function decorateCambridgeKeyboard(){
+  const root=document.querySelector(".ad-keyboard"),controls=root?.querySelector(".ad-keyboard-controls");
+  if(!controls||controls.dataset.cambridgeReady)return;
+  controls.dataset.cambridgeReady="1";
+  const make=(cls,label,fn)=>{
+    const b=document.createElement("button");b.type="button";b.className="ad-key control "+cls;b.textContent=label;
+    b.addEventListener("pointerdown",e=>e.preventDefault());b.addEventListener("click",()=>{try{navigator.vibrate?.(7);}catch(e){}fn();});
+    return b;
+  };
+  const space=controls.querySelector('[data-action="space"]'),back=controls.querySelector('[data-action="back"]');
+  const prev=make("cambridge-prev","←",()=>moveExamInput(-1));
+  const apos=make("cambridge-apos","'",()=>insertExamText("'"));
+  const next=make("cambridge-next","→",()=>moveExamInput(1));
+  controls.insertBefore(prev,space||controls.firstChild);controls.insertBefore(apos,space||null);controls.insertBefore(next,back||null);
+}
+document.addEventListener("focusin",e=>{if(e.target?.matches?.("#paperHost input[data-n]"))lastExamInput=e.target;});
+const keyboardObserver=new MutationObserver(()=>queueMicrotask(decorateCambridgeKeyboard));
+keyboardObserver.observe(document.documentElement,{childList:true,subtree:true});
 
 function loadStats(){try{const x=JSON.parse(localStorage.getItem(statsKey)),s=x&&Array.isArray(x.attempts)?x:{attempts:[]};let dirty=false;s.attempts.forEach(a=>{if("sec" in a){delete a.sec;dirty=true;}if("targetSec" in a){delete a.targetSec;dirty=true;}});if(dirty)localStorage.setItem(statsKey,JSON.stringify(s));return s;}catch(e){return{attempts:[]};}}
 function saveAttempt(result,details){
@@ -94,7 +170,7 @@ function renderPartMenu(){
 
 function startExercise(id){
   const ex=allExercises().find(x=>x.id===id);if(!ex)return;
-  activePaper=ex.paper;activePart=ex.part;activeExerciseId=id;answers={};checked=false;
+  activePaper=ex.paper;activePart=ex.part;activeExerciseId=id;answers={};checked=false;lastExamInput=null;
   const src=getSource(activePaper,activePart);
   $("headPart").textContent="Exam "+String(activePaper.examNumber).padStart(2,"0")+" · Part "+activePart;
   $("headSource").textContent=sourceLine(src);
@@ -104,18 +180,40 @@ function renderPart(){
   const p=currentPart(),src=getSource(activePaper,activePart),host=$("paperHost"),a=aggregate(exerciseAttempts(activeExerciseId));
   host.innerHTML="<div class='part-label'>EXAM "+String(activePaper.examNumber).padStart(2,"0")+" · B2 FIRST · READING AND USE OF ENGLISH</div><h2>"+esc(p.title)+"</h2>"+
     "<div class='sub'>"+esc(p.subtitle)+"</div>"+
-    "<div class='source-box'><b>ESTADÍSTICA DE ESTE EJERCICIO</b><span>"+(a.runs?(a.runs+" intentos · "+a.accuracy+"% acierto · "+a.errors+" fallos acumulados"):"Primer intento")+"</span></div>"+
-    "<div class='source-box'><b>FUENTE</b><span>"+esc(sourceLine(src))+"</span><small>"+esc(src.detail||"")+"</small></div>"+
-    "<div class='instructions'>"+esc(p.instructions)+"</div>"+renderBody(p)+
+    "<details class='exercise-meta-fold'><summary>DETALLES DEL EJERCICIO</summary>"+
+      "<div class='source-box'><b>ESTADÍSTICA</b><span>"+(a.runs?(a.runs+" intentos · "+a.accuracy+"% acierto · "+a.errors+" fallos acumulados"):"Primer intento")+"</span></div>"+
+      "<div class='source-box'><b>FUENTE</b><span>"+esc(sourceLine(src))+"</span><small>"+esc(src.detail||"")+"</small></div>"+
+    "</details>"+
+    "<div class='instructions'>"+esc(p.instructions)+"</div>"+
+    "<div id='answerProgress' class='answer-progress'></div>"+renderBody(p)+
     "<div class='paper-actions'><button id='checkBtn' class='primary'>CORREGIR EJERCICIO</button><button id='resetBtn' class='secondary'>REINICIAR</button></div>";
-  $("checkBtn").onclick=checkPart;$("resetBtn").onclick=()=>startExercise(activeExerciseId);bindInputs();
+  $("checkBtn").onclick=checkPart;$("resetBtn").onclick=()=>startExercise(activeExerciseId);bindInputs();updateAnswerProgress();
 }
 function renderBody(p){
+  if(p.layout==="worksheet")return renderWorksheetBody(p);
+  if(p.scanImage)return renderScanBody(p);
   if(activePart===4)return "<div class='transform-list'>"+p.items.map(it=>
     "<article class='transform'><div class='n'>QUESTION "+it.n+"</div><div class='first'>"+esc(it.first)+"</div><div class='keyword'>"+esc(it.keyword)+"</div>"+
     "<div class='second'>"+esc(it.secondBefore)+"<input class='transform-input' data-n='"+it.n+"' data-ad-keyboard='en' inputmode='none' autocomplete='off' autocorrect='off' autocapitalize='none' spellcheck='false'>"+esc(it.secondAfter)+"</div></article>"
   ).join("")+"</div>";
   return "<div class='exam-text'><p>"+p.segments.map(seg=>typeof seg==="string"?esc(seg):gapHtml(seg)).join("")+"</p></div>";
+}
+function renderWorksheetBody(p){
+  const rows=(p.items||[]).map(it=>{
+    if(activePart===1){
+      const opts=["A","B","C","D"];
+      return "<div class='worksheet-row'><div class='worksheet-qn'>"+it.n+"</div><div class='worksheet-choices'>"+opts.map(v=>"<button type='button' class='worksheet-choice "+(answers[it.n]===v?"selected":"")+"' data-n='"+it.n+"' data-val='"+v+"'>"+v+"</button>").join("")+"</div></div>";
+    }
+    return "<div class='worksheet-row'><div class='worksheet-qn'>"+it.n+"</div><input class='worksheet-input' data-n='"+it.n+"' data-ad-keyboard='en' inputmode='none' value='"+esc(answers[it.n]||"")+"' autocomplete='off' autocorrect='off' autocapitalize='none' spellcheck='false'></div>";
+  }).join("");
+  return "<div class='worksheet-wrap'><div class='worksheet-prompt'>"+esc(p.prompt||"").replace(/\n/g,"<br>")+"</div><div class='worksheet-answer-panel'><h3>RESPUESTAS</h3>"+rows+"</div></div>";
+}
+function renderScanBody(p){
+  const rows=(p.items||[]).map(it=>{
+    if(it.options)return "<div class='scan-answer-row'><div class='scan-qn'>"+it.n+"</div><div class='scan-choices'>"+it.options.map(v=>"<button type='button' class='scan-choice "+(answers[it.n]===v?"selected":"")+"' data-n='"+it.n+"' data-val='"+esc(v)+"'>"+esc(v)+"</button>").join("")+"</div></div>";
+    return "<div class='scan-answer-row'><div class='scan-qn'>"+it.n+"</div><input class='scan-input' data-n='"+it.n+"' data-ad-keyboard='en' inputmode='none' value='"+esc(answers[it.n]||"")+"' autocomplete='off' autocorrect='off' autocapitalize='none' spellcheck='false'></div>";
+  }).join("");
+  return "<div class='scan-wrap'><img class='scan-page' src='"+esc(p.scanImage)+"' alt='Original Cambridge exam page'><div class='scan-answer-panel'><h3>RESPUESTAS</h3>"+rows+"</div></div>";
 }
 function gapHtml(seg){
   const val=answers[seg.n]||"";
@@ -124,22 +222,71 @@ function gapHtml(seg){
   return "<span class='gap-wrap'><span class='gap-num'>"+seg.n+"</span><input class='inline-input' data-n='"+seg.n+"' data-ad-keyboard='en' inputmode='none' value='"+esc(val)+"' autocomplete='off' autocorrect='off' autocapitalize='none' spellcheck='false'>"+base+"</span>";
 }
 function bindInputs(){
+  if(currentPart()?.layout==="worksheet"){
+    document.querySelectorAll(".worksheet-choice").forEach(b=>b.onclick=()=>{
+      const n=Number(b.dataset.n);answers[n]=b.dataset.val;
+      b.parentElement.querySelectorAll(".worksheet-choice").forEach(x=>x.classList.toggle("selected",x===b));
+      updateAnswerProgress();
+    });
+    document.querySelectorAll(".worksheet-input").forEach(inp=>inp.addEventListener("input",()=>{answers[Number(inp.dataset.n)]=inp.value;updateAnswerProgress();}));
+    return;
+  }
+  if(currentPart()?.scanImage){
+    document.querySelector(".scan-page")?.addEventListener("click",e=>openScanViewer(e.currentTarget.getAttribute("src")));
+    document.querySelectorAll(".scan-choice").forEach(b=>b.onclick=()=>{
+      const n=Number(b.dataset.n);answers[n]=b.dataset.val;
+      b.parentElement.querySelectorAll(".scan-choice").forEach(x=>x.classList.toggle("selected",x===b));
+      updateAnswerProgress();
+    });
+    document.querySelectorAll("input[data-n]").forEach(inp=>inp.addEventListener("input",()=>{answers[Number(inp.dataset.n)]=inp.value;updateAnswerProgress();}));
+    return;
+  }
   if(activePart===1)document.querySelectorAll(".gap-choice").forEach(b=>b.onclick=()=>openChoices(Number(b.dataset.n)));
-  else document.querySelectorAll("input[data-n]").forEach(inp=>inp.addEventListener("input",()=>answers[Number(inp.dataset.n)]=inp.value));
+  else document.querySelectorAll("input[data-n]").forEach(inp=>inp.addEventListener("input",()=>{answers[Number(inp.dataset.n)]=inp.value;updateAnswerProgress();}));
 }
 function openChoices(n){
-  const seg=currentPart().segments.find(x=>typeof x==="object"&&x.n===n);if(!seg)return;
+  const seg=currentPart()?.segments?.find(x=>typeof x==="object"&&x.n===n);if(!seg)return;
   $("sheetTitle").textContent="Question "+n;$("optionGrid").innerHTML="";
+  const ctx=choiceContext(n);$("sheetContext").textContent=ctx;$("sheetContext").classList.toggle("hidden",!ctx);
   seg.options.forEach((opt,i)=>{const b=document.createElement("button");b.className="option";b.innerHTML="<strong>"+String.fromCharCode(65+i)+"</strong>"+esc(opt);
-    b.onclick=()=>{answers[n]=opt;closeSheet();renderPart();};$("optionGrid").appendChild(b);});
+    b.onclick=()=>{
+      answers[n]=opt;closeSheet();
+      const gap=document.querySelector(".gap-choice[data-n='"+n+"']");
+      if(gap){gap.innerHTML=esc(opt)+" ▾";gap.classList.remove("empty");}
+      updateAnswerProgress();
+    };$("optionGrid").appendChild(b);});
   $("choiceSheet").classList.remove("hidden");
 }
 function closeSheet(){$("choiceSheet").classList.add("hidden");}
 function collectAnswers(){document.querySelectorAll("input[data-n]").forEach(inp=>answers[Number(inp.dataset.n)]=inp.value);}
 function expected(it){return it.display||it.answers?.[0]||it.answer||"";}
+function microfocusExpected(user,correct){
+  const u=String(user||""),c=String(correct||"");
+  if(!u||!c)return esc(c);
+  const ul=u.toLowerCase(),cl=c.toLowerCase(),limit=Math.min(ul.length,cl.length);
+  let pre=0;while(pre<limit&&ul[pre]===cl[pre])pre++;
+  let suf=0;while(suf<limit-pre&&ul[ul.length-1-suf]===cl[cl.length-1-suf])suf++;
+  const shared=pre+suf,near=Math.abs(u.length-c.length)<=3&&shared>=Math.max(2,Math.floor(Math.min(u.length,c.length)*.35));
+  if(!near)return esc(c);
+  const a=c.slice(0,pre),mid=c.slice(pre,c.length-suf),z=suf?c.slice(c.length-suf):"";
+  return esc(a)+"<span class='ortho-risk'>"+esc(mid||c.slice(pre,pre+1))+"</span>"+esc(z);
+}
+function reviewCard(d){
+  return "<article class='review-item "+(d.correct?"review-ok":"review-bad")+"'>"+
+    "<div class='review-q'><b>Pregunta "+d.question+"</b><span>"+(d.correct?"CORRECTA":"FALLO")+"</span></div>"+
+    "<div class='review-answer'><small>TU RESPUESTA</small><b>"+esc(d.userAnswer||"—")+"</b></div>"+
+    "<div class='review-answer'><small>RESPUESTA CORRECTA</small><b>"+(d.correct?esc(d.expected):microfocusExpected(d.userAnswer,d.expected))+"</b></div>"+
+    "<p>"+esc(d.explanation)+"</p><div class='skill'>PATRÓN · "+esc(d.skill)+"</div></article>";
+}
 function checkPart(){
-  if(checked)return;checked=true;collectAnswers();
-  const p=currentPart(),items=activePart===4?p.items:p.segments.filter(x=>typeof x==="object");
+  if(checked)return;collectAnswers();
+  const items=partItems(),missing=items.filter(it=>!norm(answers[it.n]));
+  if(missing.length){
+    updateAnswerProgress("FALTAN "+missing.length+" RESPUESTA"+(missing.length===1?"":"S"));
+    focusQuestion(missing[0].n);
+    return;
+  }
+  checked=true;
   let correct=0;
   const details=items.map(it=>{
     const valid=(it.answers&&it.answers.length?it.answers:[it.answer]),user=answers[it.n]||"",ok=valid.map(norm).includes(norm(user));if(ok)correct++;
@@ -148,16 +295,13 @@ function checkPart(){
   saveAttempt({correct,total:items.length},details);renderCorrection({correct,total:items.length},details);
 }
 function renderCorrection(result,details){
-  const src=getSource(activePaper,activePart),pct=Math.round(result.correct/result.total*100);
+  const src=getSource(activePaper,activePart),pct=Math.round(result.correct/result.total*100),bad=details.filter(d=>!d.correct),ok=details.filter(d=>d.correct);
   $("resultTitle").textContent="Corrección · Part "+activePart;
   $("resultSource").textContent=sourceLine(src);
   $("reviewSummary").innerHTML="<div class='review-score'><b>"+result.correct+" / "+result.total+"</b><span>"+pct+"% de acierto</span></div>"+
-    "<div class='source-box'><b>FUENTE DEL EJERCICIO</b><span>"+esc(sourceLine(src))+"</span><small>"+esc(src.detail||"")+"</small></div>";
-  $("reviewHost").innerHTML=details.map(d=>"<article class='review-item "+(d.correct?"review-ok":"review-bad")+"'>"+
-    "<div class='review-q'><b>Pregunta "+d.question+"</b><span>"+(d.correct?"CORRECTA":"FALLO")+"</span></div>"+
-    "<div class='review-answer'><small>TU RESPUESTA</small><b>"+esc(d.userAnswer||"—")+"</b></div>"+
-    "<div class='review-answer'><small>RESPUESTA CORRECTA</small><b>"+esc(d.expected)+"</b></div>"+
-    "<p>"+esc(d.explanation)+"</p><div class='skill'>PATRÓN · "+esc(d.skill)+"</div></article>").join("");
+    "<details class='exercise-meta-fold'><summary>FUENTE DEL EJERCICIO</summary><div class='source-box'><span>"+esc(sourceLine(src))+"</span><small>"+esc(src.detail||"")+"</small></div></details>";
+  $("reviewHost").innerHTML=(bad.length?"<div class='review-errors-title'>"+bad.length+" FALLO"+(bad.length===1?"":"S")+" · REVISA ESTO PRIMERO</div>"+bad.map(reviewCard).join(""):"<div class='review-errors-title' style='color:#147747'>TODO CORRECTO</div>")+
+    (ok.length?"<details class='review-correct'><summary>"+ok.length+" CORRECTA"+(ok.length===1?"":"S")+" · ver</summary><div class='review-list'>"+ok.map(reviewCard).join("")+"</div></details>":"");
   const next=nextPendingInPart(activePart);
   $("reviewActions").innerHTML=(next?"<button id='nextBtn' class='primary'>SIGUIENTE PENDIENTE DE ESTA PART</button>":"<button id='partBtn' class='primary'>VOLVER A PART "+activePart+"</button>")+
     "<button id='repeatBtn' class='secondary'>REPETIR EJERCICIO</button>";
@@ -165,12 +309,14 @@ function renderCorrection(result,details){
   $("repeatBtn").onclick=()=>startExercise(activeExerciseId);
   showScreen("resultScreen");renderHome();window.scrollTo(0,0);
 }
-function nextPendingInPart(part){const done=completedIds();return allExercises().find(ex=>ex.part===part&&!done.has(ex.id))||null;}
-function goHome(){closeSheet();renderHome();showScreen("startScreen");window.scrollTo(0,0);}
-function backToPart(){closeSheet();openPartMenu(activePart||menuPart||1);}
+function nextPendingInPart(part){const done=completedIds();return allExercises().filter(ex=>ex.part===part&&!done.has(ex.id)).sort((a,b)=>(a.paper.examNumber||99)-(b.paper.examNumber||99))[0]||null;}
+function goHome(){closeSheet();closeScanViewer();window.AdrianKeyboard?.close?.();renderHome();showScreen("startScreen");window.scrollTo(0,0);}
+function backToPart(){closeSheet();closeScanViewer();window.AdrianKeyboard?.close?.();openPartMenu(activePart||menuPart||1);}
 
 $("backBtn").onclick=backToPart;$("resultBackBtn").onclick=backToPart;$("partBackBtn").onclick=goHome;$("sheetClose").onclick=closeSheet;
 $("choiceSheet").addEventListener("click",e=>{if(e.target===$("choiceSheet"))closeSheet();});
+$("scanViewerClose").onclick=closeScanViewer;
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSheet();closeScanViewer();}});
 renderHome();
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));
 const requestedPart=new URLSearchParams(location.search).get("part");
