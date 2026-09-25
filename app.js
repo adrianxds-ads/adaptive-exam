@@ -1,6 +1,6 @@
 const PAPERS=[...(window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].sort((a,b)=>(Number(a.examNumber)||99)-(Number(b.examNumber)||99));
 const $=id=>document.getElementById(id);
-let activePart=null,activePaper=null,activeExerciseId=null,menuPart=null,answers={},checked=false;
+let activePart=null,activePaper=null,activeExerciseId=null,menuPart=null,answers={},checked=false,exerciseStartedAt=0;
 const statsKey="cambridgeB2ExerciseStatsV3";
 const BANK_SIZE=30;
 const TARGET_EXERCISES=BANK_SIZE*4;
@@ -104,7 +104,7 @@ function saveAttempt(result,details){
     id:crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random(),
     exerciseId:activeExerciseId,paperId:activePaper.id,paperLabel:activePaper.label,
     part:activePart,title:currentPart().title,correct:result.correct,total:result.total,
-    completedAt:new Date().toISOString(),
+    completedAt:new Date().toISOString(),durationSec:exerciseStartedAt?Math.max(0,(Date.now()-exerciseStartedAt)/1000):null,
     source:{type:src.type||"",label:src.label||"",detail:src.detail||"",url:src.url||""},
     items:details
   });
@@ -170,7 +170,7 @@ function renderPartMenu(){
 
 function startExercise(id){
   const ex=allExercises().find(x=>x.id===id);if(!ex)return;
-  activePaper=ex.paper;activePart=ex.part;activeExerciseId=id;answers={};checked=false;lastExamInput=null;
+  activePaper=ex.paper;activePart=ex.part;activeExerciseId=id;answers={};checked=false;exerciseStartedAt=Date.now();lastExamInput=null;
   const src=getSource(activePaper,activePart);
   $("headPart").textContent="Exam "+String(activePaper.examNumber).padStart(2,"0")+" · Part "+activePart;
   $("headSource").textContent=sourceLine(src);
