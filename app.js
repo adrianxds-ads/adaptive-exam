@@ -118,9 +118,11 @@ function aggregate(attempts){
   return {runs:attempts.length,total,correct,accuracy:total?Math.round(correct/total*100):0,errors:total-correct};
 }
 
+function cambridgeMedalCounts(){return window.AdrianAchievements?.countsFromHistory?.(bankAttempts())||{blue:0,violet:0,gold:0};}
 function renderHome(){
   const exercises=allExercises(),attempts=bankAttempts(),done=completedIds(),g=aggregate(attempts),loaded=PAPERS.length;
   $("bankProgress").textContent="Banco maestro: "+loaded+" de "+BANK_SIZE+" exámenes cargados · "+done.size+" de "+TARGET_EXERCISES+" Parts realizadas";
+  $("startMedals").innerHTML=window.AdrianAchievements?.medalStripHtml?.(cambridgeMedalCounts(),{context:"summary"})||"";
   $("globalStats").innerHTML=
     statCell(done.size+"/"+TARGET_EXERCISES,"REALIZADAS")+
     statCell(g.total?g.accuracy+"%":"—","ACIERTO GLOBAL")+
@@ -300,7 +302,7 @@ function renderCorrection(result,details){
   $("resultSource").textContent=sourceLine(src);
   $("reviewSummary").innerHTML="<div class='review-score'><b>"+result.correct+" / "+result.total+"</b><span>"+pct+"% de acierto</span></div>"+
     "<details class='exercise-meta-fold'><summary>FUENTE DEL EJERCICIO</summary><div class='source-box'><span>"+esc(sourceLine(src))+"</span><small>"+esc(src.detail||"")+"</small></div></details>";
-  const achievement=window.AdrianAchievements?.badgeHtml?.(result.correct,result.total)||"";if(achievement){$("reviewSummary").insertAdjacentHTML("beforeend",achievement);window.AdrianAchievements?.play?.(null,result.correct,result.total);}
+  const achievement=window.AdrianAchievements?.badgeHtml?.(result.correct,result.total)||"";if(achievement){$("reviewSummary").insertAdjacentHTML("beforeend",achievement);window.AdrianAchievements?.play?.(null,result.correct,result.total);}$("reviewSummary").insertAdjacentHTML("beforeend",window.AdrianAchievements?.medalStripHtml?.(cambridgeMedalCounts(),{context:"summary"})||"");
   $("reviewHost").innerHTML=(bad.length?"<div class='review-errors-title'>"+bad.length+" FALLO"+(bad.length===1?"":"S")+" · REVISA ESTO PRIMERO</div>"+bad.map(reviewCard).join(""):"<div class='review-errors-title' style='color:#147747'>TODO CORRECTO</div>")+
     (ok.length?"<details class='review-correct'><summary>"+ok.length+" CORRECTA"+(ok.length===1?"":"S")+" · ver</summary><div class='review-list'>"+ok.map(reviewCard).join("")+"</div></details>":"");
   const next=nextPendingInPart(activePart);
