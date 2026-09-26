@@ -300,6 +300,7 @@ function renderCorrection(result,details){
   $("resultSource").textContent=sourceLine(src);
   $("reviewSummary").innerHTML="<div class='review-score'><b>"+result.correct+" / "+result.total+"</b><span>"+pct+"% de acierto</span></div>"+
     "<details class='exercise-meta-fold'><summary>FUENTE DEL EJERCICIO</summary><div class='source-box'><span>"+esc(sourceLine(src))+"</span><small>"+esc(src.detail||"")+"</small></div></details>";
+  const achievement=window.AdrianAchievements?.badgeHtml?.(result.correct,result.total)||"";if(achievement){$("reviewSummary").insertAdjacentHTML("beforeend",achievement);window.AdrianAchievements?.play?.(null,result.correct,result.total);}
   $("reviewHost").innerHTML=(bad.length?"<div class='review-errors-title'>"+bad.length+" FALLO"+(bad.length===1?"":"S")+" · REVISA ESTO PRIMERO</div>"+bad.map(reviewCard).join(""):"<div class='review-errors-title' style='color:#147747'>TODO CORRECTO</div>")+
     (ok.length?"<details class='review-correct'><summary>"+ok.length+" CORRECTA"+(ok.length===1?"":"S")+" · ver</summary><div class='review-list'>"+ok.map(reviewCard).join("")+"</div></details>":"");
   const next=nextPendingInPart(activePart);
@@ -318,6 +319,6 @@ $("choiceSheet").addEventListener("click",e=>{if(e.target===$("choiceSheet"))clo
 $("scanViewerClose").onclick=closeScanViewer;
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSheet();closeScanViewer();}});
 renderHome();
-if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));
+if("serviceWorker" in navigator&&location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}));
 const requestedPart=new URLSearchParams(location.search).get("part");
 if(["1","2","3","4"].includes(requestedPart))openPartMenu(Number(requestedPart));
