@@ -12,6 +12,14 @@ const PART_INFO={
 };
 
 function norm(v){return String(v||"").toLowerCase().replace(/[’‘]/g,"'").trim().replace(/\s+/g," ");}
+function expandAnswerSpec(value){
+  const raw=String(value||"").trim();if(!raw)return [];
+  const full=/\s+\/\s+/.test(raw)?raw.split(/\s+\/\s+/):[raw];
+  const optional=s=>{const m=s.match(/\(([^()]*)\)/);if(!m)return [s];const a=s.slice(0,m.index),b=s.slice(m.index+m[0].length);return [...optional(a+b),...optional(a+m[1]+b)];};
+  const slash=s=>{const m=s.match(/([^\s/]+)\/([^\s/]+)/);if(!m)return [s];const a=s.slice(0,m.index),b=s.slice(m.index+m[0].length);return [...slash(a+m[1]+b),...slash(a+m[2]+b)];};
+  return [...new Set(full.flatMap(optional).flatMap(slash).map(x=>x.replace(/\s+/g," ").trim()).filter(Boolean))];
+}
+function validAnswers(it){const specs=it.answers&&it.answers.length?it.answers:[it.answer];return [...new Set(specs.flatMap(expandAnswerSpec).map(norm).filter(Boolean))];}
 function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
 function showScreen(id){["startScreen","partScreen","paperScreen","resultScreen"].forEach(x=>$(x).classList.toggle("hidden",x!==id));}
 function exerciseId(paper,part){return paper.id+"-p"+part;}
@@ -291,7 +299,7 @@ function checkPart(){
   checked=true;
   let correct=0;
   const details=items.map(it=>{
-    const valid=(it.answers&&it.answers.length?it.answers:[it.answer]),user=answers[it.n]||"",ok=valid.map(norm).includes(norm(user));if(ok)correct++;
+    const valid=validAnswers(it),user=answers[it.n]||"",ok=valid.includes(norm(user));if(ok)correct++;
     return {question:it.n,correct:ok,userAnswer:user,expected:expected(it),explanation:it.explanation||"Sin explicación específica registrada.",skill:it.skill||"sin clasificar",base:it.base||null,keyword:it.keyword||null};
   });
   saveAttempt({correct,total:items.length},details);renderCorrection({correct,total:items.length},details);
