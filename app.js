@@ -1,3 +1,6 @@
+const APP_VERSION="1.2.4";
+let pendingStats=null;
+function safeDecoration(run,fallback=""){try{return run()??fallback;}catch(e){console.warn("Decoration unavailable",e);return fallback;}}
 const PAPERS=[...(window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].sort((a,b)=>(Number(a.examNumber)||99)-(Number(b.examNumber)||99));
 const $=id=>document.getElementById(id);
 let activePart=null,activePaper=null,activeExerciseId=null,menuPart=null,answers={},checked=false,exerciseStartedAt=0;
@@ -105,7 +108,7 @@ document.addEventListener("focusin",e=>{if(e.target?.matches?.("#paperHost input
 const keyboardObserver=new MutationObserver(()=>queueMicrotask(decorateCambridgeKeyboard));
 keyboardObserver.observe(document.documentElement,{childList:true,subtree:true});
 
-function loadStats(){try{const x=JSON.parse(localStorage.getItem(statsKey)),s=x&&Array.isArray(x.attempts)?x:{attempts:[]};let dirty=false;s.attempts.forEach(a=>{if("sec" in a){delete a.sec;dirty=true;}if("targetSec" in a){delete a.targetSec;dirty=true;}});if(dirty)localStorage.setItem(statsKey,JSON.stringify(s));return s;}catch(e){return{attempts:[]};}}
+function loadStats(){try{const raw=localStorage.getItem(statsKey),x=pendingStats||JSON.parse(raw),s=x&&Array.isArray(x.attempts)?{...x,attempts:x.attempts.filter(a=>a&&typeof a==="object"&&typeof a.exerciseId==="string"&&Number.isFinite(a.correct)&&Number.isFinite(a.total)&&a.total>0)}:{attempts:[]};if(raw&&x?.attempts?.length!==s.attempts.length)localStorage.setItem(statsKey+"_recovery_"+Date.now(),raw);let dirty=false;s.attempts.forEach(a=>{if("sec" in a){delete a.sec;dirty=true;}if("targetSec" in a){delete a.targetSec;dirty=true;}});if(dirty)localStorage.setItem(statsKey,JSON.stringify(s));return s;}catch(e){try{const raw=localStorage.getItem(statsKey);if(raw)localStorage.setItem(statsKey+"_recovery_"+Date.now(),raw);}catch(_){}return pendingStats||{attempts:[]};}}
 function saveAttempt(result,details){
   const s=loadStats(),src=getSource(activePaper,activePart);
   s.attempts.push({
@@ -116,7 +119,7 @@ function saveAttempt(result,details){
     source:{type:src.type||"",label:src.label||"",detail:src.detail||"",url:src.url||""},
     items:details
   });
-  localStorage.setItem(statsKey,JSON.stringify(s));
+  pendingStats=s;try{localStorage.setItem(statsKey,JSON.stringify(s));pendingStats=null;return true;}catch(e){console.warn("Progress retained in memory",e);return false;}
 }
 function bankAttempts(){const ids=new Set(allExercises().map(x=>x.id));return loadStats().attempts.filter(a=>ids.has(a.exerciseId));}
 function exerciseAttempts(id){return bankAttempts().filter(a=>a.exerciseId===id);}
@@ -130,7 +133,7 @@ function cambridgeMedalCounts(){return window.AdrianAchievements?.countsFromHist
 function renderHome(){
   const exercises=allExercises(),attempts=bankAttempts(),done=completedIds(),g=aggregate(attempts),loaded=PAPERS.length;
   $("bankProgress").textContent="Banco maestro: "+loaded+" de "+BANK_SIZE+" exámenes cargados · "+done.size+" de "+TARGET_EXERCISES+" Parts realizadas";
-  $("startMedals").innerHTML=window.AdrianAchievements?.medalStripHtml?.(cambridgeMedalCounts(),{context:"summary"})||"";
+  $("startMedals").innerHTML=safeDecoration(()=>window.AdrianAchievements?.medalStripHtml?.(cambridgeMedalCounts(),{context:"summary"}));
   $("globalStats").innerHTML=
     statCell(done.size+"/"+TARGET_EXERCISES,"REALIZADAS")+
     statCell(g.total?g.accuracy+"%":"—","ACIERTO GLOBAL")+
@@ -302,16 +305,16 @@ function checkPart(){
     const valid=validAnswers(it),user=answers[it.n]||"",ok=valid.includes(norm(user));if(ok)correct++;
     return {question:it.n,correct:ok,userAnswer:user,expected:expected(it),explanation:it.explanation||"Sin explicación específica registrada.",skill:it.skill||"sin clasificar",base:it.base||null,keyword:it.keyword||null};
   });
-  saveAttempt({correct,total:items.length},details);renderCorrection({correct,total:items.length},details);
+  const saved=saveAttempt({correct,total:items.length},details);try{renderCorrection({correct,total:items.length},details);}finally{showScreen("resultScreen");}if(!saved){const note=document.createElement("p"),backup=document.createElement("button");note.className="exercise-meta";note.textContent="Resultado conservado en memoria. El almacenamiento no está disponible.";backup.className="secondary";backup.textContent="GUARDAR COPIA DEL PROGRESO";backup.onclick=()=>{const a=document.createElement("a"),url=URL.createObjectURL(new Blob([JSON.stringify(pendingStats)],{type:"application/json"}));a.href=url;a.download="cambridge-progress-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};$("reviewSummary").append(note,backup);}
 }
 function renderCorrection(result,details){
   const src=getSource(activePaper,activePart),pct=Math.round(result.correct/result.total*100),bad=details.filter(d=>!d.correct),ok=details.filter(d=>d.correct);
   $("resultTitle").textContent="Corrección · Part "+activePart;
   $("resultSource").textContent=sourceLine(src);
   $("reviewSummary").innerHTML="<div class='review-score'><b>"+result.correct+" / "+result.total+"</b><span>"+pct+"% de acierto</span></div>"+
-    (window.AdrianAchievements?.medalStripHtml?.(cambridgeMedalCounts(),{context:"summary"})||"")+
+    (safeDecoration(()=>window.AdrianAchievements?.medalStripHtml?.(cambridgeMedalCounts(),{context:"summary"})))+
     "<details class='exercise-meta-fold'><summary>FUENTE DEL EJERCICIO</summary><div class='source-box'><span>"+esc(sourceLine(src))+"</span><small>"+esc(src.detail||"")+"</small></div></details>";
-  const achievement=window.AdrianAchievements?.badgeHtml?.(result.correct,result.total)||"";if(achievement){$("reviewSummary").insertAdjacentHTML("beforeend",achievement);window.AdrianAchievements?.play?.(null,result.correct,result.total);}
+  const achievement=safeDecoration(()=>window.AdrianAchievements?.badgeHtml?.(result.correct,result.total));if(achievement){$("reviewSummary").insertAdjacentHTML("beforeend",achievement);safeDecoration(()=>window.AdrianAchievements?.play?.(null,result.correct,result.total));}
   $("reviewHost").innerHTML=(bad.length?"<div class='review-errors-title'>"+bad.length+" FALLO"+(bad.length===1?"":"S")+" · REVISA ESTO PRIMERO</div>"+bad.map(reviewCard).join(""):"<div class='review-errors-title' style='color:#147747'>TODO CORRECTO</div>")+
     (ok.length?"<details class='review-correct'><summary>"+ok.length+" CORRECTA"+(ok.length===1?"":"S")+" · ver</summary><div class='review-list'>"+ok.map(reviewCard).join("")+"</div></details>":"");
   const next=nextPendingInPart(activePart);
