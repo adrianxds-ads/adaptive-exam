@@ -4,6 +4,29 @@ const TIERS=Object.freeze({
   violet:{key:"violet",label:"VIOLET MEDAL",short:"VIOLET",score:14,color:"#BB9EF0",text:"#D8C7F6"},
   gold:{key:"gold",label:"GOLD MEDAL",short:"GOLD",score:15,color:"#E7BF57",text:"#F1DA9E"}
 });
+const STAR_KEY="adrian_hub_stars_v1",STAR_STEP=5;
+function starAppId(){
+  const p=String(location.pathname||"").toLowerCase();
+  if(p.startsWith("/adaptive-english"))return"english";
+  if(p.startsWith("/b2-multiple-choice-cloze"))return"b2-cloze";
+  if(p.startsWith("/adaptive-phrasal-verbs"))return"phrasal-verbs";
+  if(p.startsWith("/adaptive-exam"))return"cambridge";
+  if(p.startsWith("/adaptive-verbs-catala"))return"catala";
+  if(p.startsWith("/adaptive-hoti0108"))return"hoti0108";
+  return p.split("/").filter(Boolean)[0]||"quiz";
+}
+function readStarLedger(){
+  try{const x=JSON.parse(localStorage.getItem(STAR_KEY)||"{}");return{version:1,apps:{...(x.apps||{})},stars:Math.max(0,Number(x.stars)||0),totalGold:Math.max(0,Number(x.totalGold)||0),updatedAt:Number(x.updatedAt)||0};}
+  catch{return{version:1,apps:{},stars:0,totalGold:0,updatedAt:0};}
+}
+function starState(counts=null){
+  const x=readStarLedger(),id=starAppId();
+  if(counts){const gold=Math.max(0,Math.floor(Number(counts.gold)||0));x.apps[id]=Math.max(Math.max(0,Math.floor(Number(x.apps[id])||0)),gold);x.updatedAt=Date.now();}
+  const values=Object.values(x.apps).map(n=>Math.max(0,Math.floor(Number(n)||0))),totalGold=values.reduce((sum,n)=>sum+n,0),stars=values.reduce((sum,n)=>sum+Math.floor(n/STAR_STEP),0),localGold=Math.max(0,Math.floor(Number(x.apps[id])||0)),localStars=Math.floor(localGold/STAR_STEP),progress=localGold%STAR_STEP;
+  x.totalGold=totalGold;x.stars=stars;
+  if(counts)try{localStorage.setItem(STAR_KEY,JSON.stringify(x));window.dispatchEvent(new CustomEvent("hub:star-progress",{detail:{stars,totalGold,appId:id,localGold,localStars,progress,step:STAR_STEP,apps:{...x.apps}}}));}catch{}
+  return{stars,totalGold,appId:id,localGold,localStars,progress,toNext:STAR_STEP-progress,step:STAR_STEP,apps:{...x.apps}};
+}
 function tier(correct,total=15){
   const c=Number(correct),t=Number(total);if(!Number.isFinite(c)||!Number.isFinite(t)||t<=0)return null;
   const r=c/t;if(r>=1-1e-9)return TIERS.gold;if(r>=14/15-1e-9)return TIERS.violet;if(r>=13/15-1e-9)return TIERS.blue;return null;
@@ -18,9 +41,10 @@ function countsFromHistory(rows=[]){
   return out;
 }
 function medalStripHtml(counts={},opts={}){
-  const c=normalizeCounts(counts),context=opts.context||"summary",compact=opts.compact!==false;
-  const items=Object.values(TIERS).map(x=>{const n=c[x.key]||0,earned=n>0;return '<span class="ad-medal-stat '+(earned?"earned ":"locked ")+'ad-medal-stat-'+x.key+'" style="--ach:'+x.color+';--ach-text:'+x.text+'" title="'+x.short+' · '+n+' veces conseguida"><i>'+n+'</i><b>'+x.short+'</b></span>';}).join("");
-  return '<div class="ad-medal-strip '+(compact?"compact ":"")+'context-'+context+'" aria-label="Medallas acumuladas">'+items+'</div>';
+  const c=normalizeCounts(counts),context=opts.context||"summary",compact=opts.compact!==false,st=starState(c);
+  const items=Object.values(TIERS).map(x=>{const n=c[x.key]||0,earned=n>0;return '<span class="ad-medal-stat '+(earned?"earned ":"locked ")+'ad-medal-stat-'+x.key+'" style="--ach:'+x.color+';--ach-text:'+x.text+'" title="'+x.short+' &middot; '+n+' veces conseguida"><i>'+n+'</i><b>'+x.short+'</b></span>';}).join("");
+  const star='<span class="ad-medal-stat '+(st.localStars>0?"earned ":"locked ")+'ad-medal-stat-star" title="STAR &middot; '+st.localStars+' conseguida'+(st.localStars===1?'':'s')+' &middot; '+st.progress+'/'+STAR_STEP+' oros hacia la siguiente"><i aria-hidden="true">&#9733;</i><b>STAR<em>'+st.localStars+'</em></b></span>';
+  return '<div class="ad-medal-strip '+(compact?"compact ":"")+'context-'+context+'" aria-label="Medallas y estrellas acumuladas">'+items+star+'</div>';
 }
 function legendHtml(counts={}){return medalStripHtml(counts,{context:"target",compact:true});}
 function badgeHtml(correct,total=15){
@@ -43,6 +67,7 @@ function inject(){
 .ad-achievement small,.ad-achievement b,.ad-achievement em{display:block}.ad-achievement small{font-size:10px;font-weight:950;letter-spacing:.12em;color:var(--ach-text)}.ad-achievement b{font-size:20px;line-height:1.1;color:#fff}.ad-achievement em{margin-top:3px;font-size:11px;font-style:normal;font-weight:850;color:#c9d8d0}
 .ad-medal{position:relative;display:grid;place-items:center;width:58px;height:58px;flex:0 0 58px;border-radius:50%;border:5px solid var(--ach);background:radial-gradient(circle,#18241d 46%,color-mix(in srgb,var(--ach) 35%,#121915));box-shadow:0 0 22px color-mix(in srgb,var(--ach) 42%,transparent)}.ad-medal:before,.ad-medal:after{content:"";position:absolute;z-index:-1;bottom:-18px;width:18px;height:30px;background:var(--ach);clip-path:polygon(0 0,100% 0,78% 100%,50% 76%,22% 100%)}.ad-medal:before{left:7px;transform:rotate(9deg)}.ad-medal:after{right:7px;transform:rotate(-9deg)}.ad-medal i{font-style:normal;font-size:22px;font-weight:1000;color:var(--ach-text)}
 .ad-medal-strip{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:10px 0 4px}.ad-medal-stat{--dim:.34;position:relative;display:flex;align-items:center;gap:8px;min-width:94px;padding:7px 10px;border-radius:13px;border:1px solid rgba(255,255,255,.08);background:rgba(5,12,9,.24);filter:saturate(.35);opacity:.55;transition:opacity .22s ease,filter .22s ease,border-color .22s ease,box-shadow .22s ease}.ad-medal-stat i{display:grid;place-items:center;width:30px;height:30px;flex:0 0 30px;border-radius:50%;border:2px solid color-mix(in srgb,var(--ach) 32%,#5a625e);background:#18201c;color:#89918d;font:1000 13px/1 system-ui,sans-serif}.ad-medal-stat b{font:950 10px/1.05 system-ui,sans-serif;letter-spacing:.07em;color:#87928c}.ad-medal-stat.earned{opacity:1;filter:none;border-color:color-mix(in srgb,var(--ach) 50%,transparent);background:color-mix(in srgb,var(--ach) 10%,rgba(7,14,11,.60));box-shadow:0 0 16px color-mix(in srgb,var(--ach) 16%,transparent)}.ad-medal-stat.earned i{border-color:var(--ach);background:color-mix(in srgb,var(--ach) 20%,#17201b);color:var(--ach-text);box-shadow:0 0 11px color-mix(in srgb,var(--ach) 34%,transparent)}.ad-medal-stat.earned b{color:#edf4ef}
+.ad-medal-stat-star{--ach:#f1d978;--ach-text:#fff3ad}.ad-medal-stat-star i,.ad-medal-stat-star.earned i{border:0;background:transparent;box-shadow:none;border-radius:0;font-size:27px;line-height:1;color:#6f7772}.ad-medal-stat-star b{display:flex;align-items:center;gap:5px}.ad-medal-stat-star b em{min-width:18px;padding:2px 5px;border-radius:999px;background:rgba(255,255,255,.08);font:950 9px/1 system-ui,sans-serif;font-style:normal;text-align:center;color:#8e9892}.ad-medal-stat-star.earned{border-color:rgba(241,217,120,.48);background:rgba(241,217,120,.09);box-shadow:0 0 18px rgba(241,217,120,.14)}.ad-medal-stat-star.earned i{color:#ffe88d;text-shadow:0 0 7px rgba(255,232,141,.72),0 0 18px rgba(231,191,87,.42)}.ad-medal-stat-star.earned b em{background:rgba(231,191,87,.16);color:#fff3ad}
 .medal-summary-host{margin:8px 0 14px}.medal-summary-host .ad-medal-strip{gap:11px;margin:10px 0 5px}.medal-summary-host .ad-medal-stat{min-width:112px;padding:9px 12px;gap:9px;border-radius:15px}.medal-summary-host .ad-medal-stat i{width:34px;height:34px;flex-basis:34px;border-width:3px;font-size:15px}.medal-summary-host .ad-medal-stat b{font-size:10.5px}
 .mission-overlay .ad-medal-strip{margin-top:15px}.mission-overlay .ad-medal-stat{background:rgba(5,10,8,.42)}
 @keyframes adMedalPop{0%{opacity:0;transform:scale(.58) rotate(-5deg)}65%{opacity:1;transform:scale(1.07) rotate(2deg)}100%{transform:scale(1) rotate(0)}}
@@ -51,5 +76,5 @@ function inject(){
 `;document.head.appendChild(s);
 }
 inject();
-window.AdrianAchievements=Object.freeze({tier,badgeHtml,legendHtml,medalStripHtml,countsFromHistory,play,tiers:TIERS});
+window.AdrianAchievements=Object.freeze({tier,badgeHtml,legendHtml,medalStripHtml,countsFromHistory,play,starState,starStep:STAR_STEP,tiers:TIERS});
 })();
