@@ -333,6 +333,6 @@ $("choiceSheet").addEventListener("click",e=>{if(e.target===$("choiceSheet"))clo
 $("scanViewerClose").onclick=closeScanViewer;
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSheet();closeScanViewer();}});
 renderHome();
-if("serviceWorker" in navigator&&location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=loadfix3",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}));
+if("serviceWorker" in navigator&&location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=recovery2",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}));
 const requestedPart=new URLSearchParams(location.search).get("part");
 if(["1","2","3","4"].includes(requestedPart))openPartMenu(Number(requestedPart));
