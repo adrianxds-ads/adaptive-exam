@@ -1,4 +1,4 @@
-const CACHE='adaptive-exam-v1.2.4-loadfix3';
+const CACHE='adaptive-exam-v1.2.4-loadfix4';
 const CAMBRIDGE_IMAGES=Array.from({length:10},(_,i)=>Array.from({length:4},(_,j)=>`./assets/cambridge/exam-${String(i+1).padStart(2,'0')}-part-${j+1}.webp`)).flat();
 const ASSETS=['./','./index.html','./app.js','./data/cambridge-bank.js','./data/engexam-bank.js','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png','./adrian-visual-system.js','./adrian-achievements.js','./adaptive-language-dashboard.js',...CAMBRIDGE_IMAGES];
 const CORE_RE=/\.(?:html|js|css|json|webmanifest)$/i;
