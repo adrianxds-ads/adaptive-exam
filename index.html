@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#10271d">
-<title>B2 First · Practice Bank</title>
+<title>B2 First Â· Practice Bank</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
 <style>
@@ -28,7 +28,7 @@ button,input{font:inherit}.app{width:min(900px,100%);margin:0 auto;min-height:10
 /* Cambridge mobile ergonomics */
 .exercise-meta-fold{margin:0 0 15px;border:1px solid #d6ddd8;border-radius:12px;background:#edf1ee;overflow:hidden}
 .exercise-meta-fold summary{list-style:none;cursor:pointer;padding:12px 14px;font-size:13px;font-weight:950;letter-spacing:.05em;color:#43534a;display:flex;align-items:center;justify-content:space-between;min-height:46px}
-.exercise-meta-fold summary::-webkit-details-marker{display:none}.exercise-meta-fold summary::after{content:"+";font-size:20px}.exercise-meta-fold[open] summary::after{content:"−"}
+.exercise-meta-fold summary::-webkit-details-marker{display:none}.exercise-meta-fold summary::after{content:"+";font-size:20px}.exercise-meta-fold[open] summary::after{content:"âˆ’"}
 .exercise-meta-fold .source-box{margin:0;border-radius:0;border-top:1px solid #d6ddd8;background:#f5f6f3}
 .answer-progress{position:sticky;top:70px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 16px;padding:10px 12px;border:1px solid #ced8d1;border-radius:11px;background:rgba(248,247,242,.95);backdrop-filter:blur(8px);font:900 13px/1.2 Inter,Roboto,system-ui,sans-serif;color:#43534a}
 .answer-progress strong{font-size:15px;color:#173126}.answer-progress.warning{border-color:#d6a354;background:#fff8e8;color:#755411}
@@ -62,26 +62,26 @@ body.cambridge-scan-open{overflow:hidden}
 <body>
 <div class="app">
 <section id="startScreen" class="screen center"><div class="panel">
-<div class="kicker">B2 FIRST · READING &amp; USE OF ENGLISH</div><h1>Practice<br>Bank</h1>
+<div class="kicker">B2 FIRST Â· READING &amp; USE OF ENGLISH</div><h1>Practice<br>Bank</h1>
 <div id="startMedals" class="medal-summary-host"></div>
-<p class="subtitle">Elige una de las cuatro Parts. Dentro tienes los 30 exámenes numerados para avanzar en orden o abrir cualquiera.</p>
+<p class="subtitle">Elige una de las cuatro Parts. Dentro tienes los 30 exÃ¡menes numerados para avanzar en orden o abrir cualquiera.</p>
 <div id="bankProgress" class="bank-progress"></div><div id="globalStats" class="mini-stats"></div>
 <div id="partList" class="part-list"></div>
 <div id="phaseNote" class="phase-note hidden"></div>
 </div></section>
 <section id="partScreen" class="screen hidden">
-<header class="paper-head"><div class="paper-head-row"><button id="partBackBtn" class="back" aria-label="Back">←</button><div class="paper-title"><b>30 exámenes</b><span>ELIGE CUALQUIERA</span></div><div></div></div></header>
-<div class="panel"><div class="submenu-head"><div class="kicker">B2 FIRST · PRACTICE BANK</div><h2 id="partMenuTitle">Part 1</h2><p id="partMenuSubtitle"></p></div><div id="partStats" class="mini-stats part-stats"></div><div id="exerciseList" class="exam-grid"></div></div>
+<header class="paper-head"><div class="paper-head-row"><button id="partBackBtn" class="back" aria-label="Back">â†</button><div class="paper-title"><b>30 exÃ¡menes</b><span>ELIGE CUALQUIERA</span></div><div></div></div></header>
+<div class="panel"><div class="submenu-head"><div class="kicker">B2 FIRST Â· PRACTICE BANK</div><h2 id="partMenuTitle">Part 1</h2><p id="partMenuSubtitle"></p></div><div id="partStats" class="mini-stats part-stats"></div><div id="exerciseList" class="exam-grid"></div></div>
 </section>
 <section id="paperScreen" class="screen hidden">
-<header class="paper-head"><div class="paper-head-row"><button id="backBtn" class="back" aria-label="Back">←</button><div class="paper-title"><b id="headPart">Part 1</b><span id="headSource"></span></div><div></div></div></header>
+<header class="paper-head"><div class="paper-head-row"><button id="backBtn" class="back" aria-label="Back">â†</button><div class="paper-title"><b id="headPart">Part 1</b><span id="headSource"></span></div><div></div></div></header>
 <main id="paperHost" class="paper"></main></section>
 <section id="resultScreen" class="screen hidden">
-<header class="paper-head"><div class="paper-head-row"><button id="resultBackBtn" class="back" aria-label="Back">←</button><div class="paper-title"><b id="resultTitle">Corrección</b><span id="resultSource"></span></div><div></div></div></header>
+<header class="paper-head"><div class="paper-head-row"><button id="resultBackBtn" class="back" aria-label="Back">â†</button><div class="paper-title"><b id="resultTitle">CorrecciÃ³n</b><span id="resultSource"></span></div><div></div></div></header>
 <main class="paper"><div id="reviewSummary"></div><div id="reviewHost" class="review-list"></div><div id="reviewActions" class="review-actions"></div></main></section>
 </div>
-<div id="choiceSheet" class="sheet hidden"><div class="sheet-card"><div class="sheet-top"><b id="sheetTitle">Question 1</b><button id="sheetClose" class="sheet-close">×</button></div><div id="sheetContext" class="sheet-context hidden"></div><div id="optionGrid" class="option-grid"></div></div></div>
-<div id="scanViewer" class="scan-viewer hidden" aria-hidden="true"><div class="scan-viewer-bar"><span>PÁGINA CAMBRIDGE · pellizca para ampliar</span><button id="scanViewerClose" class="scan-viewer-close" aria-label="Cerrar">×</button></div><div class="scan-viewer-body"><img id="scanViewerImg" alt="Cambridge exam page enlarged"></div></div>
+<div id="choiceSheet" class="sheet hidden"><div class="sheet-card"><div class="sheet-top"><b id="sheetTitle">Question 1</b><button id="sheetClose" class="sheet-close">Ã—</button></div><div id="sheetContext" class="sheet-context hidden"></div><div id="optionGrid" class="option-grid"></div></div></div>
+<div id="scanViewer" class="scan-viewer hidden" aria-hidden="true"><div class="scan-viewer-bar"><span>PÃGINA CAMBRIDGE Â· pellizca para ampliar</span><button id="scanViewerClose" class="scan-viewer-close" aria-label="Cerrar">Ã—</button></div><div class="scan-viewer-body"><img id="scanViewerImg" alt="Cambridge exam page enlarged"></div></div>
 <script src="https://adrianxds-ads.github.io/adrian-core/design/adrian-visual-system.js?v=core-20261004"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-achievements.js?v=core-20261004"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/hub-path-game.js?v=core-20261004"></script>
@@ -91,5 +91,5 @@ body.cambridge-scan-open{overflow:hidden}
 <script src="./app.js?v=1.2.4-oca2"></script>
 <script src="./adaptive-language-dashboard.js?v=1.2.4"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/hub-nav.js?v=9"></script>
-<script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-sync.js?v=1.0.0-20261004"></script>
+<script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-sync.js?v=1.0.1-20261004"></script>
 </body></html>
