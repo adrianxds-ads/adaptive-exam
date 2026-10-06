@@ -1,4 +1,4 @@
-const APP_VERSION="1.2.6";
+const APP_VERSION="1.2.7";
 let pendingStats=null;
 function safeDecoration(run,fallback=""){try{return run()??fallback;}catch(e){console.warn("Decoration unavailable",e);return fallback;}}
 const PAPERS=[...(window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].sort((a,b)=>(Number(a.examNumber)||99)-(Number(b.examNumber)||99));
@@ -64,8 +64,7 @@ function focusQuestion(n){
   if(activePart===1){openChoices(n);return;}
   const el=document.querySelector("input[data-n='"+n+"']");
   if(!el)return;
-  el.scrollIntoView({behavior:"smooth",block:"center"});
-  setTimeout(()=>{el.focus({preventScroll:true});window.AdrianKeyboard?.open?.(el);},180);
+  focusExamInput(el);
 }
 function choiceContext(n){
   const segs=currentPart()?.segments||[],i=segs.findIndex(x=>typeof x==="object"&&Number(x.n)===Number(n));
@@ -85,13 +84,27 @@ function closeScanViewer(){
 }
 
 let lastExamInput=null;
+function ensureExamInputVisible(){
+ const el=lastExamInput,kb=document.querySelector('.ad-keyboard.open');
+ if(!el?.isConnected||!kb)return;
+ const rect=el.getBoundingClientRect(),bottom=kb.getBoundingClientRect().top-18;
+ const headers=[...document.querySelectorAll('.adrian-tools,#paperScreen .paper-head')].map(x=>x.getBoundingClientRect()).filter(r=>r.top<=80&&r.bottom>0&&r.bottom<bottom);
+ const top=Math.max(8,...headers.map(r=>r.bottom))+8;
+ const delta=rect.bottom>bottom?rect.bottom-bottom:rect.top<top?rect.top-top:0;
+ if(Math.abs(delta)>1)window.scrollBy({top:delta,left:0,behavior:'instant'});
+}
+function focusExamInput(el){
+ lastExamInput=el;el.focus({preventScroll:true});window.AdrianKeyboard?.open?.(el);
+ requestAnimationFrame(ensureExamInputVisible);setTimeout(ensureExamInputVisible,200);
+}
+window.addEventListener('resize',()=>requestAnimationFrame(ensureExamInputVisible));
+window.visualViewport?.addEventListener('resize',()=>requestAnimationFrame(ensureExamInputVisible));
 function examInputs(){return Array.from(document.querySelectorAll("#paperHost input[data-n]"));}
 function moveExamInput(delta){
   const list=examInputs();if(!list.length)return;
   let i=Math.max(0,list.indexOf(lastExamInput));i=Math.max(0,Math.min(list.length-1,i+delta));
   const next=list[i];if(!next)return;
-  next.scrollIntoView({behavior:"smooth",block:"center"});
-  setTimeout(()=>{next.focus({preventScroll:true});lastExamInput=next;window.AdrianKeyboard?.open?.(next);},130);
+  focusExamInput(next);
 }
 function insertExamText(text){
   const el=lastExamInput;if(!el)return;
@@ -115,7 +128,7 @@ function decorateCambridgeKeyboard(){
   const next=make("cambridge-next","→",()=>moveExamInput(1));
   controls.insertBefore(prev,space||controls.firstChild);controls.insertBefore(apos,space||null);controls.insertBefore(next,back||null);
 }
-document.addEventListener("focusin",e=>{if(e.target?.matches?.("#paperHost input[data-n]"))lastExamInput=e.target;});
+document.addEventListener("focusin",e=>{if(e.target?.matches?.("#paperHost input[data-n]")){lastExamInput=e.target;requestAnimationFrame(ensureExamInputVisible);setTimeout(ensureExamInputVisible,200);}});
 const keyboardObserver=new MutationObserver(()=>queueMicrotask(decorateCambridgeKeyboard));
 keyboardObserver.observe(document.documentElement,{childList:true,subtree:true});
 
