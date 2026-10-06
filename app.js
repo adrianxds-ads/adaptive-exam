@@ -1,4 +1,4 @@
-const APP_VERSION="1.2.5";
+const APP_VERSION="1.2.6";
 let pendingStats=null;
 function safeDecoration(run,fallback=""){try{return run()??fallback;}catch(e){console.warn("Decoration unavailable",e);return fallback;}}
 const PAPERS=[...(window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].sort((a,b)=>(Number(a.examNumber)||99)-(Number(b.examNumber)||99));
@@ -64,8 +64,11 @@ function focusQuestion(n){
   if(activePart===1){openChoices(n);return;}
   const el=document.querySelector("input[data-n='"+n+"']");
   if(!el)return;
-  el.scrollIntoView({behavior:"smooth",block:"center"});
-  setTimeout(()=>{el.focus({preventScroll:true});window.AdrianKeyboard?.open?.(el);},180);
+  setTimeout(()=>{
+    lastExamInput=el;
+    if(window.CambridgeWritingMode?.focus)window.CambridgeWritingMode.focus(el);
+    else{el.focus({preventScroll:true});window.AdrianKeyboard?.open?.(el);}
+  },40);
 }
 function choiceContext(n){
   const segs=currentPart()?.segments||[],i=segs.findIndex(x=>typeof x==="object"&&Number(x.n)===Number(n));
@@ -90,8 +93,11 @@ function moveExamInput(delta){
   const list=examInputs();if(!list.length)return;
   let i=Math.max(0,list.indexOf(lastExamInput));i=Math.max(0,Math.min(list.length-1,i+delta));
   const next=list[i];if(!next)return;
-  next.scrollIntoView({behavior:"smooth",block:"center"});
-  setTimeout(()=>{next.focus({preventScroll:true});lastExamInput=next;window.AdrianKeyboard?.open?.(next);},130);
+  setTimeout(()=>{
+    lastExamInput=next;
+    if(window.CambridgeWritingMode?.focus)window.CambridgeWritingMode.focus(next);
+    else{next.focus({preventScroll:true});window.AdrianKeyboard?.open?.(next);}
+  },40);
 }
 function insertExamText(text){
   const el=lastExamInput;if(!el)return;
@@ -320,6 +326,6 @@ $("choiceSheet").addEventListener("click",e=>{if(e.target===$("choiceSheet"))clo
 $("scanViewerClose").onclick=closeScanViewer;
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSheet();closeScanViewer();}});
 renderHome();
-if("serviceWorker" in navigator&&location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=performance-20261006b",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}));
+if("serviceWorker" in navigator&&location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=performance-20261006c",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}));
 const requestedPart=new URLSearchParams(location.search).get("part");
 if(["1","2","3","4"].includes(requestedPart))openPartMenu(Number(requestedPart));
