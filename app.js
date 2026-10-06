@@ -1,4 +1,4 @@
-const APP_VERSION="1.2.4";
+const APP_VERSION="1.2.5";
 let pendingStats=null;
 function safeDecoration(run,fallback=""){try{return run()??fallback;}catch(e){console.warn("Decoration unavailable",e);return fallback;}}
 const PAPERS=[...(window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].sort((a,b)=>(Number(a.examNumber)||99)-(Number(b.examNumber)||99));
@@ -6,7 +6,13 @@ const $=id=>document.getElementById(id);
 let activePart=null,activePaper=null,activeExerciseId=null,menuPart=null,answers={},checked=false,exerciseStartedAt=0;
 const statsKey="cambridgeB2ExerciseStatsV3";
 const BANK_SIZE=30;
+const OCR_END=10;
+const PRACTICE_START=11;
+const PRACTICE_COUNT=20;
+const OCR_COUNT=10;
 const TARGET_EXERCISES=BANK_SIZE*4;
+const TARGET_PRACTICE=PRACTICE_COUNT*4;
+const TARGET_OCR=OCR_COUNT*4;
 const PART_INFO={
   1:{name:"Multiple-choice cloze",desc:"Choose A, B, C or D for each gap."},
   2:{name:"Open cloze",desc:"Write the missing word in each gap."},
@@ -27,6 +33,10 @@ function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&l
 function showScreen(id){["startScreen","partScreen","paperScreen","resultScreen"].forEach(x=>$(x).classList.toggle("hidden",x!==id));}
 function exerciseId(paper,part){return paper.id+"-p"+part;}
 function allExercises(){return PAPERS.flatMap(p=>Object.keys(p.parts||{}).map(k=>({paper:p,part:Number(k),data:p.parts[k],id:exerciseId(p,Number(k))})));}
+function practiceExercises(){return allExercises().filter(ex=>!ex.data?.scanImage);}
+function ocrExercises(){return allExercises().filter(ex=>!!ex.data?.scanImage);}
+function attemptsForExercises(exercises,rows=bankAttempts()){const ids=new Set(exercises.map(x=>x.id));return rows.filter(a=>ids.has(a.exerciseId));}
+function completedForExercises(exercises,rows=bankAttempts()){return new Set(attemptsForExercises(exercises,rows).map(a=>a.exerciseId));}
 function paperByNumber(n){return PAPERS.find(p=>Number(p.examNumber)===Number(n))||null;}
 function currentPart(){return activePaper?.parts?.[activePart];}
 function getSource(paper,part){return paper.parts?.[part]?.source||paper.source||{type:"unknown",label:"Fuente no especificada",detail:"No hay información de procedencia registrada."};}
@@ -66,6 +76,7 @@ function choiceContext(n){
 }
 function openScanViewer(src){
   if(!$("scanViewer")||!src)return;
+  window.AdrianKeyboard?.close?.();
   $("scanViewerImg").src=src;$("scanViewer").classList.remove("hidden");$("scanViewer").setAttribute("aria-hidden","false");document.body.classList.add("cambridge-scan-open");
 }
 function closeScanViewer(){
@@ -131,28 +142,14 @@ function aggregate(attempts){
 
 function cambridgeMedalCounts(){return window.AdrianAchievements?.countsFromHistory?.(bankAttempts())||{blue:0,violet:0,gold:0};}
 function renderHome(){
-  const exercises=allExercises(),attempts=bankAttempts(),done=completedIds(),g=aggregate(attempts),loaded=PAPERS.length;
-  $("bankProgress").textContent="Banco maestro: "+loaded+" de "+BANK_SIZE+" exámenes cargados · "+done.size+" de "+TARGET_EXERCISES+" Parts realizadas";
+  const practice=practiceExercises(),ocr=ocrExercises(),attempts=bankAttempts(),practiceAttempts=attemptsForExercises(practice,attempts),practiceDone=completedForExercises(practice,attempts),ocrDone=completedForExercises(ocr,attempts),g=aggregate(practiceAttempts);
+  $("bankProgress").textContent="Practice Bank: 20 tests nativos · "+practiceDone.size+" / "+TARGET_PRACTICE+" Parts hechas · OCR Originals: "+ocrDone.size+" / "+TARGET_OCR;
   $("startMedals").innerHTML=safeDecoration(()=>window.AdrianAchievements?.medalStripHtml?.(cambridgeMedalCounts(),{context:"summary"}));
-  $("globalStats").innerHTML=
-    statCell(done.size+"/"+TARGET_EXERCISES,"REALIZADAS")+
-    statCell(g.total?g.accuracy+"%":"—","ACIERTO GLOBAL")+
-    statCell(g.runs,"INTENTOS TOTALES")+
-    statCell(g.errors,"FALLOS REGISTRADOS");
+  $("globalStats").innerHTML=statCell(practiceDone.size+"/"+TARGET_PRACTICE,"PRACTICE PARTS")+statCell(g.total?g.accuracy+"%":"—","ACIERTO PRACTICE")+statCell(g.runs,"INTENTOS PRACTICE")+statCell(g.errors,"FALLOS PRACTICE");
   const host=$("partList");host.innerHTML="";
-  [1,2,3,4].forEach(part=>{
-    const list=exercises.filter(ex=>ex.part===part),partDone=list.filter(ex=>done.has(ex.id)).length;
-    const a=aggregate(attempts.filter(x=>x.part===part)),info=PART_INFO[part];
-    const b=document.createElement("button");b.className="part-card";
-    b.innerHTML="<div class='exercise-top'><span class='exercise-part'>PART "+part+"</span><span class='part-count'>"+partDone+" / "+BANK_SIZE+"</span></div>"+
-      "<b>"+esc(info.name)+"</b><span class='part-desc'>"+esc(info.desc)+"</span>"+
-      "<span class='exercise-meta'>"+(a.runs?("Acierto "+a.accuracy+"% · "+a.runs+" intentos · "+a.errors+" fallos"):"Sin ejercicios realizados")+"</span>";
-    b.onclick=()=>openPartMenu(part);host.appendChild(b);
-  });
-  $("phaseNote").classList.remove("hidden");
-  $("phaseNote").innerHTML=loaded<BANK_SIZE
-    ?"<b>Banco en carga: "+loaded+"/"+BANK_SIZE+".</b> Los exámenes 11–30 ya están disponibles. Los 01–10 permanecen visibles y se activarán tras su revisión visual."
-    :"<b>Banco completo.</b> Los 30 exámenes están disponibles en las cuatro Parts.";
+  [1,2,3,4].forEach(part=>{const list=practice.filter(ex=>ex.part===part),partDone=list.filter(ex=>practiceDone.has(ex.id)).length,ids=new Set(list.map(x=>x.id)),a=aggregate(practiceAttempts.filter(x=>ids.has(x.exerciseId))),info=PART_INFO[part],b=document.createElement("button");b.className="part-card";b.innerHTML="<div class='exercise-top'><span class='exercise-part'>PART "+part+"</span><span class='part-count'>"+partDone+" / "+PRACTICE_COUNT+"</span></div><b>"+esc(info.name)+"</b><span class='part-desc'>"+esc(info.desc)+"</span><span class='exercise-meta'>"+(a.runs?("Practice 11–30 · Acierto "+a.accuracy+"% · "+a.runs+" intentos · "+a.errors+" fallos"):"Practice 11–30 · Sin ejercicios realizados")+"</span>";b.onclick=()=>openPartMenu(part);host.appendChild(b);});
+  const ocrCard=document.createElement("button");ocrCard.className="part-card ocr-library-card";ocrCard.innerHTML="<div class='exercise-top'><span class='exercise-part'>OCR ORIGINALS</span><span class='part-count'>"+ocrDone.size+" / "+TARGET_OCR+"</span></div><b>Cambridge 01–10 · Original scans</b><span class='part-desc'>Biblioteca separada de exámenes originales en imagen. Pantalla grande recomendada.</span><span class='exercise-meta'>Resultados guardados aparte del Practice Bank · 10 tests × 4 Parts</span>";ocrCard.onclick=openOcrMenu;host.appendChild(ocrCard);
+  $("phaseNote").classList.remove("hidden");$("phaseNote").innerHTML="<b>Practice Bank · tests 11–30.</b> Formato nativo optimizado para móvil y ordenador; estas 80 Parts forman la estadística principal.<br><b>OCR Originals · tests 01–10.</b> Se conservan completos con sus imágenes y claves, separados dentro de cada Part y con pantalla grande recomendada.";
 }
 function statCell(value,label){return "<div class='stat'><b>"+value+"</b><span>"+label+"</span></div>";}
 
@@ -160,25 +157,15 @@ function openPartMenu(part){
   menuPart=Number(part);renderPartMenu();showScreen("partScreen");window.scrollTo(0,0);
 }
 function renderPartMenu(){
-  const done=completedIds(),attempts=bankAttempts().filter(a=>a.part===menuPart),g=aggregate(attempts),info=PART_INFO[menuPart];
-  const completed=Array.from({length:BANK_SIZE},(_,i)=>i+1).filter(n=>{const p=paperByNumber(n);return p&&done.has(exerciseId(p,menuPart));}).length;
-  $("partMenuTitle").textContent="Part "+menuPart+" · "+info.name;
-  $("partMenuSubtitle").textContent=completed+" de "+BANK_SIZE+" hechos · "+PAPERS.length+" disponibles ahora";
-  $("partStats").innerHTML=statCell(completed+"/"+BANK_SIZE,"HECHOS")+statCell(g.total?g.accuracy+"%":"—","ACIERTO")+statCell(g.runs,"INTENTOS")+statCell(g.errors,"FALLOS");
-  const host=$("exerciseList");host.innerHTML="";
-  let nextMarked=false;
-  for(let n=1;n<=BANK_SIZE;n++){
-    const paper=paperByNumber(n),id=paper?exerciseId(paper,menuPart):null,at=id?exerciseAttempts(id):[],a=aggregate(at),last=at[at.length-1];
-    const b=document.createElement("button"),available=!!paper,wasDone=!!at.length;
-    b.className="exam-tile"+(wasDone?" done":"")+(!available?" unavailable":"");
-    if(available&&!wasDone&&!nextMarked){b.classList.add("next");nextMarked=true;}
-    b.disabled=!available;
-    const source=paper?.source?.type||"PENDIENTE";
-    b.innerHTML="<span class='bank-source'>"+esc(source)+"</span><span class='exam-no'>"+String(n).padStart(2,"0")+"</span>"+
-      "<span class='exam-status'>"+(wasDone?"HECHO":available?"PENDIENTE":"POR CARGAR")+"</span>"+
-      "<span class='exam-mini'>"+(wasDone?("Último "+last.correct+"/"+last.total+" · "+a.runs+" int. · "+a.errors+" fallos"):available?"Listo para hacer":"Escaneo en revisión")+"</span>";
-    if(available)b.onclick=()=>startExercise(id);host.appendChild(b);
-  }
+  const done=completedIds(),practice=practiceExercises().filter(ex=>ex.part===menuPart),practiceIds=new Set(practice.map(x=>x.id)),practiceAttempts=bankAttempts().filter(a=>a.part===menuPart&&practiceIds.has(a.exerciseId)),g=aggregate(practiceAttempts),info=PART_INFO[menuPart],practiceDone=practice.filter(ex=>done.has(ex.id)).length;
+  $("partMenuTitle").textContent="Part "+menuPart+" · "+info.name;$("partMenuSubtitle").textContent=practiceDone+" de "+PRACTICE_COUNT+" Practice hechos · tests 11–30";$("partStats").innerHTML=statCell(practiceDone+"/"+PRACTICE_COUNT,"PRACTICE")+statCell(g.total?g.accuracy+"%":"—","ACIERTO")+statCell(g.runs,"INTENTOS")+statCell(g.errors,"FALLOS");
+  const host=$("exerciseList");host.innerHTML="";let nextMarked=false;
+  for(let n=PRACTICE_START;n<=BANK_SIZE;n++){const paper=paperByNumber(n),id=paper?exerciseId(paper,menuPart):null,at=id?exerciseAttempts(id):[],a=aggregate(at),last=at[at.length-1],b=document.createElement("button"),available=!!paper,wasDone=!!at.length;b.className="exam-tile"+(wasDone?" done":"")+(!available?" unavailable":"");if(available&&!wasDone&&!nextMarked){b.classList.add("next");nextMarked=true;}b.disabled=!available;const source=paper?.source?.type||"PENDIENTE";b.innerHTML="<span class='bank-source'>"+esc(source)+"</span><span class='exam-no'>"+String(n).padStart(2,"0")+"</span><span class='exam-status'>"+(wasDone?"HECHO":available?"PENDIENTE":"POR CARGAR")+"</span><span class='exam-mini'>"+(wasDone?("Último "+last.correct+"/"+last.total+" · "+a.runs+" int. · "+a.errors+" fallos"):available?"Listo para hacer":"No disponible")+"</span>";if(available)b.onclick=()=>startExercise(id);host.appendChild(b);}
+}
+function openOcrMenu(){
+  const attempts=attemptsForExercises(ocrExercises()),done=completedForExercises(ocrExercises()),g=aggregate(attempts);menuPart=null;$("partMenuTitle").textContent="OCR Originals · Cambridge 01–10";$("partMenuSubtitle").textContent="10 exámenes originales · 40 Parts · pantalla grande recomendada";$("partStats").innerHTML=statCell(done.size+"/"+TARGET_OCR,"OCR PARTS")+statCell(g.total?g.accuracy+"%":"—","ACIERTO")+statCell(g.runs,"INTENTOS")+statCell(g.errors,"FALLOS");
+  const host=$("exerciseList");host.innerHTML="<div class='ocr-library-note'><b>ORIGINALES EN IMAGEN</b><span>Se conservan tal como fueron preparados. Puedes ampliarlos y responder debajo; sus estadísticas no modifican la cobertura del Practice Bank.</span></div>";
+  for(let n=1;n<=OCR_END;n++){const paper=paperByNumber(n),card=document.createElement("section");card.className="ocr-exam-card";const head=document.createElement("div");head.className="ocr-exam-head";head.innerHTML="<span>CAMBRIDGE ORIGINAL</span><b>TEST "+String(n).padStart(2,"0")+"</b>";card.appendChild(head);const parts=document.createElement("div");parts.className="ocr-part-grid";for(let part=1;part<=4;part++){const id=paper?exerciseId(paper,part):null,at=id?exerciseAttempts(id):[],a=aggregate(at),last=at.at(-1),b=document.createElement("button");b.type="button";b.className="ocr-part-btn"+(at.length?" done":"");b.innerHTML="<b>PART "+part+"</b><span>"+(at.length?(last.correct+"/"+last.total+" · "+a.runs+" int."):"PENDIENTE")+"</span>";b.disabled=!paper;if(paper)b.onclick=()=>startExercise(id);parts.appendChild(b);}card.appendChild(parts);host.appendChild(card);}showScreen("partScreen");window.scrollTo(0,0);
 }
 
 function startExercise(id){
@@ -326,13 +313,13 @@ function renderCorrection(result,details){
 }
 function nextPendingInPart(part){const done=completedIds();return allExercises().filter(ex=>ex.part===part&&!done.has(ex.id)).sort((a,b)=>(a.paper.examNumber||99)-(b.paper.examNumber||99))[0]||null;}
 function goHome(){closeSheet();closeScanViewer();window.AdrianKeyboard?.close?.();renderHome();showScreen("startScreen");window.scrollTo(0,0);}
-function backToPart(){closeSheet();closeScanViewer();window.AdrianKeyboard?.close?.();openPartMenu(activePart||menuPart||1);}
+function backToPart(){closeSheet();closeScanViewer();window.AdrianKeyboard?.close?.();if(activePaper?.parts?.[activePart]?.scanImage)openOcrMenu();else openPartMenu(activePart||menuPart||1);}
 
 $("backBtn").onclick=backToPart;$("resultBackBtn").onclick=backToPart;$("partBackBtn").onclick=goHome;$("sheetClose").onclick=closeSheet;
 $("choiceSheet").addEventListener("click",e=>{if(e.target===$("choiceSheet"))closeSheet();});
 $("scanViewerClose").onclick=closeScanViewer;
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSheet();closeScanViewer();}});
 renderHome();
-if("serviceWorker" in navigator&&location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=core-sync-20261004",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}));
+if("serviceWorker" in navigator&&location.protocol.startsWith("http"))window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=performance-20261006",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}));
 const requestedPart=new URLSearchParams(location.search).get("part");
 if(["1","2","3","4"].includes(requestedPart))openPartMenu(Number(requestedPart));

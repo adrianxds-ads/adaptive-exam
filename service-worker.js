@@ -1,6 +1,6 @@
-const CACHE='adaptive-exam-v1.2.4-core-sync-20261004';
+const CACHE='adaptive-exam-v1.2.5-performance-20261006';
 const CAMBRIDGE_IMAGES=Array.from({length:10},(_,i)=>Array.from({length:4},(_,j)=>`./assets/cambridge/exam-${String(i+1).padStart(2,'0')}-part-${j+1}.webp`)).flat();
-const ASSETS=['./','./index.html','./app.js','./data/cambridge-bank.js','./data/engexam-bank.js','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png','/adrian-core/design/adrian-visual-system.js','/adrian-core/components/adrian-achievements.js','/adrian-core/components/hub-path-game.js','./adaptive-language-dashboard.js',...CAMBRIDGE_IMAGES];
+const ASSETS=['./','./index.html','./app.js','./performance-adapter.js','./data/cambridge-bank.js','./data/engexam-bank.js','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png','/adrian-core/design/adrian-visual-system.js','/adrian-core/components/adrian-achievements.js','/adrian-core/components/adrian-performance.js','/adrian-core/components/hub-path-game.js','./adaptive-language-dashboard.js',...CAMBRIDGE_IMAGES];
 const CORE_RE=/\.(?:html|js|css|json|webmanifest)$/i;
 function withTimeout(req,ms,init={}){const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);return fetch(req,{...init,signal:c.signal}).finally(()=>clearTimeout(t));}
 async function installCore(){const c=await caches.open(CACHE);try{await Promise.all(ASSETS.map(async url=>{const req=new Request(new URL(url,self.registration.scope),{cache:'reload'}),r=await withTimeout(req,10000,{cache:'reload'});if(!r||!r.ok)throw Error(`Core asset failed: ${url}`);await c.put(req,r.clone());}));}catch(e){await caches.delete(CACHE);throw e;}}
