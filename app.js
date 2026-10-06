@@ -1,4 +1,4 @@
-const APP_VERSION="1.2.7";
+const APP_VERSION="1.2.8";
 let pendingStats=null;
 function safeDecoration(run,fallback=""){try{return run()??fallback;}catch(e){console.warn("Decoration unavailable",e);return fallback;}}
 const PAPERS=[...(window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].sort((a,b)=>(Number(a.examNumber)||99)-(Number(b.examNumber)||99));
@@ -85,6 +85,7 @@ function closeScanViewer(){
 
 let lastExamInput=null;
 function ensureExamInputVisible(){
+ if(window.CambridgeWritingMode&&document.body.classList.contains('cambridge-writing')){window.CambridgeWritingMode.settle();return;}
  const el=lastExamInput,kb=document.querySelector('.ad-keyboard.open');
  if(!el?.isConnected||!kb)return;
  const rect=el.getBoundingClientRect(),bottom=kb.getBoundingClientRect().top-18;
@@ -94,7 +95,7 @@ function ensureExamInputVisible(){
  if(Math.abs(delta)>1)window.scrollBy({top:delta,left:0,behavior:'instant'});
 }
 function focusExamInput(el){
- lastExamInput=el;el.focus({preventScroll:true});window.AdrianKeyboard?.open?.(el);
+ lastExamInput=el;if(window.CambridgeWritingMode?.focus)window.CambridgeWritingMode.focus(el);else{el.focus({preventScroll:true});window.AdrianKeyboard?.open?.(el);}
  requestAnimationFrame(ensureExamInputVisible);setTimeout(ensureExamInputVisible,200);
 }
 window.addEventListener('resize',()=>requestAnimationFrame(ensureExamInputVisible));

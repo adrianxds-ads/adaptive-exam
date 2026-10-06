@@ -1,0 +1,37 @@
+/* Cambridge writing mode: maximise exercise context while the custom keyboard is open. */
+body.cambridge-writing .ad-keyboard-float-preview{display:none!important}
+body.cambridge-writing .ad-keyboard-top{
+  position:absolute;right:max(6px,env(safe-area-inset-right));top:-44px;z-index:4;
+  min-height:0!important;margin:0!important
+}
+body.cambridge-writing .ad-keyboard-top>*:not(.ad-close){display:none!important}
+body.cambridge-writing .ad-close{
+  width:40px;min-width:40px;height:40px;min-height:40px;border-radius:11px;
+  background:#273238;border-color:rgba(255,255,255,.2);font-size:18px
+}
+body.cambridge-writing .ad-keyboard-row{gap:3px;margin:2px auto}
+body.cambridge-writing .ad-key{min-height:52px;font-size:30px;border-radius:10px}
+body.cambridge-writing .ad-keyboard-controls{gap:4px;margin-top:4px}
+body.cambridge-writing .ad-key.control{min-height:47px;font-size:17px}
+body.cambridge-writing .ad-key.cambridge-apos{font-size:23px}
+body.cambridge-writing #paperScreen .paper-head{padding:5px 8px;margin-bottom:5px}
+body.cambridge-writing #paperScreen .paper-head-row{grid-template-columns:38px 1fr 38px;gap:6px}
+body.cambridge-writing #paperScreen .back{width:38px;height:38px;font-size:17px}
+body.cambridge-writing #paperScreen .paper-title b{font-size:15px;line-height:1.1}
+body.cambridge-writing #paperScreen .paper-title span{display:none}
+body.cambridge-writing #paperScreen{scroll-padding-top:54px}
+body.cambridge-writing .gap-wrap:focus-within{
+  background:rgba(23,49,38,.07);border-radius:9px;box-shadow:0 0 0 4px rgba(23,49,38,.07)
+}
+body.cambridge-writing .transform:focus-within{
+  border-color:#9eb0a6;box-shadow:0 0 0 3px rgba(23,49,38,.08)
+}
+body.cambridge-writing .worksheet-row:focus-within,
+body.cambridge-writing .scan-answer-row:focus-within{box-shadow:0 0 0 3px rgba(23,49,38,.07)}
+@media(max-width:390px){
+  body.cambridge-writing .ad-keyboard-row{gap:2px;margin:2px auto}
+  body.cambridge-writing .ad-key{min-height:49px;font-size:29px}
+  body.cambridge-writing .ad-key.control{min-height:45px;font-size:16px}
+}
+
+@media(max-height:480px){body.cambridge-writing .ad-key{min-height:40px;font-size:26px}body.cambridge-writing .ad-key.control{min-height:38px;font-size:17px}}
