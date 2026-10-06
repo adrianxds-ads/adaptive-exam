@@ -23,7 +23,7 @@ function readStarLedger(){
 function starState(counts=null){
   const x=readStarLedger(),id=starAppId();
   if(counts){const gold=Math.max(0,Math.floor(Number(counts.gold)||0));x.apps[id]=Math.max(Math.max(0,Math.floor(Number(x.apps[id])||0)),gold);x.updatedAt=Date.now();}
-  const values=Object.values(x.apps).map(n=>Math.max(0,Math.floor(Number(n)||0))),totalGold=values.reduce((sum,n)=>sum+n,0),stars=values.reduce((sum,n)=>sum+Math.floor(n/STAR_STEP),0),localGold=Math.max(0,Math.floor(Number(x.apps[id])||0)),localStars=Math.floor(localGold/STAR_STEP),progress=localGold%STAR_STEP;
+  const values=Object.values(x.apps).map(n=>Math.max(0,Math.floor(Number(n)||0))),totalGold=values.reduce((sum,n)=>sum+n,0),stars=Math.floor(totalGold/STAR_STEP),localGold=Math.max(0,Math.floor(Number(x.apps[id])||0)),localStars=Math.floor(localGold/STAR_STEP),progress=totalGold%STAR_STEP;
   x.totalGold=totalGold;x.stars=stars;
   if(counts)try{localStorage.setItem(STAR_KEY,JSON.stringify(x));window.dispatchEvent(new CustomEvent("hub:star-progress",{detail:{stars,totalGold,appId:id,localGold,localStars,progress,step:STAR_STEP,apps:{...x.apps}}}));}catch{}
   return{stars,totalGold,appId:id,localGold,localStars,progress,toNext:STAR_STEP-progress,step:STAR_STEP,apps:{...x.apps}};
@@ -44,7 +44,7 @@ function countsFromHistory(rows=[]){
 function medalStripHtml(counts={},opts={}){
   const c=normalizeCounts(counts),context=opts.context||"summary",compact=opts.compact!==false,st=starState(c);
   const items=Object.values(TIERS).map(x=>{const n=c[x.key]||0,earned=n>0;return '<span class="ad-medal-stat '+(earned?"earned ":"locked ")+'ad-medal-stat-'+x.key+'" style="--ach:'+x.color+';--ach-text:'+x.text+'" title="'+x.short+' &middot; '+n+' veces conseguida"><i>'+n+'</i><b>'+x.short+'</b></span>';}).join("");
-  const star='<span class="ad-medal-stat '+(st.localStars>0?"earned ":"locked ")+'ad-medal-stat-star" title="STAR &middot; '+st.localStars+' conseguida'+(st.localStars===1?'':'s')+' &middot; '+st.progress+'/'+STAR_STEP+' oros hacia la siguiente"><i aria-hidden="true">&#9733;</i><b>STAR<em>'+st.localStars+'</em></b></span>';
+  const star='<span class="ad-medal-stat '+(st.stars>0?"earned ":"locked ")+'ad-medal-stat-star" title="STAR GLOBAL &middot; '+st.stars+' conseguida'+(st.stars===1?'':'s')+' &middot; '+st.progress+'/'+STAR_STEP+' oros globales hacia la siguiente"><i aria-hidden="true">&#9733;</i><b>STAR<em>'+st.stars+'</em></b></span>';
   return '<div class="ad-medal-strip '+(compact?"compact ":"")+'context-'+context+'" aria-label="Medallas y estrellas acumuladas">'+items+star+'</div>';
 }
 function legendHtml(counts={}){return medalStripHtml(counts,{context:"target",compact:true});}
