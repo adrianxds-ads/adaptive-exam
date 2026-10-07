@@ -1,8 +1,8 @@
-﻿(()=>{
+(()=>{
 "use strict";
-const VERSION="2.0.1",BOARD=25,KEY="adrian_hub_oca_v1",OLD_KEY="adrian_hub_path_game_v1";
+const VERSION="2.0.2",BOARD=25,KEY="adrian_hub_oca_v1",OLD_KEY="adrian_hub_path_game_v1";
 const LEGACY_APPS=["english","phrasal-verbs","b2-cloze","catala","hoti0108","cambridge","pizarras","default"];
-const APP_LABELS={english:"ADAPTIVE ENGLISH","phrasal-verbs":"PHRASAL VERBS","b2-cloze":"B2 CLOZE",catala:"CATALÀ",hoti0108:"HOTI0108",cambridge:"CAMBRIDGE B2",pizarras:"PIZARRAS",default:"ADAPTIVE"};
+const APP_LABELS={english:"ADAPTIVE ENGLISH","phrasal-verbs":"PHRASAL VERBS","b2-cloze":"B2 CLOZE",catala:"CATALÀ",hoti0108:"HOTI0108",cambridge:"CAMBRIDGE B2","keyword-speaking":"KEY WORD SPEAKING",pizarras:"PIZARRAS",default:"ADAPTIVE"};
 const CELLS=[
  {n:1,r:5,c:1,icon:"🚩",label:"SALIDA"},{n:2,r:5,c:2,icon:"📘",label:"LIBRO"},{n:3,r:5,c:3,icon:"🍀",label:"SUERTE"},{n:4,r:5,c:4,icon:"🪿",label:"OCA",kind:"bonus"},{n:5,r:5,c:5,icon:"🌳",label:"BOSQUE"},
  {n:6,r:4,c:5,icon:"🪧",label:"RUTA"},{n:7,r:3,c:5,icon:"🌉",label:"PUENTE",kind:"bonus"},{n:8,r:2,c:5,icon:"🪷",label:"ESTANQUE"},{n:9,r:1,c:5,icon:"🪿",label:"OCA",kind:"bonus"},{n:10,r:1,c:4,icon:"💡",label:"IDEA"},
