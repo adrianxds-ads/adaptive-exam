@@ -6,7 +6,7 @@ const QUESTION_COUNT=15;
 const LIMIT={1:15,2:30,3:30};
 const AUTO_SEC={1:6,2:12,3:12};
 const LABEL={1:"Multiple Choice",2:"Open Cloze",3:"Word Formation"};
-const EXAMS=(window.ADAPTIVE_EXAM_PAPERS||[]).filter(x=>Number(x.examNumber)>=11&&Number(x.examNumber)<=30);
+const EXAMS=[...(window.ADAPTIVE_EXAM_TRANSCRIBED_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].filter(x=>Number(x.examNumber)>=1&&Number(x.examNumber)<=30);
 const ALL=[1,2,3].flatMap(part=>EXAMS.flatMap(p=>{
  const d=p.parts&&p.parts[String(part)];
  if(!d||!Array.isArray(d.segments))return [];

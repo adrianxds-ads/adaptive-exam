@@ -1,29 +1,29 @@
-# Cambridge Quiz — rama de desarrollo
+# Cambridge Quiz — B2 First
 
-Prototipo independiente del modo Estudio, que sigue intacto. La portada de Cambridge permite elegir Quiz o Estudio.
+## Arquitectura
+Dos modos complementarios en la misma app: Quiz (modalidad principal y adaptativa) y Estudio (exámenes completos originales). El antiguo Modo Estudio no se modifica. Part 4 se mantiene en Estudio y en la aplicación de transformations.
 
 ## Implementado
-- 3 modalidades: Part 1 (cuatro opciones, 15 s), Part 2 (respuesta escrita, 30 s), Part 3 (word formation con palabra base, 30 s).
-- 15 preguntas por ronda, corrección y explicación inmediatas, opción Pasar, bonificación por rapidez exclusivamente para respuestas acertadas.
-- Selección adaptativa que prioriza preguntas no vistas y previamente falladas; únicamente preguntas originales del banco, nunca generadas.
-- Contexto del texto fuente con desplazamiento y degradado, hueco actual destacado y teclado compartido.
-- Historial registrado respuesta a respuesta bajo cambridgeB2ExerciseStatsV3; IDs de intentos distintos de los exámenes completos.
-- Escala de medallas 13/14/15, enlace con el libro de estrellas y gráficas mediante el componente común HubCharts.
-- Enlaces directos ?part=1, ?part=2 y ?part=3.
+- 30 exámenes completos en banco Quiz, 240 preguntas en cada Part 1–3: **720 preguntas verificadas**.
+- Exámenes 01–10: transcritos desde el documento maestro de Drive (revision consultada 2026-10-08), con 240 respuestas contrastadas automáticamente con el banco de claves existente. Escaneos conservados en Estudio.
+- Exámenes 11–30: 480 preguntas estructuradas reutilizadas del banco previo.
+- 15 preguntas por ronda. Part 1: cuatro opciones y 15 s; Parts 2–3: una palabra escrita y 30 s.
+- Pasar sin puntos; respuesta correcta: 100 puntos más bonificación hasta 50 según rapidez.
+- Selección adaptativa que prioriza preguntas no vistas y errores; jamás inventa preguntas.
+- Contexto desplazable del texto original, difuminado superior/inferior, hueco resaltado, palabra base en Part 3; teclado personalizado compartido.
+- Registro por pregunta bajo cambridgeB2ExerciseStatsV3, separando los IDs Quiz de los IDs Estudio; corregido el filtro del dashboard antiguo para que no mezcle ambos históricos.
+- Medallas 13/14/15, estrellas compartidas y gráficas de acierto y automatismo mediante HubCharts.
+- URLs directas de cada modo: cambridge-quiz.html?part=1|2|3.
 
-## Cobertura del banco
-- 11–30: 20 pruebas estructuradas, 160 preguntas en cada Part 1–3 = 480 listas.
-- 01–10: 10 pruebas escaneadas con claves, pero sin texto y opciones estructurados (faltan 240 ítems para quiz). No se generan enunciados ficticios.
-- La Part 4 permanece en Modo Estudio / aplicación específica de Key Word Transformations.
+## QA 2026-10-08
+- Archivo de prueba de datos local: C:\Users\adria\quiz-qa\cambridge-quiz-bank-test.cjs.
+- **PASS:** 10 exámenes añadidos, 240 preguntas nuevas, 240 claves cotejadas, 80 preguntas nuevas por modalidad; 720 total.
+- Navegador Chrome/Edge headless: C:\Users\adria\quiz-qa\cambridge-quiz-smoke.cjs.
+- **PASS:** 240 preguntas por modalidad, navegación, 15 preguntas completas, puntuación por velocidad, corrección escrita, omisión, guardado, tres integraciones compartidas (achievements, charts y teclado).
+- Responsive sin desbordamientos a 360, 390, 500 y 1280 px.
+- Capturas de las 3 modalidades en C:\Users\adria\quiz-qa\cambridge-quiz-part1.png, part2.png y part3.png.
+- Comprobación visual de muestra de escaneos de exámenes 01, 03, 07 y 10 frente a la transcripción maestra.
 
-## Pendiente antes de publicar
-- Transcribir/verificar las 240 preguntas correspondientes a exámenes 01–10, si se desea cobertura completa.
-- Comprobar el teclado personalizado y sincronización de Pixel ↔ PC en dispositivo real.
-- Revisar integración final de métricas y premios con el Hub, incluyendo política de automatismo (6 s en Part 1; 12 s en Parts 2–3).
-- Validar textos de fuente y derechos de uso antes de redistribución fuera del entorno de estudio.
-
-## QA ejecutada — 2026-10-08
-- Scripts de navegador en C:\Users\adria\quiz-qa\cambridge-quiz-smoke.cjs.
-- PASS: 160/160/160 ítems, viewports de 360/390/500/1280 px sin desbordamiento, selección correcta, 15 preguntas completas, 17 intentos guardados y salto de ejercicio. 
-- Capturas en C:\Users\adria\quiz-qa\cambridge-quiz-part1.png, part2.png y part3.png.
-- Esta rama no debe desplegarse automáticamente antes de revisión final.
+## Observaciones
+- Pendiente comprobación funcional directa en Pixel; las pruebas automáticas en navegador ya son satisfactorias.
+- El banco transcrito es para estudio personal: verificar permisos antes de cualquier redistribución pública de contenidos originales de Cambridge.
