@@ -1,0 +1,290 @@
+[
+  {
+    "width": 412,
+    "kind": "mixed",
+    "mode": "recommended",
+    "part": 1,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "mixed",
+    "mode": "recommended",
+    "part": 2,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "mixed",
+    "mode": "recommended",
+    "part": 3,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "mixed",
+    "mode": "exam",
+    "part": 1,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "mixed",
+    "mode": "exam",
+    "part": 2,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "mixed",
+    "mode": "exam",
+    "part": 3,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "mixed",
+    "mode": "untimed",
+    "part": 1,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "mixed",
+    "mode": "untimed",
+    "part": 2,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "mixed",
+    "mode": "untimed",
+    "part": 3,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "exam",
+    "mode": "recommended",
+    "part": 1,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "exam",
+    "mode": "recommended",
+    "part": 2,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "exam",
+    "mode": "recommended",
+    "part": 3,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "exam",
+    "mode": "exam",
+    "part": 1,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "exam",
+    "mode": "exam",
+    "part": 2,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "exam",
+    "mode": "exam",
+    "part": 3,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "exam",
+    "mode": "untimed",
+    "part": 1,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "exam",
+    "mode": "untimed",
+    "part": 2,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "kind": "exam",
+    "mode": "untimed",
+    "part": 3,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "mixed",
+    "mode": "recommended",
+    "part": 1,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "mixed",
+    "mode": "recommended",
+    "part": 2,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "mixed",
+    "mode": "recommended",
+    "part": 3,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "mixed",
+    "mode": "exam",
+    "part": 1,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "mixed",
+    "mode": "exam",
+    "part": 2,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "mixed",
+    "mode": "exam",
+    "part": 3,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "mixed",
+    "mode": "untimed",
+    "part": 1,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "mixed",
+    "mode": "untimed",
+    "part": 2,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "mixed",
+    "mode": "untimed",
+    "part": 3,
+    "questions": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "exam",
+    "mode": "recommended",
+    "part": 1,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "exam",
+    "mode": "recommended",
+    "part": 2,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "exam",
+    "mode": "recommended",
+    "part": 3,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "exam",
+    "mode": "exam",
+    "part": 1,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "exam",
+    "mode": "exam",
+    "part": 2,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "exam",
+    "mode": "exam",
+    "part": 3,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "exam",
+    "mode": "untimed",
+    "part": 1,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "exam",
+    "mode": "untimed",
+    "part": 2,
+    "questions": 8,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "kind": "exam",
+    "mode": "untimed",
+    "part": 3,
+    "questions": 8,
+    "passed": true
+  }
+]

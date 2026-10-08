@@ -3,6 +3,7 @@
 const $=id=>document.getElementById(id);
 const KEY="cambridgeB2ExerciseStatsV3";
 const QUESTION_COUNT=15;
+let quizKind="mixed";
 const LIMIT={1:53,2:53,3:45};
 const TIME_KEY="cambridgeQuizTimingV1";
 let timingMode="recommended";
@@ -12,7 +13,7 @@ function updateTiming(){
  document.querySelectorAll("[name=quizTiming]").forEach(x=>x.checked=x.value===timingMode);
  document.querySelectorAll("#quizModes [data-part]").forEach(b=>{
  const part=Number(b.dataset.part),limit=questionLimit(part);
- b.querySelector("small").textContent=({1:"4 opciones",2:"Escribe una palabra",3:"Transforma la palabra"})[part]+" · "+(limit===null?"Sin tiempo":limit===180?"3 minutos":limit+" segundos*");
+ b.querySelector("small").textContent=(quizKind==="exam"?"8 preguntas en orden":"15 preguntas mezcladas")+" · "+({1:"4 opciones",2:"Escribe una palabra",3:"Transforma la palabra"})[part]+" · "+(limit===null?"Sin tiempo":limit===180?"3 minutos":limit+" segundos*");
  });
 }
 const AUTO_SEC={1:6,2:12,3:12};
@@ -73,7 +74,7 @@ function historySessions(attempts){
  const m=new Map();
  for(const a of attempts){
   const id=a.sessionId||a.id;
-  const row=m.get(id)||{id,part:a.part,at:Date.parse(a.completedAt)||Date.now(),total:0,correct:0,points:0,auto:0};
+  const row=m.get(id)||{id,part:a.part,at:Date.parse(a.completedAt)||Date.now(),total:0,correct:0,points:0,auto:0,roundSize:Number(a.roundSize)||QUESTION_COUNT};
   row.total++;row.correct+=Number(a.correct)||0;row.points+=Number(a.quizPoints)||0;
   const detail=a.items?.[0];if(detail?.correct&&Number(detail.responseSec)<=AUTO_SEC[a.part])row.auto++;
   row.at=Math.max(row.at,Date.parse(a.completedAt)||0);m.set(id,row);
@@ -86,7 +87,7 @@ function chart(rows,title,key,max=100){
  return "<div class='chart-shell'><h3>"+esc(title)+"</h3>"+window.HubCharts.chart(data,{max,title})+"</div>";
 }
 function renderHome(){
- const attempts=quizAttempts(),runs=historySessions(attempts).filter(s=>s.total>=QUESTION_COUNT);
+ const attempts=quizAttempts(),runs=historySessions(attempts).filter(s=>s.total>=s.roundSize);
  const correct=attempts.filter(a=>a.correct).length,fast=attempts.filter(a=>a.correct&&Number(a.items[0].responseSec)<=AUTO_SEC[a.part]).length;
  const coverage=new Set(attempts.map(a=>a.items[0].sourceKey)).size;
  $("quizHomeStats").innerHTML=metric(attempts.length?" "+Math.round(correct/attempts.length*100)+"%":"—","Acierto")
@@ -96,11 +97,25 @@ function renderHome(){
  $("quizHistory").innerHTML=chart(scores,"Línea de aprendizaje","score")+chart(scores,"Automatismo","automaticity");
 }
 
-function startQuiz(part){
+function renderExamPicker(){
+ const papers=[...new Map(ALL.map(q=>[q.paper.id,q.paper])).values()].sort((a,b)=>Number(a.examNumber)-Number(b.examNumber));
+ $("quizExam").innerHTML=papers.map(p=>"<option value='"+esc(p.id)+"'>Exam "+String(p.examNumber).padStart(2,"0")+"</option>").join("");
+}
+function updateQuizKind(){
+ $("quizExamPicker").classList.toggle("hidden",quizKind!=="exam");
+ $("quizRouteHint").textContent=quizKind==="exam"?"Elige el examen y la parte. Sus 8 preguntas originales aparecen en orden, con corrección después de cada respuesta.":"15 preguntas de distintos exámenes, seleccionadas para practicar.";
+ updateTiming();
+}
+function renderScores(){
+ $("quizExamScore").textContent="Exam points: "+session.correct+" / "+session.questions.length;
+ $("quizScore").textContent="Game points: "+session.points;
+}
+function startQuiz(part,paperId=null){
  if(!LIMIT[part])return;
- const questions=drawQuestions(part);
+ const sourcePaperId=paperId||(quizKind==="exam"?$("quizExam").value:null);
+ const questions=sourcePaperId?ALL.filter(q=>q.part===part&&q.paper.id===sourcePaperId).sort((a,b)=>Number(a.item.n)-Number(b.item.n)):drawQuestions(part);
  if(!questions.length){alert("Esta modalidad aún no contiene preguntas estructuradas.");return;}
- session={id:uid(),part,timingMode,limitSec:questionLimit(part),questions,index:0,points:0,correct:0,answers:[],answered:false,started:0};
+ session={id:uid(),part,quizKind:sourcePaperId?"exam":"mixed",sourcePaperId,timingMode,limitSec:questionLimit(part),questions,index:0,points:0,correct:0,answers:[],answered:false,started:0};
  show("quizPlay");renderQuestion();
 }
 function contextHTML(q){
@@ -125,8 +140,8 @@ function renderQuestion(){
  const part=session.part,q=session.questions[session.index];
  session.answered=false;
  $("quizPosition").textContent=(session.index+1)+" / "+session.questions.length;
- $("quizModeTitle").textContent=LABEL[part];
- $("quizScore").textContent=session.points+" puntos";
+ $("quizModeTitle").textContent=LABEL[part]+(session.quizKind==="exam"?" · Exam "+String(q.paper.examNumber).padStart(2,"0"):" · Mixed quiz");
+ renderScores();
  $("quizProgressBar").style.width=100*session.index/session.questions.length+"%";
  $("quizOrigin").textContent="EXAM "+String(q.paper.examNumber).padStart(2,"0")+" · QUESTION "+q.item.n;
  $("quizContext").innerHTML=contextHTML(q);
@@ -162,7 +177,8 @@ function saveAnswer(q,correct,raw,sec,points,reason){
  const stamp=new Date().toISOString();
  state.attempts.push({
   id:uid(),exerciseId:"quiz-p"+session.part+"-"+q.key,
-  paperId:"cambridge-quiz",paperLabel:"Mixed Cambridge Quiz",part:session.part,
+  paperId:session.sourcePaperId||"cambridge-quiz",paperLabel:session.quizKind==="exam"?"Exam "+String(q.paper.examNumber).padStart(2,"0"):"Mixed Cambridge Quiz",part:session.part,
+  quizKind:session.quizKind,roundSize:session.questions.length,examPoints:correct?1:0,examMaxPoints:1,
   timingMode:session.timingMode,timeLimitSec:session.limitSec,
   title:LABEL[session.part],source:{type:q.paper.source?.type||"Exam bank",label:q.paper.label||"",detail:""},
   correct:correct?1:0,total:1,learning:correct?100:0,completedAt:stamp,
@@ -190,14 +206,14 @@ function acceptAnswer(reason,raw="",button=null){
  buttons.forEach(el=>{el.disabled=true;if(el===button)el.classList.add("chosen");});
  const good=q.item.answers?.[0]||q.item.answer||"—";
  const expl=q.item.explanation||"Respuesta del banco original.";
- const message=ok?"Correcto. +"+points+" puntos":"Respuesta correcta: "+good;
+ const message=ok?"Correcto. +1 Exam point · +"+points+" Game points":"Respuesta correcta: "+good+" · +0 Exam points · +0 Game points";
  const f=$("quizFeedback");
  f.className="feedback"+(ok?" ok":"");
  f.innerHTML="<strong>"+esc(message)+"</strong><div>"+esc(expl)+"</div>"+(saved?"":"<small>No se ha podido guardar el progreso en este dispositivo.</small>");
  $("skipQuiz").classList.add("hidden");$("submitQuiz").classList.add("hidden");
  $("nextQuiz").classList.remove("hidden");
  $("nextQuiz").textContent=session.index===session.questions.length-1?"Ver resultado →":"Siguiente →";
- $("quizScore").textContent=session.points+" puntos";
+ renderScores();
 }
 function nextQuestion(){
  if(!session||!session.answered)return;
@@ -209,10 +225,10 @@ function finishQuiz(){
  stopTimer();window.AdrianKeyboard?.close?.();
  const count=session.questions.length,fast=session.answers.filter(a=>a.correct&&a.sec<=AUTO_SEC[session.part]).length;
  $("finishTitle").textContent=session.correct+" / "+count+" correctas";
- $("finishSummary").innerHTML=metric(session.points,"Puntos")+metric(Math.round(100*session.correct/count)+"%","Acierto")
+ $("finishSummary").innerHTML=metric(session.correct+" / "+count,"Exam points")+metric(session.points,"Game points")+metric(Math.round(100*session.correct/count)+"%","Acierto")
   +metric(fast+"/"+count,"Automatismo")+metric(session.answers.length,"Preguntas");
  const achievement=window.AdrianAchievements;
- const completed=historySessions(quizAttempts()).filter(x=>x.total>=QUESTION_COUNT);
+ const completed=historySessions(quizAttempts()).filter(x=>x.total>=x.roundSize);
  const originalAttempts=loadStore().attempts.filter(a=>/^exam-\d+-p[1-4]$/.test(String(a.exerciseId||"")));
  const counts=achievement?.countsFromHistory?.([...originalAttempts,...completed.map(r=>({correct:r.correct,total:r.total}))])||{blue:0,violet:0,gold:0};
  $("finishBadge").innerHTML=(achievement?.medalStripHtml?.(counts,{context:"summary"})||"")+(achievement?.badgeHtml?.(session.correct,count,counts)||"");
@@ -227,12 +243,14 @@ $("submitQuiz").addEventListener("click",()=>acceptAnswer("answer",$("quizInput"
 $("nextQuiz").addEventListener("click",nextQuestion);
 $("quitQuiz").addEventListener("click",()=>{stopTimer();window.AdrianKeyboard?.close?.();session=null;renderHome();show("quizHome");});
 $("finishHome").addEventListener("click",()=>{session=null;renderHome();show("quizHome");});
-$("repeatQuiz").addEventListener("click",()=>{if(session)startQuiz(session.part);});
+$("repeatQuiz").addEventListener("click",()=>{if(session)startQuiz(session.part,session.sourcePaperId);});
 window.addEventListener("pagehide",stopTimer);
 document.querySelectorAll("[name=quizTiming]").forEach(x=>x.addEventListener("change",()=>{
  timingMode=x.value;try{localStorage.setItem(TIME_KEY,timingMode);}catch(_){}updateTiming();
 }));
-updateTiming();
+renderExamPicker();
+document.querySelectorAll("[name=quizKind]").forEach(x=>x.addEventListener("change",()=>{quizKind=x.value;updateQuizKind();}));
+updateQuizKind();
 renderHome();
 const requestedPart=Number(new URLSearchParams(location.search).get("part"));
 if(LIMIT[requestedPart])startQuiz(requestedPart);

@@ -37,3 +37,9 @@ Pruebas: 18 rondas completas en Chrome, 412 y 1280 px, tres partes y tres tiempo
 
 ## 1.2.17 · 2026-10-08
 Tabla con nombres ingleses de las siete partes y puntos oficiales por pregunta y máximo: 8+8+8+12+12+12+10=70. Se distingue la puntuación del examen de los puntos del juego. Verificada tabla de seis columnas, total 70, siete nombres y ausencia de desbordamiento de página a 412 px.
+
+
+## 1.2.18 · 2026-10-08
+Quiz por examen: 30 exámenes, partes 1–3, ocho preguntas originales en orden. Conserva el quiz mezclado de 15 y los tres tiempos. Exam points (1 por acierto) y Game points (100 más hasta 50 por rapidez) separados en ronda, corrección y resultado. Cada respuesta guarda tipo de quiz, examen, longitud de ronda y puntos de examen; historial y medallas admiten rondas de ocho, con compatibilidad de rondas antiguas de quince.
+
+Verificación: 36 rondas completas, móvil 412 px y escritorio 1280 px, ambos tipos de quiz y tres tiempos. Respuestas reales del banco, un fallo por ronda, puntos, orden, repetición, caducidad, historial y recarga. Los 30 exámenes por tres partes contienen ocho preguntas únicas. Capturas de selector y marcadores revisadas. Pruebas aisladas sin progreso real. Evidencia: EXAM_QUIZ_ACCEPTANCE_2026-10-08.json.

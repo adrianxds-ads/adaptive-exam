@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#10271d">
 <title>Cambridge B2 · Quiz</title>
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./cambridge-quiz.css?v=0.3.1">
+<link rel="stylesheet" href="./cambridge-quiz.css?v=0.4.0">
 </head>
 <body>
 <div class="app">
@@ -18,7 +18,13 @@
   <div class="eyebrow">B2 FIRST · READING &amp; USE OF ENGLISH</div>
   <h1>Cambridge Quiz</h1>
   <p class="intro">Elige un tipo de ejercicio. Preguntas originales, una por pantalla, con tiempo y corrección inmediata.</p>
-  <fieldset class="timing-settings"><legend>Tiempo por pregunta</legend>
+  <fieldset class="timing-settings"><legend>Cómo queremos practicar</legend>
+<label><input type="radio" name="quizKind" value="mixed" checked><span><b>Quiz mezclado</b><small>15 preguntas de distintos exámenes.</small></span></label>
+<label><input type="radio" name="quizKind" value="exam"><span><b>Quiz por examen</b><small>Las 8 preguntas originales de una parte, en orden.</small></span></label>
+<div id="quizExamPicker" class="exam-picker hidden"><label for="quizExam">Elegir examen</label><select id="quizExam" aria-label="Elegir examen"></select></div>
+</fieldset>
+<p id="quizRouteHint" class="bank-note"></p>
+<fieldset class="timing-settings"><legend>Tiempo por pregunta</legend>
 <label><input type="radio" name="quizTiming" value="recommended" checked><span><b>3 minutos · Recomendada</b><small>Tiempo para leer el contexto y pensar.</small></span></label>
 <label><input type="radio" name="quizTiming" value="exam"><span><b>Tiempo de examen*</b><small>Media orientativa según la parte: 53, 53 o 45 segundos.</small></span></label>
 <label><input type="radio" name="quizTiming" value="untimed"><span><b>Sin tiempo</b><small>Avanza a tu ritmo.</small></span></label>
@@ -35,7 +41,7 @@
     <button class="mode" data-part="3"><span class="mode-num">03</span><span><b>Word Formation</b><small>Transforma la palabra · 3 minutos</small></span><span aria-hidden="true">→</span></button>
   </section>
   <p class="bank-note"><b>Banco completo:</b> los 30 exámenes originales, 240 preguntas por modalidad y 720 en total. Los ejercicios completos siguen disponibles en Modo Estudio.</p>
-  <section class="stats-panel"><h2>Tu evolución</h2><div id="quizHomeStats" class="stats-grid"></div><div id="quizHistory"></div></section>
+  <p class="bank-note"><b>Exam points:</b> 1 punto por respuesta correcta en estas tres partes. <b>Game points:</b> 100 por acierto, más hasta 50 por rapidez con temporizador; sin tiempo, 100 por acierto.</p><section class="stats-panel"><h2>Tu evolución</h2><div id="quizHomeStats" class="stats-grid"></div><div id="quizHistory"></div></section>
 </main>
 <main id="quizPlay" class="screen hidden" aria-live="off">
   <div class="play-head">
@@ -43,7 +49,8 @@
     <span id="quizPosition" class="position">1 / 15</span>
     <div id="quizClock" class="clock" style="--fill:100%"><strong id="quizCountdown">180</strong><small>s</small></div>
   </div>
-  <div class="session-bar"><span id="quizModeTitle">Multiple Choice</span><span id="quizScore">0 puntos</span></div>
+  <div class="session-bar"><span id="quizModeTitle">Multiple Choice</span></div>
+<div class="scoreboard" aria-label="Puntuaciones"><span id="quizExamScore">Exam points: 0 / 15</span><span id="quizScore">Game points: 0</span></div>
   <div class="progress-rail"><div id="quizProgressBar"></div></div>
   <article class="question-panel">
     <p class="origin" id="quizOrigin"></p>
@@ -69,9 +76,9 @@
 <script src="https://adrianxds-ads.github.io/adrian-core/design/adrian-visual-system.js?v=core-20261004b"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-achievements.js?v=c796fa764ae1"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/hub-charts.js?v=1.0.0"></script>
-<script src="./data/cambridge-quiz-transcribed.js?v=0.3.1"></script>
+<script src="./data/cambridge-quiz-transcribed.js?v=0.4.0"></script>
 <script src="./data/engexam-bank.js"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-keyboard.js?v=4.1.2-20261007"></script>
-<script src="./cambridge-quiz.js?v=0.3.1"></script>
+<script src="./cambridge-quiz.js?v=0.4.0"></script>
 </body>
 </html>

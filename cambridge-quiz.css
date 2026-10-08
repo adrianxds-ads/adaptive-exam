@@ -51,3 +51,9 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .timing-table-wrap td{white-space:nowrap}.timing-table-wrap tbody th{min-width:155px;font-weight:600}
 .timing-footnote{color:var(--muted)}
 .clock:has(small:last-child){flex-shrink:0}.clock small{font-size:10px}
+
+.exam-picker{padding:10px 8px}.exam-picker label{padding:0 0 8px;font-weight:800}
+.exam-picker select{font:inherit;width:100%;min-height:50px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:#172f24;color:#f4f7f5}
+.scoreboard{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.scoreboard span{padding:12px 8px;border:1px solid var(--line);border-radius:10px;text-align:center;background:rgba(255,255,255,.06);font-size:14px;font-weight:800}
+.scoreboard #quizExamScore{color:#a7e2be}.scoreboard #quizScore{color:var(--accent)}

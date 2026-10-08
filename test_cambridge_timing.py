@@ -16,14 +16,14 @@ with sync_playwright() as pw:
   page=ctx.new_page(); errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.add_init_script('window.testOffset=0;const realNow=performance.now.bind(performance);performance.now=()=>realNow()+window.testOffset;')
   page.goto('http://127.0.0.1:18769/cambridge-quiz.html')
-  assert page.locator('[value=recommended]').is_checked()
+  assert page.locator('[name=quizTiming][value=recommended]').is_checked()
   page.locator('.timing-advice summary').click()
   assert page.locator('tbody tr').count()==9
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   if width==412:page.screenshot(path='C:/Users/adria/agent-workbench/cambridge-timing-mobile.png',full_page=True)
   for mode in ['recommended','exam','untimed']:
    for part in [1,2,3]:
-    page.locator('[value='+mode+']').check()
+    page.locator('[name=quizTiming][value='+mode+']').check()
     page.locator('[data-part="'+str(part)+'"]').click()
     want='∞' if mode=='untimed' else str(180 if mode=='recommended' else {1:53,2:53,3:45}[part])
     assert page.locator('#quizCountdown').inner_text()==want
@@ -45,7 +45,7 @@ with sync_playwright() as pw:
     if mode=='untimed':assert attempts[0]['durationSec']>=181 and attempts[0]['timeLimitSec'] is None
     page.locator('#finishHome').click()
     results.append({'width':width,'mode':mode,'part':part,'round':15,'passed':True})
-   page.reload();assert page.locator('[value='+mode+']').is_checked()
+   page.reload();assert page.locator('[name=quizTiming][value='+mode+']').is_checked()
   assert not errors,errors
   ctx.close()
  browser.close()
