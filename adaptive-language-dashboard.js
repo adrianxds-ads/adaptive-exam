@@ -8,7 +8,7 @@ function rankFor(v){return Math.max(1,Math.min(15,Math.ceil(clamp(v/100)*15)));}
 function rank(v){return R()[rankFor(v)-1]||{level:rankFor(v),name:"Rank",color:"#57965A",surface:"#213C26",text:"#9EC29F"};}
 function qMastery(s,limit){if(!s?.attempts)return 0;const a=s.correct/s.attempts,e=Math.min(1,s.attempts/6),t=(s.time||s.totalTime||0)/Math.max(1,s.attempts),speed=clamp((limit-t)/limit);return 100*(.65*a+.20*e+.15*speed);}
 function ema(vals,a=.22){let x=null;return vals.map(v=>x=x==null?v:a*v+(1-a)*x);}
-function scoreHistory(rows){return (rows||[]).slice(-60).map((x,i)=>({at:x.at||x.completedAt||Date.now()+i,score15:15*(Number(x.score??x.correct)||0)/Math.max(1,Number(x.total)||15),learning:Number.isFinite(Number(x.learning))?Number(x.learning):null}));}
+function scoreHistory(rows){return (rows||[]).map((x,i)=>({at:x.at||Date.parse(x.completedAt)||null,score15:15*(Number(x.score??x.correct)||0)/Math.max(1,Number(x.total)||15),learning:Number.isFinite(Number(x.learning))?Number(x.learning):null}));}
 function mcc(){const b=window.CLOZE_BANK||[],s=parse("b2_mcc_state_v1"),items=s.items||{},recent=(s.recent||[]).slice(-60),seen=b.filter(x=>(items[x.id]?.attempts||0)>0).length,coverage=pct(seen,b.length),mastery=b.length?b.reduce((n,x)=>n+qMastery(items[x.id]||{},20),0)/b.length:0,ra=recent.length?pct(recent.reduce((n,x)=>n+(x.ok?1:0),0),recent.length):0,auto=recent.length?pct(recent.filter(x=>x.ok&&Number(x.t)<=6).length,recent.length):0,learning=.45*mastery+.25*ra+.20*coverage+.10*auto,skills={};
 for(const x of b){const st=items[x.id]||{};if(!st.attempts)continue;const z=skills[x.t]||(skills[x.t]={name:x.t,n:0,c:0});z.n+=st.attempts;z.c+=st.correct;}
 return{app:"B2 Multiple-Choice Cloze",kicker:"CAMBRIDGE B2 · PART 1",coverage,mastery,recent:ra,automatic:auto,avg:s.total?(s.time||0)/s.total:NaN,total:s.total||0,sessions:s.sessions||0,focus:s.time||0,learning,history:scoreHistory(s.history),skills:Object.values(skills).map(x=>({...x,value:100*(.78*x.c/Math.max(1,x.n)+.22*Math.min(1,x.n/20))}))};}
@@ -22,7 +22,7 @@ const raw=parse("cambridgeB2ExerciseStatsV3"),all=raw.attempts||[],a=all.filter(
 const recentRows=a.slice(-10),rt=recentRows.reduce((n,x)=>n+(Number(x.total)||0),0),rc=recentRows.reduce((n,x)=>n+(Number(x.correct)||0),0),ra=pct(rc,rt),mastery=.70*overall+.30*coverage;
 const dur=a.filter(x=>Number.isFinite(Number(x.durationSec))),focus=dur.reduce((n,x)=>n+Number(x.durationSec),0),timedItems=dur.reduce((n,x)=>n+(Number(x.total)||0),0),avg=timedItems?focus/timedItems:NaN,skills={};
 for(const run of a)for(const it of run.items||[]){const k=it.skill||("Part "+run.part),z=skills[k]||(skills[k]={name:k,n:0,c:0});z.n++;z.c+=it.correct?1:0;}
-const history=a.slice(-60).map((x,i)=>({at:Date.parse(x.completedAt)||Date.now()+i,score15:15*(Number(x.correct)||0)/Math.max(1,Number(x.total)||1)})),learning=.55*mastery+.30*ra+.15*coverage;
+const history=a.map((x,i)=>({at:Date.parse(x.completedAt)||Date.now()+i,score15:15*(Number(x.correct)||0)/Math.max(1,Number(x.total)||1)})),learning=.55*mastery+.30*ra+.15*coverage;
 return{app:"Cambridge B2 Practice Bank",kicker:"B2 FIRST · READING & USE OF ENGLISH",coverage,mastery,recent:ra,automatic:NaN,avg,total,sessions:a.length,focus,learning,history,skills:Object.values(skills).map(x=>({...x,value:100*(.82*x.c/Math.max(1,x.n)+.18*Math.min(1,x.n/18))}))};
 }
 function data(){if(window.CLOZE_BANK)return mcc();if(window.PHRASAL_BANK)return phrasal();if(window.ADAPTIVE_EXAM_PAPERS||window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS)return exam();return null;}
