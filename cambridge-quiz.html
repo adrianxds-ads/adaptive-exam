@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#10271d">
 <title>Cambridge B2 · Quiz</title>
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./cambridge-quiz.css?v=0.2.0">
+<link rel="stylesheet" href="./cambridge-quiz.css?v=0.3.0">
 </head>
 <body>
 <div class="app">
@@ -18,10 +18,21 @@
   <div class="eyebrow">B2 FIRST · READING &amp; USE OF ENGLISH</div>
   <h1>Cambridge Quiz</h1>
   <p class="intro">Elige un tipo de ejercicio. Preguntas originales, una por pantalla, con tiempo y corrección inmediata.</p>
-  <section id="quizModes" class="mode-list" aria-label="Modalidades">
-    <button class="mode" data-part="1"><span class="mode-num">01</span><span><b>Multiple Choice</b><small>4 opciones · 15 segundos</small></span><span aria-hidden="true">→</span></button>
-    <button class="mode" data-part="2"><span class="mode-num">02</span><span><b>Open Cloze</b><small>Escribe una palabra · 30 segundos</small></span><span aria-hidden="true">→</span></button>
-    <button class="mode" data-part="3"><span class="mode-num">03</span><span><b>Word Formation</b><small>Transforma la palabra · 30 segundos</small></span><span aria-hidden="true">→</span></button>
+  <fieldset class="timing-settings"><legend>Tiempo por pregunta</legend>
+<label><input type="radio" name="quizTiming" value="recommended" checked><span><b>3 minutos · Recomendada</b><small>Tiempo para leer el contexto y pensar.</small></span></label>
+<label><input type="radio" name="quizTiming" value="exam"><span><b>Tiempo de examen*</b><small>Media orientativa según la parte: 53, 53 o 45 segundos.</small></span></label>
+<label><input type="radio" name="quizTiming" value="untimed"><span><b>Sin tiempo</b><small>Avanza a tu ritmo.</small></span></label>
+</fieldset>
+<details class="timing-advice"><summary>Tiempos orientativos del B2 First</summary>
+<p>Reading &amp; Use of English: 75 minutos oficiales, 7 partes y 52 preguntas.</p>
+<div class="timing-table-wrap" tabindex="0" role="region" aria-label="Tabla de tiempos orientativos"><table><thead><tr><th scope="col">Parte</th><th scope="col">Preguntas</th><th scope="col">Tiempo</th><th scope="col">Media*</th></tr></thead><tbody><tr><th scope="row">1. Elegir la palabra correcta</th><td>8</td><td>7 min</td><td>53 s</td></tr><tr><th scope="row">2. Completar con una palabra</th><td>8</td><td>7 min</td><td>53 s</td></tr><tr><th scope="row">3. Formación de palabras</th><td>8</td><td>6 min</td><td>45 s</td></tr><tr><th scope="row">4. Transformar frases</th><td>6</td><td>10 min</td><td>1 min 40 s</td></tr><tr><th scope="row">5. Lectura con opciones</th><td>6</td><td>12 min</td><td>2 min</td></tr><tr><th scope="row">6. Completar el texto</th><td>6</td><td>12 min</td><td>2 min</td></tr><tr><th scope="row">7. Buscar correspondencias</th><td>10</td><td>13 min</td><td>1 min 18 s</td></tr><tr><th scope="row">Revisión</th><td>—</td><td>8 min</td><td>—</td></tr><tr><th scope="row">Total</th><td>52</td><td>75 min</td><td>—</td></tr></tbody></table></div>
+<p class="timing-footnote">* Reparto orientativo propuesto por la IA. Cambridge fija 75 minutos para toda la prueba; las medias incluyen la lectura del texto compartido y están redondeadas. La opción «Tiempo de examen» usa estas medias por pregunta.</p>
+<p><a href="https://www.cambridgeenglish.org/es/exams-and-tests/first/exam-format/" target="_blank" rel="noopener noreferrer">Consultar el formato oficial de Cambridge</a></p>
+</details>
+<section id="quizModes" class="mode-list" aria-label="Modalidades">
+    <button class="mode" data-part="1"><span class="mode-num">01</span><span><b>Multiple Choice</b><small>4 opciones · 3 minutos</small></span><span aria-hidden="true">→</span></button>
+    <button class="mode" data-part="2"><span class="mode-num">02</span><span><b>Open Cloze</b><small>Escribe una palabra · 3 minutos</small></span><span aria-hidden="true">→</span></button>
+    <button class="mode" data-part="3"><span class="mode-num">03</span><span><b>Word Formation</b><small>Transforma la palabra · 3 minutos</small></span><span aria-hidden="true">→</span></button>
   </section>
   <p class="bank-note"><b>Banco completo:</b> los 30 exámenes originales, 240 preguntas por modalidad y 720 en total. Los ejercicios completos siguen disponibles en Modo Estudio.</p>
   <section class="stats-panel"><h2>Tu evolución</h2><div id="quizHomeStats" class="stats-grid"></div><div id="quizHistory"></div></section>
@@ -30,7 +41,7 @@
   <div class="play-head">
     <button class="plain-back" id="quitQuiz" type="button">← Salir</button>
     <span id="quizPosition" class="position">1 / 15</span>
-    <div id="quizClock" class="clock" style="--fill:100%"><strong id="quizCountdown">15</strong><small>s</small></div>
+    <div id="quizClock" class="clock" style="--fill:100%"><strong id="quizCountdown">180</strong><small>s</small></div>
   </div>
   <div class="session-bar"><span id="quizModeTitle">Multiple Choice</span><span id="quizScore">0 puntos</span></div>
   <div class="progress-rail"><div id="quizProgressBar"></div></div>
@@ -58,9 +69,9 @@
 <script src="https://adrianxds-ads.github.io/adrian-core/design/adrian-visual-system.js?v=core-20261004b"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-achievements.js?v=c796fa764ae1"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/hub-charts.js?v=1.0.0"></script>
-<script src="./data/cambridge-quiz-transcribed.js?v=0.2.0"></script>
+<script src="./data/cambridge-quiz-transcribed.js?v=0.3.0"></script>
 <script src="./data/engexam-bank.js"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-keyboard.js?v=4.1.2-20261007"></script>
-<script src="./cambridge-quiz.js?v=0.2.0"></script>
+<script src="./cambridge-quiz.js?v=0.3.0"></script>
 </body>
 </html>

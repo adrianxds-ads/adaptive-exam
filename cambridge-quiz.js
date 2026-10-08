@@ -3,7 +3,18 @@
 const $=id=>document.getElementById(id);
 const KEY="cambridgeB2ExerciseStatsV3";
 const QUESTION_COUNT=15;
-const LIMIT={1:15,2:30,3:30};
+const LIMIT={1:53,2:53,3:45};
+const TIME_KEY="cambridgeQuizTimingV1";
+let timingMode="recommended";
+try{const saved=localStorage.getItem(TIME_KEY);if(["recommended","exam","untimed"].includes(saved))timingMode=saved;}catch(_){}
+const questionLimit=part=>timingMode==="untimed"?null:timingMode==="exam"?LIMIT[part]:180;
+function updateTiming(){
+ document.querySelectorAll("[name=quizTiming]").forEach(x=>x.checked=x.value===timingMode);
+ document.querySelectorAll("#quizModes [data-part]").forEach(b=>{
+ const part=Number(b.dataset.part),limit=questionLimit(part);
+ b.querySelector("small").textContent=({1:"4 opciones",2:"Escribe una palabra",3:"Transforma la palabra"})[part]+" · "+(limit===null?"Sin tiempo":limit===180?"3 minutos":limit+" segundos*");
+ });
+}
 const AUTO_SEC={1:6,2:12,3:12};
 const LABEL={1:"Multiple Choice",2:"Open Cloze",3:"Word Formation"};
 const EXAMS=[...(window.ADAPTIVE_EXAM_TRANSCRIBED_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].filter(x=>Number(x.examNumber)>=1&&Number(x.examNumber)<=30);
@@ -89,7 +100,7 @@ function startQuiz(part){
  if(!LIMIT[part])return;
  const questions=drawQuestions(part);
  if(!questions.length){alert("Esta modalidad aún no contiene preguntas estructuradas.");return;}
- session={id:uid(),part,questions,index:0,points:0,correct:0,answers:[],answered:false,started:0};
+ session={id:uid(),part,timingMode,limitSec:questionLimit(part),questions,index:0,points:0,correct:0,answers:[],answered:false,started:0};
  show("quizPlay");renderQuestion();
 }
 function contextHTML(q){
@@ -102,7 +113,9 @@ function contextHTML(q){
 function stopTimer(){if(timerId){clearInterval(timerId);timerId=null;}}
 function tick(){
  if(!session||session.answered)return;
- const limit=LIMIT[session.part],seconds=Math.max(0,limit-(performance.now()-session.started)/1000);
+ const limit=session.limitSec;
+ if(limit===null){$("quizCountdown").textContent="∞";$("quizClock").style.setProperty("--fill","100%");return;}
+ const seconds=Math.max(0,limit-(performance.now()-session.started)/1000);
  $("quizCountdown").textContent=String(Math.ceil(seconds));
  $("quizClock").style.setProperty("--fill",(seconds/limit*100).toFixed(1)+"%");
  if(seconds<=0)acceptAnswer("timeout");
@@ -139,8 +152,10 @@ function renderQuestion(){
   const box=$("quizContext"),gap=$("targetGap");
   if(gap)box.scrollTop=clamp(gap.offsetTop-box.offsetTop-box.clientHeight/2+gap.clientHeight/2,0,box.scrollHeight-box.clientHeight);
  });
+ $("quizClock").setAttribute("aria-label",session.limitSec===null?"Sin límite de tiempo":"Tiempo restante en segundos");
+ $("quizClock").querySelector("small").textContent=session.limitSec===null?"sin límite":"s";
  session.started=performance.now();
- tick();timerId=setInterval(tick,100);
+ tick();if(session.limitSec!==null)timerId=setInterval(tick,100);
 }
 function saveAnswer(q,correct,raw,sec,points,reason){
  const state=loadStore();
@@ -148,6 +163,7 @@ function saveAnswer(q,correct,raw,sec,points,reason){
  state.attempts.push({
   id:uid(),exerciseId:"quiz-p"+session.part+"-"+q.key,
   paperId:"cambridge-quiz",paperLabel:"Mixed Cambridge Quiz",part:session.part,
+  timingMode:session.timingMode,timeLimitSec:session.limitSec,
   title:LABEL[session.part],source:{type:q.paper.source?.type||"Exam bank",label:q.paper.label||"",detail:""},
   correct:correct?1:0,total:1,learning:correct?100:0,completedAt:stamp,
   durationSec:sec,sessionId:session.id,quizPoints:points,
@@ -159,12 +175,12 @@ function saveAnswer(q,correct,raw,sec,points,reason){
 }
 function acceptAnswer(reason,raw="",button=null){
  if(!session||session.answered)return;
- const q=session.questions[session.index],limit=LIMIT[session.part];
- const sec=clamp((performance.now()-session.started)/1000,0,limit);
+ const q=session.questions[session.index],limit=session.limitSec;
+ const sec=clamp((performance.now()-session.started)/1000,0,limit===null?Infinity:limit);
  const allowed=(q.item.answers||[q.item.answer]).map(norm);
  if(reason==="answer"&&!norm(raw)){if($("quizInput"))$("quizInput").focus();return;}
  const ok=reason==="answer"&&allowed.includes(norm(raw));
- const points=ok?100+Math.round(50*(limit-sec)/limit):0;
+ const points=ok?100+(limit===null?0:Math.round(50*(limit-sec)/limit)):0;
  session.answered=true;stopTimer();
  const saved=saveAnswer(q,ok,raw,sec,points,reason);
  session.correct+=Number(ok);session.points+=points;
@@ -213,6 +229,10 @@ $("quitQuiz").addEventListener("click",()=>{stopTimer();window.AdrianKeyboard?.c
 $("finishHome").addEventListener("click",()=>{session=null;renderHome();show("quizHome");});
 $("repeatQuiz").addEventListener("click",()=>{if(session)startQuiz(session.part);});
 window.addEventListener("pagehide",stopTimer);
+document.querySelectorAll("[name=quizTiming]").forEach(x=>x.addEventListener("change",()=>{
+ timingMode=x.value;try{localStorage.setItem(TIME_KEY,timingMode);}catch(_){}updateTiming();
+}));
+updateTiming();
 renderHome();
 const requestedPart=Number(new URLSearchParams(location.search).get("part"));
 if(LIMIT[requestedPart])startQuiz(requestedPart);

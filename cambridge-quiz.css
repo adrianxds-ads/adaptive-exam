@@ -36,3 +36,18 @@ h1{font-size:clamp(38px,8.5vw,60px);letter-spacing:-.045em;line-height:1;margin:
 button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 @media(max-width:520px){.topbar{padding:9px 12px;height:61px}.screen{padding:18px 12px 28px}.mode{padding:14px;min-height:95px;grid-template-columns:48px minmax(0,1fr) 20px}.mode b{font-size:21px}.mode-num{font-size:26px}.question-panel{padding:16px}.passage{padding:15px;max-height:210px;min-height:150px}.answer-area{gap:8px}.option-btn{font-size:17px;padding:11px;min-height:62px}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.clock{height:67px;width:67px}.clock strong{font-size:24px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.timing-settings{border:1px solid rgba(231,191,87,.35);border-radius:14px;padding:14px;margin:20px 0;color:var(--text,#f4f7f5)}
+.timing-settings legend{font-weight:850;padding:0 7px}
+.timing-settings label{display:flex;align-items:center;gap:12px;padding:12px 8px;cursor:pointer;border-radius:10px}
+.timing-settings label:has(input:checked){background:rgba(231,191,87,.13)}
+.timing-settings input{width:21px;height:21px;flex:none;accent-color:#e7bf57}
+.timing-settings b,.timing-settings small{display:block}.timing-settings small{margin-top:4px;line-height:1.4;color:var(--muted)}
+.timing-advice{margin:0 0 22px;padding:15px;border-radius:13px;background:rgba(255,255,255,.05)}
+.timing-advice summary{cursor:pointer;font-weight:800;min-height:28px}
+.timing-advice p{line-height:1.5;font-size:14px}.timing-advice a{color:#e7bf57}
+.timing-table-wrap{overflow-x:auto}.timing-table-wrap table{width:100%;border-collapse:collapse;font-size:13px}
+.timing-table-wrap th,.timing-table-wrap td{padding:10px 7px;text-align:left;border-bottom:1px solid rgba(255,255,255,.12)}
+.timing-table-wrap td{white-space:nowrap}.timing-table-wrap tbody th{min-width:155px;font-weight:600}
+.timing-footnote{color:var(--muted)}
+.clock:has(small:last-child){flex-shrink:0}.clock small{font-size:10px}

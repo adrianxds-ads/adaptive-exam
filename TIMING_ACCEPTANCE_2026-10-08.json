@@ -1,0 +1,128 @@
+[
+  {
+    "width": 412,
+    "mode": "recommended",
+    "part": 1,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "mode": "recommended",
+    "part": 2,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "mode": "recommended",
+    "part": 3,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "mode": "exam",
+    "part": 1,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "mode": "exam",
+    "part": 2,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "mode": "exam",
+    "part": 3,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "mode": "untimed",
+    "part": 1,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "mode": "untimed",
+    "part": 2,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "mode": "untimed",
+    "part": 3,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "mode": "recommended",
+    "part": 1,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "mode": "recommended",
+    "part": 2,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "mode": "recommended",
+    "part": 3,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "mode": "exam",
+    "part": 1,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "mode": "exam",
+    "part": 2,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "mode": "exam",
+    "part": 3,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "mode": "untimed",
+    "part": 1,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "mode": "untimed",
+    "part": 2,
+    "round": 15,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "mode": "untimed",
+    "part": 3,
+    "round": 15,
+    "passed": true
+  }
+]

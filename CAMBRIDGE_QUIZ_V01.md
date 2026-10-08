@@ -27,3 +27,9 @@ Dos modos complementarios en la misma app: Quiz (modalidad principal y adaptativ
 ## Observaciones
 - Pendiente comprobación funcional directa en Pixel; las pruebas automáticas en navegador ya son satisfactorias.
 - El banco transcrito es para estudio personal: verificar permisos antes de cualquier redistribución pública de contenidos originales de Cambridge.
+
+
+## 1.2.16 · 2026-10-08
+Tres tiempos por pregunta: 180 segundos por defecto, media orientativa de examen (53/53/45 segundos) y sin límite. Preferencia local persistente. Tabla completa de las siete partes, revisión y enlace oficial. Modo y límite quedan registrados con cada respuesta. Sin tiempo: 100 puntos por acierto, sin bonificación por rapidez.
+
+Pruebas: 18 rondas completas en Chrome, 412 y 1280 px, tres partes y tres tiempos, caducidad única, duración sin límite y preferencia tras recarga. Tabla móvil revisada visualmente. Datos de prueba aislados; no se ha utilizado el progreso real. Evidencia: TIMING_ACCEPTANCE_2026-10-08.json.
