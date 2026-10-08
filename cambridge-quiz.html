@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#10271d">
 <title>Cambridge B2 · Quiz</title>
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./cambridge-quiz.css?v=0.4.0">
+<link rel="stylesheet" href="./cambridge-quiz.css?v=0.5.0">
 </head>
 <body>
 <div class="app">
@@ -40,6 +40,17 @@
     <button class="mode" data-part="2"><span class="mode-num">02</span><span><b>Open Cloze</b><small>Escribe una palabra · 3 minutos</small></span><span aria-hidden="true">→</span></button>
     <button class="mode" data-part="3"><span class="mode-num">03</span><span><b>Word Formation</b><small>Transforma la palabra · 3 minutos</small></span><span aria-hidden="true">→</span></button>
   </section>
+<section id="examListSection" class="stats-panel hidden">
+<h2>Nuestros exámenes</h2>
+<label class="exam-part-label" for="examListPart">Parte del examen</label>
+<select id="examListPart" class="exam-part-select"><option value="1">1. Multiple-choice cloze</option><option value="2">2. Open cloze</option><option value="3">3. Word formation</option></select>
+<p id="examListSummary" class="bank-note"></p>
+<div class="exam-table-wrap" role="region" aria-label="Progreso de los 30 exámenes" tabindex="0">
+<table class="exam-table"><thead><tr><th scope="col">Examen</th><th scope="col">Hecho</th><th scope="col">Veces</th><th scope="col">Últ. fallos</th><th scope="col">Mejor</th><th scope="col">Jugar</th></tr></thead><tbody id="examTableBody"></tbody></table>
+</div>
+<p class="exam-table-note">Cada fila corresponde a la parte seleccionada. ✓ indica una ronda completa, cualquiera que sea el resultado. «Mejor» muestra el máximo de Exam points /8 y de Game points (GP). Los fallos incluyen respuestas incorrectas, preguntas pasadas y tiempo agotado. Las rondas empezadas cuentan al completar las ocho preguntas.</p>
+<div id="examProgressChart"></div>
+</section>
   <p class="bank-note"><b>Banco completo:</b> los 30 exámenes originales, 240 preguntas por modalidad y 720 en total. Los ejercicios completos siguen disponibles en Modo Estudio.</p>
   <p class="bank-note"><b>Exam points:</b> 1 punto por respuesta correcta en estas tres partes. <b>Game points:</b> 100 por acierto, más hasta 50 por rapidez con temporizador; sin tiempo, 100 por acierto.</p><section class="stats-panel"><h2>Tu evolución</h2><div id="quizHomeStats" class="stats-grid"></div><div id="quizHistory"></div></section>
 </main>
@@ -62,12 +73,13 @@
   </article>
 </main>
 <main id="quizFinish" class="screen hidden">
-  <div class="eyebrow">RONDA TERMINADA</div><h1 id="finishTitle">Resultado</h1>
+  <div class="eyebrow" id="finishExamLabel">RONDA TERMINADA</div><h1 id="finishTitle">Resultado</h1>
   <section class="finish-panel">
     <div id="finishBadge"></div>
     <div id="finishSummary" class="stats-grid"></div>
     <div id="finishChart"></div>
     <button id="repeatQuiz" class="main-btn full" type="button">Otra ronda</button>
+    <button id="nextExamQuiz" class="main-btn full hidden" type="button">Siguiente examen</button>
     <button id="finishHome" class="soft-btn full" type="button">Cambiar modalidad</button>
   </section>
 </main>
@@ -76,9 +88,9 @@
 <script src="https://adrianxds-ads.github.io/adrian-core/design/adrian-visual-system.js?v=core-20261004b"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-achievements.js?v=c796fa764ae1"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/hub-charts.js?v=1.0.0"></script>
-<script src="./data/cambridge-quiz-transcribed.js?v=0.4.0"></script>
+<script src="./data/cambridge-quiz-transcribed.js?v=0.5.0"></script>
 <script src="./data/engexam-bank.js"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-keyboard.js?v=4.1.2-20261007"></script>
-<script src="./cambridge-quiz.js?v=0.4.0"></script>
+<script src="./cambridge-quiz.js?v=0.5.0"></script>
 </body>
 </html>

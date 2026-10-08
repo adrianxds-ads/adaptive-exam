@@ -57,3 +57,13 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .scoreboard{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
 .scoreboard span{padding:12px 8px;border:1px solid var(--line);border-radius:10px;text-align:center;background:rgba(255,255,255,.06);font-size:14px;font-weight:800}
 .scoreboard #quizExamScore{color:#a7e2be}.scoreboard #quizScore{color:var(--accent)}
+
+#examListSection{scroll-margin-top:16px}.exam-part-label{display:block;font-size:14px;font-weight:800;margin-bottom:8px}
+.exam-part-select{width:100%;font:inherit;background:#172f24;color:#f4f7f5;min-height:50px;padding:10px;border:1px solid var(--line);border-radius:10px}
+.exam-table-wrap{overflow-x:auto}.exam-table{width:100%;border-collapse:collapse;font-size:13px}
+.exam-table th,.exam-table td{text-align:center;padding:10px 4px;border-bottom:1px solid var(--line)}
+.exam-table thead th{font-size:11px;color:var(--muted)}.exam-table tbody th{text-align:left;white-space:nowrap}
+.exam-table td small{display:block;font-size:10px;color:var(--muted);margin-top:4px}.exam-done{color:#a7e2be}.exam-pending{color:#e2a6a6}
+.exam-play{background:rgba(231,191,87,.12);border:1px solid rgba(231,191,87,.5);color:#e7bf57;border-radius:9px;min-height:44px;padding:8px;font-size:12px;font-weight:800;cursor:pointer}
+.exam-table-note{font-size:12px;line-height:1.5;color:var(--muted)}
+@media(max-width:520px){#examListSection{padding:14px 8px}.exam-table{font-size:12px}.exam-table th,.exam-table td{padding:9px 3px}}

@@ -1,0 +1,41 @@
+[
+  {
+    "width": 360,
+    "table": 30,
+    "lastErrors": 2,
+    "best": 7,
+    "timesAfterRepeat": 2,
+    "nextSamePart": true,
+    "partialExcluded": true,
+    "reload": true,
+    "lastExamBoundary": true,
+    "fullHistory": true,
+    "passed": true
+  },
+  {
+    "width": 412,
+    "table": 30,
+    "lastErrors": 2,
+    "best": 7,
+    "timesAfterRepeat": 2,
+    "nextSamePart": true,
+    "partialExcluded": true,
+    "reload": true,
+    "lastExamBoundary": true,
+    "fullHistory": true,
+    "passed": true
+  },
+  {
+    "width": 1280,
+    "table": 30,
+    "lastErrors": 2,
+    "best": 7,
+    "timesAfterRepeat": 2,
+    "nextSamePart": true,
+    "partialExcluded": true,
+    "reload": true,
+    "lastExamBoundary": true,
+    "fullHistory": true,
+    "passed": true
+  }
+]

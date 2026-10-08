@@ -74,7 +74,7 @@ function historySessions(attempts){
  const m=new Map();
  for(const a of attempts){
   const id=a.sessionId||a.id;
-  const row=m.get(id)||{id,part:a.part,at:Date.parse(a.completedAt)||Date.now(),total:0,correct:0,points:0,auto:0,roundSize:Number(a.roundSize)||QUESTION_COUNT};
+  const row=m.get(id)||{id,part:a.part,at:Date.parse(a.completedAt)||Date.now(),total:0,correct:0,points:0,auto:0,roundSize:Number(a.roundSize)||QUESTION_COUNT,quizKind:a.quizKind||"mixed",paperId:a.paperId,timingMode:a.timingMode||"legacy"};
   row.total++;row.correct+=Number(a.correct)||0;row.points+=Number(a.quizPoints)||0;
   const detail=a.items?.[0];if(detail?.correct&&Number(detail.responseSec)<=AUTO_SEC[a.part])row.auto++;
   row.at=Math.max(row.at,Date.parse(a.completedAt)||0);m.set(id,row);
@@ -86,6 +86,40 @@ function chart(rows,title,key,max=100){
  const data=rows.slice(-30).map(r=>({at:r.at,value:r[key]}));
  return "<div class='chart-shell'><h3>"+esc(title)+"</h3>"+window.HubCharts.chart(data,{max,title})+"</div>";
 }
+function examPapers(){
+ return [...new Map(ALL.map(q=>[q.paper.id,q.paper])).values()].sort((a,b)=>Number(a.examNumber)-Number(b.examNumber));
+}
+function completedExamRuns(part=null){
+ return historySessions(quizAttempts()).filter(r=>r.quizKind==="exam"&&r.total>=r.roundSize&&(part===null||Number(r.part)===part));
+}
+function renderExamTable(){
+ const part=Number($("examListPart").value),runs=completedExamRuns(part);
+ $("examTableBody").innerHTML=examPapers().map(p=>{
+  const own=runs.filter(r=>r.paperId===p.id),last=own[own.length-1],best=own.length?Math.max(...own.map(r=>r.correct)):null;
+  const game=own.length?Math.max(...own.map(r=>r.points)):null;
+  return "<tr data-exam-row='"+esc(p.id)+"'><th scope='row'>Exam "+String(p.examNumber).padStart(2,"0")+"</th><td><span class='"+(own.length?"exam-done":"exam-pending")+"' aria-label='"+(own.length?"Completado":"Pendiente")+"'>"+(own.length?"✓":"✗")+"</span></td><td>"+own.length+"</td><td>"+(last?last.total-last.correct:"—")+"</td><td>"+(best===null?"—":"<b>"+best+"/8</b><small>"+game+" GP</small>")+"</td><td><button class='exam-play' data-exam-play='"+esc(p.id)+"' type='button' aria-label='"+(own.length?"Repetir":"Empezar")+" Exam "+String(p.examNumber).padStart(2,"0")+" · "+esc(LABEL[part])+"'>"+(own.length?"Repetir":"Jugar")+"</button></td></tr>";
+ }).join("");
+ $("examTableBody").querySelectorAll("[data-exam-play]").forEach(b=>b.addEventListener("click",()=>{
+  $("quizExam").value=b.dataset.examPlay;startQuiz(part,b.dataset.examPlay);
+ }));
+ const done=new Set(runs.map(r=>r.paperId)).size;
+ $("examListSummary").textContent=done+" / 30 completados · "+runs.length+" intentos · "+LABEL[part];
+ const history=completedExamRuns().map(r=>({...r,score:100*r.correct/r.total}));
+ $("examProgressChart").innerHTML=(window.HubCharts?.chart&&history.length?window.HubCharts.chart(history.map(r=>({at:r.at,value:r.score,label:"Exam "+String(examPapers().find(p=>p.id===r.paperId)?.examNumber||"").padStart(2,"0")+" · "+LABEL[r.part],weight:r.total})),{max:100,title:"Quiz por examen · histórico completo",note:"Cada punto corresponde a una parte completada. Incluye todos los intentos y los tres tiempos."}):"")||(history.length?"<p class='bank-note'>"+history.length+" rondas completadas · "+Math.round(100*history.reduce((n,r)=>n+r.correct,0)/history.reduce((n,r)=>n+r.total,0))+"% de acierto.</p>":"<p class='bank-note'>La evolución aparecerá al completar nuestro primer quiz por examen.</p>");
+}
+function chooseExam(){
+ const part=session?.part||Number($("examListPart").value);
+ session=null;quizKind="exam";
+ document.querySelectorAll("[name=quizKind]").forEach(x=>x.checked=x.value==="exam");
+ $("examListPart").value=String(part);
+ renderHome();updateQuizKind();show("quizHome");
+ $("examListSection").scrollIntoView({block:"start",behavior:"smooth"});
+}
+function nextExamPaper(){
+ if(!session?.sourcePaperId)return null;
+ const papers=examPapers(),i=papers.findIndex(p=>p.id===session.sourcePaperId);
+ return i>=0?papers[i+1]||null:null;
+}
 function renderHome(){
  const attempts=quizAttempts(),runs=historySessions(attempts).filter(s=>s.total>=s.roundSize);
  const correct=attempts.filter(a=>a.correct).length,fast=attempts.filter(a=>a.correct&&Number(a.items[0].responseSec)<=AUTO_SEC[a.part]).length;
@@ -95,6 +129,7 @@ function renderHome(){
   +metric(attempts.length?Math.round(fast/attempts.length*100)+"%":"—","Automatismo");
  const scores=runs.map(r=>({...r,score:100*r.correct/r.total,automaticity:100*r.auto/r.total}));
  $("quizHistory").innerHTML=chart(scores,"Línea de aprendizaje","score")+chart(scores,"Automatismo","automaticity");
+ renderExamTable();
 }
 
 function renderExamPicker(){
@@ -103,6 +138,8 @@ function renderExamPicker(){
 }
 function updateQuizKind(){
  $("quizExamPicker").classList.toggle("hidden",quizKind!=="exam");
+ $("examListSection").classList.toggle("hidden",quizKind!=="exam");
+ if(quizKind==="exam")renderExamTable();
  $("quizRouteHint").textContent=quizKind==="exam"?"Elige el examen y la parte. Sus 8 preguntas originales aparecen en orden, con corrección después de cada respuesta.":"15 preguntas de distintos exámenes, seleccionadas para practicar.";
  updateTiming();
 }
@@ -115,6 +152,7 @@ function startQuiz(part,paperId=null){
  const sourcePaperId=paperId||(quizKind==="exam"?$("quizExam").value:null);
  const questions=sourcePaperId?ALL.filter(q=>q.part===part&&q.paper.id===sourcePaperId).sort((a,b)=>Number(a.item.n)-Number(b.item.n)):drawQuestions(part);
  if(!questions.length){alert("Esta modalidad aún no contiene preguntas estructuradas.");return;}
+ if(sourcePaperId){$("quizExam").value=sourcePaperId;$("examListPart").value=String(part);}
  session={id:uid(),part,quizKind:sourcePaperId?"exam":"mixed",sourcePaperId,timingMode,limitSec:questionLimit(part),questions,index:0,points:0,correct:0,answers:[],answered:false,started:0};
  show("quizPlay");renderQuestion();
 }
@@ -225,6 +263,13 @@ function finishQuiz(){
  stopTimer();window.AdrianKeyboard?.close?.();
  const count=session.questions.length,fast=session.answers.filter(a=>a.correct&&a.sec<=AUTO_SEC[session.part]).length;
  $("finishTitle").textContent=session.correct+" / "+count+" correctas";
+ $("finishExamLabel").textContent=session.quizKind==="exam"?"Exam "+String(session.questions[0].paper.examNumber).padStart(2,"0")+" · "+LABEL[session.part]:"Mixed quiz · "+LABEL[session.part];
+ $("repeatQuiz").textContent=session.quizKind==="exam"?"Repetir examen":"Otra ronda";
+ $("finishHome").textContent=session.quizKind==="exam"?"Elegir examen":"Cambiar modalidad";
+ const following=nextExamPaper();
+ $("nextExamQuiz").classList.toggle("hidden",session.quizKind!=="exam");
+ $("nextExamQuiz").disabled=!following;
+ $("nextExamQuiz").textContent=following?"Siguiente · Exam "+String(following.examNumber).padStart(2,"0"):"Exam 30 · último de la lista";
  $("finishSummary").innerHTML=metric(session.correct+" / "+count,"Exam points")+metric(session.points,"Game points")+metric(Math.round(100*session.correct/count)+"%","Acierto")
   +metric(fast+"/"+count,"Automatismo")+metric(session.answers.length,"Preguntas");
  const achievement=window.AdrianAchievements;
@@ -233,7 +278,7 @@ function finishQuiz(){
  const counts=achievement?.countsFromHistory?.([...originalAttempts,...completed.map(r=>({correct:r.correct,total:r.total}))])||{blue:0,violet:0,gold:0};
  $("finishBadge").innerHTML=(achievement?.medalStripHtml?.(counts,{context:"summary"})||"")+(achievement?.badgeHtml?.(session.correct,count,counts)||"");
  achievement?.play?.(null,session.correct,count);
- const hist=completed.filter(x=>x.part===session.part).map(r=>({...r,score:100*r.correct/r.total,automaticity:100*r.auto/r.total}));
+ const hist=completed.filter(x=>x.part===session.part&&x.quizKind===session.quizKind).map(r=>({...r,score:100*r.correct/r.total,automaticity:100*r.auto/r.total}));
  $("finishChart").innerHTML=chart(hist,"Acierto · evolución","score")+chart(hist,"Automatismo · evolución","automaticity");
  show("quizFinish");
 }
@@ -242,9 +287,12 @@ $("skipQuiz").addEventListener("click",()=>acceptAnswer("skip"));
 $("submitQuiz").addEventListener("click",()=>acceptAnswer("answer",$("quizInput")?.value||""));
 $("nextQuiz").addEventListener("click",nextQuestion);
 $("quitQuiz").addEventListener("click",()=>{stopTimer();window.AdrianKeyboard?.close?.();session=null;renderHome();show("quizHome");});
-$("finishHome").addEventListener("click",()=>{session=null;renderHome();show("quizHome");});
+$("finishHome").addEventListener("click",()=>{if(session?.quizKind==="exam"){chooseExam();return;}session=null;renderHome();show("quizHome");});
+$("nextExamQuiz").addEventListener("click",()=>{const p=nextExamPaper();if(p)startQuiz(session.part,p.id);});
+$("examListPart").addEventListener("change",renderExamTable);
 $("repeatQuiz").addEventListener("click",()=>{if(session)startQuiz(session.part,session.sourcePaperId);});
 window.addEventListener("pagehide",stopTimer);
+window.addEventListener("storage",e=>{if(e.key===KEY&&!session)renderHome();});
 document.querySelectorAll("[name=quizTiming]").forEach(x=>x.addEventListener("change",()=>{
  timingMode=x.value;try{localStorage.setItem(TIME_KEY,timingMode);}catch(_){}updateTiming();
 }));

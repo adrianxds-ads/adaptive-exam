@@ -43,3 +43,9 @@ Tabla con nombres ingleses de las siete partes y puntos oficiales por pregunta y
 Quiz por examen: 30 exámenes, partes 1–3, ocho preguntas originales en orden. Conserva el quiz mezclado de 15 y los tres tiempos. Exam points (1 por acierto) y Game points (100 más hasta 50 por rapidez) separados en ronda, corrección y resultado. Cada respuesta guarda tipo de quiz, examen, longitud de ronda y puntos de examen; historial y medallas admiten rondas de ocho, con compatibilidad de rondas antiguas de quince.
 
 Verificación: 36 rondas completas, móvil 412 px y escritorio 1280 px, ambos tipos de quiz y tres tiempos. Respuestas reales del banco, un fallo por ronda, puntos, orden, repetición, caducidad, historial y recarga. Los 30 exámenes por tres partes contienen ocho preguntas únicas. Capturas de selector y marcadores revisadas. Pruebas aisladas sin progreso real. Evidencia: EXAM_QUIZ_ACCEPTANCE_2026-10-08.json.
+
+
+## 1.2.19 · 2026-10-08
+Lista de Exam 01–30 por parte: completado, número de rondas completas, últimos fallos, mejores Exam points y Game points, acceso directo para jugar/repetir. Usa los intentos existentes de Quiz por examen 1.2.18 sin migración. Rondas incompletas y quiz mezclado excluidos de la tabla. Gráfica de histórico completo del modo por examen, ampliable. Resultado identificado por número y parte; repetir, siguiente examen (misma parte/tiempo), elegir examen y volver a la lista. Exam 30 no reinicia la secuencia.
+
+Pruebas a 360/412/1280 px: treinta filas en orden, pendientes, dos repeticiones con 7 y 6 aciertos (dos últimos fallos y mejor 7/8), independencia por parte, ronda abandonada excluida, siguiente y elección, límite Exam 30, recarga, 39 registros en la gráfica sin limitar a treinta. Captura móvil revisada. Pruebas aisladas y sin progreso real. Evidencia: EXAM_TRACKER_ACCEPTANCE_2026-10-08.json.
