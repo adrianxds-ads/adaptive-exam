@@ -26,7 +26,7 @@ const history=a.slice(-60).map((x,i)=>({at:Date.parse(x.completedAt)||Date.now()
 return{app:"Cambridge B2 Practice Bank",kicker:"B2 FIRST · READING & USE OF ENGLISH",coverage,mastery,recent:ra,automatic:NaN,avg,total,sessions:a.length,focus,learning,history,skills:Object.values(skills).map(x=>({...x,value:100*(.82*x.c/Math.max(1,x.n)+.18*Math.min(1,x.n/18))}))};
 }
 function data(){if(window.CLOZE_BANK)return mcc();if(window.PHRASAL_BANK)return phrasal();if(window.ADAPTIVE_EXAM_PAPERS||window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS)return exam();return null;}
-function chart(rows){
+function chart(rows){if(window.HubCharts)return HubCharts.chart((rows||[]).map(r=>({at:r.at,value:r.score15})),{max:15,unit:" /15",title:"Resultados"});
 if(!rows?.length)return'<div class="ald-empty">Complete a session to start the graph.</div>';
 const rs=rows.slice(-30),w=720,h=250,L=42,Rr=14,T=18,B=32,ranks=R(),x=i=>L+(rs.length===1?.5:i/(rs.length-1))*(w-L-Rr),y=v=>T+(15-v)/15*(h-T-B);
 const bands=ranks.map((q,i)=>'<rect x="'+L+'" y="'+y(i+1)+'" width="'+(w-L-Rr)+'" height="'+Math.max(1,y(i)-y(i+1))+'" fill="'+q.color+'" fill-opacity=".58"/>').join("");
@@ -34,7 +34,7 @@ const grid=Array.from({length:16},(_,i)=>'<line x1="'+L+'" y1="'+y(i)+'" x2="'+(
 const pts=rs.map((q,i)=>x(i)+","+y(q.score15)).join(" "),dots=rs.map((q,i)=>{const z=rank(100*q.score15/15);return'<circle cx="'+x(i)+'" cy="'+y(q.score15)+'" r="3.5" fill="'+z.color+'" stroke="'+z.text+'" stroke-width="1.4"></circle>';}).join("");
 return'<svg class="ald-chart" viewBox="0 0 '+w+' '+h+'"><rect x="'+L+'" y="'+T+'" width="'+(w-L-Rr)+'" height="'+(h-T-B)+'" rx="8" fill="#101815"/>'+bands+grid+'<polyline points="'+pts+'" fill="none" stroke="#f4f7f5" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"/>'+dots+'</svg>';
 }
-function learnChart(rows){
+function learnChart(rows){if(window.HubCharts)return HubCharts.chart((rows||[]).map(r=>({at:r.at,value:r.learning??null})),{title:"Línea de aprendizaje"});
 if(!rows?.length)return'<div class="ald-empty">The learning curve will appear after your first sessions.</div>';
 const vals=ema(rows.slice(-40).map(x=>Number.isFinite(x.learning)?x.learning:100*x.score15/15)),w=720,h=210,L=42,Rr=14,T=18,B=28,x=i=>L+(vals.length===1?.5:i/(vals.length-1))*(w-L-Rr),y=v=>T+(100-v)/100*(h-T-B),pts=vals.map((v,i)=>x(i)+","+y(v)).join(" "),z=rank(vals[vals.length-1]);
 return'<svg class="ald-chart" viewBox="0 0 '+w+' '+h+'"><rect x="'+L+'" y="'+T+'" width="'+(w-L-Rr)+'" height="'+(h-T-B)+'" rx="8" fill="#101815"/>'+[0,25,50,75,100].map(v=>'<line x1="'+L+'" y1="'+y(v)+'" x2="'+(w-Rr)+'" y2="'+y(v)+'" stroke="rgba(255,255,255,.12)"/><text x="'+(L-7)+'" y="'+(y(v)+3)+'" text-anchor="end" fill="#b7c9bf" font-size="9">'+v+'</text>').join("")+'<polyline points="'+pts+'" fill="none" stroke="'+z.color+'" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg>';

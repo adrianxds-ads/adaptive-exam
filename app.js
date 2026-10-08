@@ -1,9 +1,14 @@
-const APP_VERSION="1.2.12";
+const APP_VERSION="1.2.13";
 let pendingStats=null;
 function safeDecoration(run,fallback=""){try{return run()??fallback;}catch(e){console.warn("Decoration unavailable",e);return fallback;}}
 const PAPERS=[...(window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].sort((a,b)=>(Number(a.examNumber)||99)-(Number(b.examNumber)||99));
 const $=id=>document.getElementById(id);
 let activePart=null,activePaper=null,activeExerciseId=null,menuPart=null,answers={},checked=false,exerciseStartedAt=0;
+let gapTiming={};
+function gapStart(n){if(!gapTiming[n])gapTiming[n]={start:Date.now(),sec:null};}
+function gapAnswered(n){if(gapTiming[n])gapTiming[n].sec=Math.max(.001,(Date.now()-gapTiming[n].start)/1000);}
+document.addEventListener("focusin",e=>{const n=e.target?.matches?.("#paperHost input[data-n]")?e.target.dataset.n:null;if(n!==null)gapStart(n);});
+document.addEventListener("input",e=>{if(e.target?.matches?.("#paperHost input[data-n]"))gapAnswered(e.target.dataset.n);});
 const statsKey="cambridgeB2ExerciseStatsV3";
 const BANK_SIZE=30;
 const OCR_END=10;
@@ -140,7 +145,7 @@ function saveAttempt(result,details){
     id:crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random(),
     exerciseId:activeExerciseId,paperId:activePaper.id,paperLabel:activePaper.label,
     part:activePart,title:currentPart().title,correct:result.correct,total:result.total,
-    completedAt:new Date().toISOString(),durationSec:exerciseStartedAt?Math.max(0,(Date.now()-exerciseStartedAt)/1000):null,
+    learning:100*result.correct/result.total,completedAt:new Date().toISOString(),durationSec:exerciseStartedAt?Math.max(0,(Date.now()-exerciseStartedAt)/1000):null,
     source:{type:src.type||"",label:src.label||"",detail:src.detail||"",url:src.url||""},
     items:details
   });
@@ -184,7 +189,7 @@ function openOcrMenu(){
 
 function startExercise(id){
   const ex=allExercises().find(x=>x.id===id);if(!ex)return;
-  activePaper=ex.paper;activePart=ex.part;activeExerciseId=id;answers={};checked=false;exerciseStartedAt=Date.now();lastExamInput=null;
+  activePaper=ex.paper;activePart=ex.part;activeExerciseId=id;answers={};checked=false;exerciseStartedAt=Date.now();gapTiming={};lastExamInput=null;
   const src=getSource(activePaper,activePart);
   $("headPart").textContent="Exam "+String(activePaper.examNumber).padStart(2,"0")+" · Part "+activePart;
   $("headSource").textContent=sourceLine(src);
@@ -258,13 +263,13 @@ function bindInputs(){
   if(activePart===1)document.querySelectorAll(".gap-choice").forEach(b=>b.onclick=()=>openChoices(Number(b.dataset.n)));
   else document.querySelectorAll("input[data-n]").forEach(inp=>inp.addEventListener("input",()=>{answers[Number(inp.dataset.n)]=inp.value;updateAnswerProgress();}));
 }
-function openChoices(n){
+function openChoices(n){gapStart(n);
   const seg=currentPart()?.segments?.find(x=>typeof x==="object"&&x.n===n);if(!seg)return;
   $("sheetTitle").textContent="Question "+n;$("optionGrid").innerHTML="";
   const ctx=choiceContext(n);$("sheetContext").textContent=ctx;$("sheetContext").classList.toggle("hidden",!ctx);
   seg.options.forEach((opt,i)=>{const b=document.createElement("button");b.className="option";b.innerHTML="<strong>"+String.fromCharCode(65+i)+"</strong>"+esc(opt);
     b.onclick=()=>{
-      answers[n]=opt;closeSheet();
+      answers[n]=opt;gapAnswered(n);closeSheet();
       const gap=document.querySelector(".gap-choice[data-n='"+n+"']");
       if(gap){gap.innerHTML=esc(opt)+" ▾";gap.classList.remove("empty");}
       updateAnswerProgress();
@@ -304,7 +309,7 @@ function checkPart(){
   let correct=0;
   const details=items.map(it=>{
     const valid=validAnswers(it),user=answers[it.n]||"",ok=valid.includes(norm(user));if(ok)correct++;
-    return {question:it.n,correct:ok,userAnswer:user,expected:expected(it),explanation:it.explanation||"Sin explicación específica registrada.",skill:it.skill||"sin clasificar",base:it.base||null,keyword:it.keyword||null};
+    return {responseSec:gapTiming[it.n]?.sec??null,question:it.n,correct:ok,userAnswer:user,expected:expected(it),explanation:it.explanation||"Sin explicación específica registrada.",skill:it.skill||"sin clasificar",base:it.base||null,keyword:it.keyword||null};
   });
   const saved=saveAttempt({correct,total:items.length},details);try{window.HubPathGame?.resolve?.({appId:"cambridge",correct,total:items.length,eventId:`cambridge:${activeExerciseId}:${Date.now()}`});}catch(e){console.warn("Hub Oca unavailable",e);}try{renderCorrection({correct,total:items.length},details);}finally{showScreen("resultScreen");}if(!saved){const note=document.createElement("p"),backup=document.createElement("button");note.className="exercise-meta";note.textContent="Resultado conservado en memoria. El almacenamiento no está disponible.";backup.className="secondary";backup.textContent="GUARDAR COPIA DEL PROGRESO";backup.onclick=()=>{const a=document.createElement("a"),url=URL.createObjectURL(new Blob([JSON.stringify(pendingStats)],{type:"application/json"}));a.href=url;a.download="cambridge-progress-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};$("reviewSummary").append(note,backup);}
 }
