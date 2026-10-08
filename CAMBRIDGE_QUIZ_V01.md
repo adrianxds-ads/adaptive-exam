@@ -33,3 +33,7 @@ Dos modos complementarios en la misma app: Quiz (modalidad principal y adaptativ
 Tres tiempos por pregunta: 180 segundos por defecto, media orientativa de examen (53/53/45 segundos) y sin límite. Preferencia local persistente. Tabla completa de las siete partes, revisión y enlace oficial. Modo y límite quedan registrados con cada respuesta. Sin tiempo: 100 puntos por acierto, sin bonificación por rapidez.
 
 Pruebas: 18 rondas completas en Chrome, 412 y 1280 px, tres partes y tres tiempos, caducidad única, duración sin límite y preferencia tras recarga. Tabla móvil revisada visualmente. Datos de prueba aislados; no se ha utilizado el progreso real. Evidencia: TIMING_ACCEPTANCE_2026-10-08.json.
+
+
+## 1.2.17 · 2026-10-08
+Tabla con nombres ingleses de las siete partes y puntos oficiales por pregunta y máximo: 8+8+8+12+12+12+10=70. Se distingue la puntuación del examen de los puntos del juego. Verificada tabla de seis columnas, total 70, siete nombres y ausencia de desbordamiento de página a 412 px.
