@@ -14,16 +14,40 @@ function starAppId(){
   if(p.startsWith("/adaptive-verbs-catala"))return"catala";
   if(p.startsWith("/adaptive-hoti0108"))return"hoti0108";
   if(p.startsWith("/adaptive-pizarras"))return"pizarras";
+  if(p.startsWith("/adaptive-keyword-speaking"))return"keyword-speaking";
   return p.split("/").filter(Boolean)[0]||"quiz";
 }
+function cambridgeMedalCounts(){
+ let state;try{const raw=localStorage.getItem("cambridgeB2ExerciseStatsV3");if(!raw)return null;state=JSON.parse(raw);}catch{return null;}
+ if(!Array.isArray(state?.attempts))return null;
+ const seen=new Set(),runs=new Map(),rows=[];
+ for(const a of state.attempts){
+  if(!a||seen.has(a.id))continue;if(a.id)seen.add(a.id);
+  if(String(a.exerciseId||"").startsWith("quiz-p")){
+   if(!a.sessionId||!a.items?.[0]?.sourceKey)continue;
+   let run=runs.get(a.sessionId);
+   if(!run){run={total:Number(a.roundSize)||15,items:new Map()};runs.set(a.sessionId,run);}
+   run.items.set(a.items[0].sourceKey,Boolean(a.items[0].correct));
+  }else if(Number(a.total)>1&&Number.isFinite(Number(a.correct)))rows.push(a);
+ }
+ for(const run of runs.values())if(run.items.size===run.total)rows.push({correct:[...run.items.values()].filter(Boolean).length,total:run.total});
+ return countsFromHistory(rows);
+}
+function normalizeStarApps(apps={}){
+ const out={...apps};
+ if(Object.hasOwn(out,"adaptive-keyword-speaking")){out["keyword-speaking"]=Math.max(Number(out["keyword-speaking"])||0,Number(out["adaptive-keyword-speaking"])||0);delete out["adaptive-keyword-speaking"];}
+ return out;
+}
 function readStarLedger(){
-  try{const x=JSON.parse(localStorage.getItem(STAR_KEY)||"{}");return{version:1,apps:{...(x.apps||{})},stars:Math.max(0,Number(x.stars)||0),totalGold:Math.max(0,Number(x.totalGold)||0),updatedAt:Number(x.updatedAt)||0};}
-  catch{return{version:1,apps:{},stars:0,totalGold:0,updatedAt:0};}
+  try{const x=JSON.parse(localStorage.getItem(STAR_KEY)||"{}");return{version:3,apps:normalizeStarApps(x.apps),stars:Math.max(0,Number(x.stars)||0),totalGold:Math.max(0,Number(x.totalGold)||0),updatedAt:Number(x.updatedAt)||0};}
+  catch{return{version:3,apps:{},stars:0,totalGold:0,updatedAt:0};}
 }
 function starState(counts=null){
   const x=readStarLedger(),id=starAppId();
-  if(counts){const gold=Math.max(0,Math.floor(Number(counts.gold)||0));x.apps[id]=Math.max(Math.max(0,Math.floor(Number(x.apps[id])||0)),gold);x.updatedAt=Date.now();}
-  const values=Object.values(x.apps).map(n=>Math.max(0,Math.floor(Number(n)||0))),totalGold=values.reduce((sum,n)=>sum+n,0),stars=Math.floor(totalGold/STAR_STEP),localGold=Math.max(0,Math.floor(Number(x.apps[id])||0)),localStars=Math.floor(localGold/STAR_STEP),progress=totalGold%STAR_STEP;
+  const cambridge=cambridgeMedalCounts();if(cambridge)x.apps.cambridge=cambridge.gold;
+  try{const raw=localStorage.getItem(STAR_KEY);if(raw&&Number(JSON.parse(raw).version)<3&&!localStorage.getItem(STAR_KEY+"_before_rule_v3"))localStorage.setItem(STAR_KEY+"_before_rule_v3",raw);}catch(_){}
+  if(counts){const gold=Math.max(0,Math.floor(Number(counts.gold)||0));x.apps[id]=id==="cambridge"&&cambridge?cambridge.gold:Math.max(Math.max(0,Math.floor(Number(x.apps[id])||0)),gold);x.updatedAt=Date.now();}
+  const values=Object.values(x.apps).map(n=>Math.max(0,Math.floor(Number(n)||0))),totalGold=values.reduce((sum,n)=>sum+n,0),stars=values.reduce((sum,n)=>sum+Math.floor(n/STAR_STEP),0),localGold=Math.max(0,Math.floor(Number(x.apps[id])||0)),localStars=Math.floor(localGold/STAR_STEP),progress=localGold%STAR_STEP;
   x.totalGold=totalGold;x.stars=stars;
   if(counts)try{localStorage.setItem(STAR_KEY,JSON.stringify(x));window.dispatchEvent(new CustomEvent("hub:star-progress",{detail:{stars,totalGold,appId:id,localGold,localStars,progress,step:STAR_STEP,apps:{...x.apps}}}));}catch{}
   return{stars,totalGold,appId:id,localGold,localStars,progress,toNext:STAR_STEP-progress,step:STAR_STEP,apps:{...x.apps}};
@@ -42,9 +66,9 @@ function countsFromHistory(rows=[]){
   return out;
 }
 function medalStripHtml(counts={},opts={}){
-  const c=normalizeCounts(counts),context=opts.context||"summary",compact=opts.compact!==false,st=starState(c);
+  const c=normalizeCounts(starAppId()==="cambridge"?(cambridgeMedalCounts()||counts):counts),context=opts.context||"summary",compact=opts.compact!==false,st=starState(c);
   const items=Object.values(TIERS).map(x=>{const n=c[x.key]||0,earned=n>0;return '<span class="ad-medal-stat '+(earned?"earned ":"locked ")+'ad-medal-stat-'+x.key+'" style="--ach:'+x.color+';--ach-text:'+x.text+'" title="'+x.short+' &middot; '+n+' veces conseguida"><i>'+n+'</i><b>'+x.short+'</b></span>';}).join("");
-  const star='<span class="ad-medal-stat '+(st.stars>0?"earned ":"locked ")+'ad-medal-stat-star" title="STAR GLOBAL &middot; '+st.stars+' conseguida'+(st.stars===1?'':'s')+' &middot; '+st.progress+'/'+STAR_STEP+' oros globales hacia la siguiente"><i aria-hidden="true">&#9733;</i><b>STAR<em>'+st.stars+'</em></b></span>';
+  const star='<span class="ad-medal-stat '+(st.localStars>0?"earned ":"locked ")+'ad-medal-stat-star" title="'+st.localStars+' estrellas de esta aplicación · '+st.progress+'/'+STAR_STEP+' oros hacia la siguiente"><i aria-hidden="true">&#9733;</i><b><em>'+st.localStars+'</em></b></span>';
   return '<div class="ad-medal-strip '+(compact?"compact ":"")+'context-'+context+'" aria-label="Medallas y estrellas acumuladas">'+items+star+'</div>';
 }
 function legendHtml(counts={}){return medalStripHtml(counts,{context:"target",compact:true});}
@@ -89,5 +113,5 @@ function inject(){
 `;document.head.appendChild(s);
 }
 inject();
-window.AdrianAchievements=Object.freeze({tier,badgeHtml,legendHtml,medalStripHtml,countsFromHistory,play,celebrate,starState,starStep:STAR_STEP,tiers:TIERS});
+window.AdrianAchievements=Object.freeze({version:"1.2.0",cambridgeMedalCounts,normalizeStarApps,tier,badgeHtml,legendHtml,medalStripHtml,countsFromHistory,play,celebrate,starState,starStep:STAR_STEP,tiers:TIERS});
 })();
