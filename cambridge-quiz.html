@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10271d">
+<title>Cambridge B2 · Quiz</title>
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./cambridge-quiz.css?v=0.1.0">
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <a class="study-link" href="./index.html" aria-label="Volver a los exámenes">← Modo Estudio</a>
+  <strong>CAMBRIDGE B2 · QUIZ</strong>
+</header>
+<main id="quizHome" class="screen">
+  <div class="eyebrow">B2 FIRST · READING &amp; USE OF ENGLISH</div>
+  <h1>Cambridge Quiz</h1>
+  <p class="intro">Elige un tipo de ejercicio. Preguntas originales, una por pantalla, con tiempo y corrección inmediata.</p>
+  <section id="quizModes" class="mode-list" aria-label="Modalidades">
+    <button class="mode" data-part="1"><span class="mode-num">01</span><span><b>Multiple Choice</b><small>4 opciones · 15 segundos</small></span><span aria-hidden="true">→</span></button>
+    <button class="mode" data-part="2"><span class="mode-num">02</span><span><b>Open Cloze</b><small>Escribe una palabra · 30 segundos</small></span><span aria-hidden="true">→</span></button>
+    <button class="mode" data-part="3"><span class="mode-num">03</span><span><b>Word Formation</b><small>Transforma la palabra · 30 segundos</small></span><span aria-hidden="true">→</span></button>
+  </section>
+  <p class="bank-note"><b>Banco disponible:</b> 20 exámenes estructurados (11–30), 160 preguntas por modalidad. Los 10 exámenes escaneados siguen íntegros en Modo Estudio y se incorporarán cuando sus textos estén estructurados.</p>
+  <section class="stats-panel"><h2>Tu evolución</h2><div id="quizHomeStats" class="stats-grid"></div><div id="quizHistory"></div></section>
+</main>
+<main id="quizPlay" class="screen hidden" aria-live="off">
+  <div class="play-head">
+    <button class="plain-back" id="quitQuiz" type="button">← Salir</button>
+    <span id="quizPosition" class="position">1 / 15</span>
+    <div id="quizClock" class="clock" style="--fill:100%"><strong id="quizCountdown">15</strong><small>s</small></div>
+  </div>
+  <div class="session-bar"><span id="quizModeTitle">Multiple Choice</span><span id="quizScore">0 puntos</span></div>
+  <div class="progress-rail"><div id="quizProgressBar"></div></div>
+  <article class="question-panel">
+    <p class="origin" id="quizOrigin"></p>
+    <div id="quizContext" class="passage" aria-label="Fragmento original del examen"></div>
+    <div id="quizBase" class="base-word hidden"></div>
+    <div id="quizAnswerArea" class="answer-area"></div>
+    <div id="quizFeedback" class="feedback hidden" aria-live="polite"></div>
+    <div class="actions"><button id="skipQuiz" class="soft-btn" type="button">Pasar</button><button id="submitQuiz" class="main-btn hidden" type="button">Comprobar</button><button id="nextQuiz" class="main-btn hidden" type="button">Siguiente →</button></div>
+  </article>
+</main>
+<main id="quizFinish" class="screen hidden">
+  <div class="eyebrow">RONDA TERMINADA</div><h1 id="finishTitle">Resultado</h1>
+  <section class="finish-panel">
+    <div id="finishBadge"></div>
+    <div id="finishSummary" class="stats-grid"></div>
+    <div id="finishChart"></div>
+    <button id="repeatQuiz" class="main-btn full" type="button">Otra ronda</button>
+    <button id="finishHome" class="soft-btn full" type="button">Cambiar modalidad</button>
+  </section>
+</main>
+</div>
+<script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-sync.js?v=1.0.8-0d4fa97"></script>
+<script src="https://adrianxds-ads.github.io/adrian-core/design/adrian-visual-system.js?v=core-20261004b"></script>
+<script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-achievements.js?v=c796fa764ae1"></script>
+<script src="https://adrianxds-ads.github.io/adrian-core/components/hub-charts.js?v=1.0.0"></script>
+<script src="./data/engexam-bank.js"></script>
+<script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-keyboard.js?v=4.1.2-20261007"></script>
+<script src="./cambridge-quiz.js?v=0.1.0"></script>
+</body>
+</html>
