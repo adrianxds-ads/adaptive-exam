@@ -1,4 +1,4 @@
-const APP_VERSION="1.3.2";
+const APP_VERSION="1.3.3";
 let pendingStats=null;
 function safeDecoration(run,fallback=""){try{return run()??fallback;}catch(e){console.warn("Decoration unavailable",e);return fallback;}}
 const PAPERS=[...(window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].sort((a,b)=>(Number(a.examNumber)||99)-(Number(b.examNumber)||99));

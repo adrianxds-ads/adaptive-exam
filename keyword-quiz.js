@@ -34,7 +34,9 @@ for(const p of sources){
 }
 function readJSON(key,fallback){try{return JSON.parse(localStorage.getItem(key)||'null')||fallback;}catch{return fallback;}}
 const stats=readJSON(STORE,{attempts:[],sessions:[]});
-const pref=readJSON(PREF,{difficulty:'tricky',readFirst:true});
+const pref=readJSON(PREF,{difficulty:'normal',readFirst:true});
+// Earlier six-option sessions remain in progress history, but all new rounds use four options.
+pref.difficulty='normal';
 const save=()=>{try{localStorage.setItem(STORE,JSON.stringify(stats));}catch(e){console.warn('Keyword progress save failed',e);}};
 const savePref=()=>{try{localStorage.setItem(PREF,JSON.stringify(pref));}catch(_){}};
 let state=null,interval=null,delay=null,nextDelay=null;
@@ -62,7 +64,7 @@ function choose(){
  return result;
 }
 function renderHome(){
- $('kqBankLabel').textContent=bank.length+' transformaciones piloto · Exámenes 11–14 · Normal o Tricky';
+ $('kqBankLabel').textContent=bank.length+' transformaciones piloto · Exámenes 11–14 · 4 opciones con posiciones variables';
  const total=stats.attempts.length,correct=stats.attempts.filter(x=>x.correct).length,unique=new Set(stats.attempts.map(x=>x.id)).size;
  const medals=stats.sessions.reduce((acc,s)=>{if(s.correct===15)acc.gold++;else if(s.correct===14)acc.violet++;else if(s.correct===13)acc.blue++;return acc;},{gold:0,violet:0,blue:0});
  $('kqHomeStats').innerHTML=[
@@ -74,7 +76,7 @@ function renderHome(){
  $('kqStart').disabled=bank.length<ROUND;
 }
 function persistSettings(){
- pref.difficulty=document.querySelector('[name=kqDifficulty]:checked')?.value||'tricky';
+ pref.difficulty='normal';
  pref.readFirst=$('kqReadFirst').checked;
  savePref();
 }
@@ -87,9 +89,17 @@ function begin(){
 function question(){
  return state?.questions[state.index];
 }
-function attemptCount(id){return stats.attempts.filter(a=>a.id===id).length;}
+function keywordPosition(value,keyword){
+ return words(value).findIndex(w=>w.replace(/^[^a-z]+|[^a-z]+$/gi,'').toUpperCase()===keyword.toUpperCase());
+}
 function choices(q){
- const picked=state.difficulty==='tricky'?q.distractors.slice():shuffle(q.distractors).slice(0,3);
+ // One distractor moves the mandatory word where a reviewed alternative exists.
+ // This prevents the learner from guessing by the fixed position of the keyword.
+ const originalPosition=keywordPosition(q.correct,q.keyword);
+ const shifted=shuffle(q.distractors.filter(d=>keywordPosition(d,q.keyword)!==originalPosition));
+ const first=shifted[0]||null;
+ const others=shuffle(q.distractors.filter(d=>d!==first)).slice(0,first?2:3);
+ const picked=first?[first,...others]:others;
  return shuffle([q.correct,...picked].map(value=>({value,correct:value===q.correct})));
 }
 function secondText(q,answer='',result=''){
@@ -98,10 +108,10 @@ function secondText(q,answer='',result=''){
 }
 function renderQuestion(){
  stop();state.answered=false;
- const q=question(),limit=state.difficulty==='tricky'?20:15;
+ const q=question(),limit=15;
  state.limit=limit;state.selected=null;state.options=choices(q);
  $('kqPosition').textContent=(state.index+1)+' / '+state.questions.length;
- $('kqMode').textContent=(state.difficulty==='tricky'?'TRICKY · 6 OPCIONES':'NORMAL · 4 OPCIONES');
+ $('kqMode').textContent='KEYWORD QUIZ · 4 OPCIONES';
  $('kqScore').textContent=state.points+' puntos';
  $('kqBar').style.width=(state.index/state.questions.length*100)+'%';
  $('kqSource').textContent='EXAM '+String(q.paper).padStart(2,'0')+' · PREGUNTA '+q.number+' · PART 4';
@@ -159,16 +169,12 @@ function finish(){
  save();
  $('kqFinishTitle').textContent=state.correct+' / '+state.questions.length+' correctas';
  $('kqResultStats').innerHTML=[[''+state.correct+' / '+state.questions.length,'Aciertos'],[nfmt(state.points),'Puntos'],
-  [Math.round(100*state.correct/state.questions.length)+'%','Precisión'],[state.difficulty==='tricky'?'6':'4','Opciones']].map(([v,label])=>'<div class="metric"><b>'+esc(v)+'</b><span>'+label+'</span></div>').join('');
+  [Math.round(100*state.correct/state.questions.length)+'%','Precisión'],['4','Opciones']].map(([v,label])=>'<div class="metric"><b>'+esc(v)+'</b><span>'+label+'</span></div>').join('');
  const medal=state.correct===15?'🥇 Oro':state.correct===14?'🥈 Violeta':state.correct===13?'🥉 Azul':'';
  $('kqMedals').textContent=medal?medal+' · '+state.correct+' / 15':'';
  $('kqMedals').style.fontWeight='900';$('kqMedals').style.fontSize='22px';
  show('kqFinish');renderHome();
 }
-document.querySelectorAll('[name=kqDifficulty]').forEach(x=>{
- x.checked=x.value===pref.difficulty;
- x.addEventListener('change',persistSettings);
-});
 $('kqReadFirst').checked=pref.readFirst!==false;
 $('kqReadFirst').addEventListener('change',persistSettings);
 $('kqStart').addEventListener('click',begin);
