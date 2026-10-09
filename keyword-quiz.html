@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10271d">
+<title>Keyword Quiz · Cambridge B2</title>
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./cambridge-quiz.css?v=0.5.4">
+<link rel="stylesheet" href="./keyword-quiz.css?v=0.1.0">
+</head>
+<body>
+<div class="app kq-app">
+<header class="topbar"><a class="study-link" href="./cambridge-quiz.html">← Cambridge Quiz</a><strong>KEYWORD QUIZ · B2</strong></header>
+<main id="kqHome" class="screen">
+ <div class="eyebrow">CAMBRIDGE PART 4 · ENTRENAMIENTO</div>
+ <h1>Keyword Quiz</h1>
+ <p class="intro">Transformaciones con una palabra obligatoria. Acierta entre respuestas casi iguales, sin escribir con el teclado.</p>
+ <section class="kq-note" aria-label="Contenido experimental"><strong>Laboratorio · Primera campaña</strong><span id="kqBankLabel">Cargando tarjetas…</span><span>Estas son preguntas adaptadas al formato de reconocimiento; el examen real requiere escribir la transformación.</span></section>
+ <fieldset class="timing-settings"><legend>¿Cuántas opciones?</legend>
+  <label><input type="radio" name="kqDifficulty" value="normal"><span><b>Normal · 4 opciones</b><small>15 segundos para elegir. Tres trampas gramaticales o de significado.</small></span></label>
+  <label><input type="radio" name="kqDifficulty" value="tricky" checked><span><b>Tricky · 6 opciones</b><small>20 segundos. Cinco alternativas diseñadas para hacerte dudar.</small></span></label>
+ </fieldset>
+ <label class="kq-read-toggle"><input type="checkbox" id="kqReadFirst" checked> <span><b>Leer primero</b><small>Verás las frases 2,8 s antes de que aparezcan las opciones. El tiempo empieza después.</small></span></label>
+ <button id="kqStart" class="main-btn full" type="button">Empezar · 15 preguntas</button>
+ <div id="kqHomeStats" class="stats-grid kq-stats" aria-label="Estadísticas personales"></div>
+ <p class="kq-footnote">Reconocer no sustituye a producir: sigue practicando el ejercicio escrito de Cambridge para preparar el examen.</p>
+</main>
+<main id="kqPlay" class="screen hidden">
+ <div class="play-head"><button id="kqQuit" class="plain-back" type="button">← Salir</button><span id="kqPosition" class="position">1 / 15</span><div class="clock" id="kqClock" style="--fill:100%"><strong id="kqSeconds">20</strong><small>s</small></div></div>
+ <div class="session-bar"><span id="kqMode">TRICKY · 6 OPCIONES</span><span id="kqScore">0 puntos</span></div>
+ <div class="progress-rail"><div id="kqBar"></div></div>
+ <article class="question-panel kq-panel">
+  <p id="kqSource" class="origin">EXAM · PART 4</p>
+  <div id="kqOriginal" class="kq-original"></div>
+  <div class="kq-rewrite">
+   <div class="kq-keyline"><span>PALABRA OBLIGATORIA</span><b id="kqKeyword"></b></div>
+   <p id="kqSecond"></p>
+  </div>
+  <p class="kq-rule">2–5 palabras, incluida la palabra clave. Conserva el significado.</p>
+  <div id="kqChoices" class="kq-choices"></div>
+  <button id="kqReveal" class="soft-btn full hidden" type="button">Mostrar opciones ahora</button>
+  <div id="kqFeedback" class="kq-feedback hidden" aria-live="polite"></div>
+ </article>
+</main>
+<main id="kqFinish" class="screen hidden">
+ <div class="eyebrow">RONDA COMPLETADA</div>
+ <h1 id="kqFinishTitle">Resultado</h1>
+ <div id="kqMedals"></div>
+ <div class="stats-grid" id="kqResultStats"></div>
+ <div class="kq-end-buttons"><button id="kqAgain" class="main-btn" type="button">Otra ronda</button><button id="kqBack" class="soft-btn" type="button">Elegir dificultad</button></div>
+ <p class="kq-footnote">Las preguntas falladas tendrán prioridad en próximas sesiones. Los avances de este juego se guardan aparte.</p>
+</main>
+</div>
+<script src="./data/engexam-bank.js"></script>
+<script src="./keyword-quiz-bank.js?v=0.1.0"></script>
+<script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-achievements.js?v=stars3"></script>
+<script src="./keyword-quiz.js?v=0.1.0"></script>
+</body>
+</html>
