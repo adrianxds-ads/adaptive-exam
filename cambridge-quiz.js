@@ -181,7 +181,7 @@ function contextHTML(q){
    const label=answer.reason==="answer"?(answer.correct?"Acierto":"Error"):answer.reason==="timeout"?"Tiempo agotado":"Pasada";
    return "<mark "+(current?"id='targetGap' ":"")+"class='gap-answer "+(answer.correct?"gap-correct":"gap-incorrect")+"' aria-label='"+label+"'>"+esc(String(answer.raw||"").trim()||"—")+"</mark>";
   }
-  if(current)return "<mark id='targetGap' aria-label='Hueco actual'>____</mark>";
+  if(current)return q.part===1?"<mark id='targetGap' aria-label='Hueco actual'>____</mark>":"<mark id='targetGap' class='editable-gap'><input id='quizInput' class='inline-answer-input' type='text' data-ad-keyboard='en' inputmode='none' autocomplete='off' autocorrect='off' autocapitalize='none' spellcheck='false' aria-label='Escribe la respuesta en este hueco'></mark>";
   return "<span class='other-gap' aria-label='Otro hueco'> […] </span>";
  }).join("")+"</p>";
 }
@@ -212,16 +212,25 @@ function renderQuestion(){
  $("quizFeedback").textContent="";
  $("skipQuiz").classList.remove("hidden");
  $("submitQuiz").classList.toggle("hidden",part===1);
- const host=$("quizAnswerArea");host.className="answer-area"+(part===1?"":" typing");
+ const host=$("quizAnswerArea");host.className="answer-area"+(part===1?"":" typing inline-entry");
  if(part===1){
   host.innerHTML=(q.item.options||[]).map((opt,i)=>"<button class='option-btn' data-opt='"+i+"' type='button'><span>"+String.fromCharCode(65+i)+"</span>"+esc(opt)+"</button>").join("");
   host.querySelectorAll(".option-btn").forEach(b=>b.addEventListener("click",()=>acceptAnswer("answer",q.item.options[Number(b.dataset.opt)],b)));
  }else{
-  host.innerHTML="<input id='quizInput' class='answer-input' type='text' data-ad-keyboard='en' inputmode='none' autocomplete='off' autocapitalize='none' autocorrect='off' spellcheck='false' aria-label='Escribe la respuesta'>"+
-    "<p class='answer-tip'>Escribe una sola palabra y pulsa Comprobar. Puedes usar tu teclado habitual.</p>";
+  host.innerHTML="<p class='answer-tip'>Escribe en el hueco resaltado del texto y pulsa Comprobar cuando termines.</p>";
   const inp=$("quizInput");
   inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();acceptAnswer("answer",inp.value);}});
-  inp.addEventListener("focus",()=>{window.AdrianKeyboard?.open?.(inp);setTimeout(()=>inp.scrollIntoView({block:"center",behavior:"smooth"}),80);});
+  const fitAnswer=()=>{
+    const bar=$("submitQuiz"),kb=document.querySelector(".ad-keyboard.open");
+    if(!kb||!bar||!inp.isConnected)return;
+    const bottom=bar.getBoundingClientRect().top-12,rect=inp.getBoundingClientRect();
+    if(rect.bottom>bottom)window.scrollBy({top:rect.bottom-bottom,behavior:"instant"});
+  };
+  inp.addEventListener("focus",()=>{
+    window.AdrianKeyboard?.open?.(inp);
+    [80,220,400].forEach(ms=>setTimeout(()=>{window.AdrianKeyboard?.keepActiveVisible?.();fitAnswer();},ms));
+  });
+  inp.addEventListener("input",()=>requestAnimationFrame(fitAnswer));
  }
  requestAnimationFrame(()=>{
   const box=$("quizContext"),gap=$("targetGap");

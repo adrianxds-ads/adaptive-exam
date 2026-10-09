@@ -1,4 +1,4 @@
-const APP_VERSION="1.2.22";
+const APP_VERSION="1.2.23";
 let pendingStats=null;
 function safeDecoration(run,fallback=""){try{return run()??fallback;}catch(e){console.warn("Decoration unavailable",e);return fallback;}}
 const PAPERS=[...(window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].sort((a,b)=>(Number(a.examNumber)||99)-(Number(b.examNumber)||99));
@@ -130,9 +130,8 @@ function decorateCambridgeKeyboard(){
   };
   const space=controls.querySelector('[data-action="space"]'),back=controls.querySelector('[data-action="back"]');
   const prev=make("cambridge-prev","←",()=>moveExamInput(-1));
-  const apos=make("cambridge-apos","'",()=>insertExamText("'"));
   const next=make("cambridge-next","→",()=>moveExamInput(1));
-  controls.insertBefore(prev,space||controls.firstChild);controls.insertBefore(apos,space||null);controls.insertBefore(next,back||null);
+  controls.insertBefore(prev,space||controls.firstChild);controls.insertBefore(next,back||null);
 }
 document.addEventListener("focusin",e=>{if(e.target?.matches?.("#paperHost input[data-n]")){lastExamInput=e.target;requestAnimationFrame(ensureExamInputVisible);setTimeout(ensureExamInputVisible,200);}});
 const keyboardObserver=new MutationObserver(()=>queueMicrotask(decorateCambridgeKeyboard));

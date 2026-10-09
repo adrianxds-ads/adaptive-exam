@@ -11,9 +11,8 @@ body.cambridge-writing .ad-close{
 }
 body.cambridge-writing .ad-keyboard-row{gap:3px;margin:2px auto}
 body.cambridge-writing .ad-key{min-height:52px;font-size:30px;border-radius:10px}
-body.cambridge-writing .ad-keyboard-controls{gap:4px;margin-top:4px}
+body.cambridge-writing .ad-keyboard-controls{grid-template-columns:.85fr .75fr .8fr 2.25fr .8fr .75fr .8fr .85fr;gap:4px;margin-top:4px}
 body.cambridge-writing .ad-key.control{min-height:47px;font-size:17px}
-body.cambridge-writing .ad-key.cambridge-apos{font-size:23px}
 body.cambridge-writing #paperScreen .paper-head{padding:5px 8px;margin-bottom:5px}
 body.cambridge-writing #paperScreen .paper-head-row{grid-template-columns:38px 1fr 38px;gap:6px}
 body.cambridge-writing #paperScreen .back{width:38px;height:38px;font-size:17px}
