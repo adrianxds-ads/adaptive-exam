@@ -136,13 +136,14 @@ function nextExamPaper(){
  const papers=examPapers(),i=papers.findIndex(p=>p.id===session.sourcePaperId);
  return i>=0?papers[i+1]||null:null;
 }
-function renderHome(){QuizLearning.evidence(quizAttempts().flatMap(a=>(a.items||[]).map(item=>({...item,at:Date.parse(a.completedAt),retrievalMode:Number(a.part)===1?"RECOGNITION":"PRODUCTION"}))),"#quizHomeStats");
+function renderHome(){
  const attempts=quizAttempts(),runs=historySessions(attempts).filter(s=>s.total>=s.roundSize);
  const correct=attempts.filter(a=>a.correct).length,fast=attempts.filter(a=>a.correct&&Number(a.items[0].responseSec)<=AUTO_SEC[a.part]).length;
  const coverage=new Set(attempts.map(a=>a.items[0].sourceKey)).size;
  $("quizHomeStats").innerHTML=metric(attempts.length?" "+Math.round(correct/attempts.length*100)+"%":"—","Acierto")
   +metric(coverage+"/"+ALL.length,"Preguntas vistas")+metric(runs.length,"Rondas")
   +metric(attempts.length?Math.round(fast/attempts.length*100)+"%":"—","Automatismo");
+ QuizLearning.evidence(quizAttempts().flatMap(a=>(a.items||[]).map(item=>({...item,at:Date.parse(a.completedAt),retrievalMode:Number(a.part)===1?"RECOGNITION":"PRODUCTION"}))),"#quizHomeStats");
  const scores=runs.map(r=>({...r,score:100*r.correct/r.total,automaticity:100*r.auto/r.total}));
  $("quizHistory").innerHTML=chart(scores,"Línea de aprendizaje","score")+chart(scores,"Automatismo","automaticity");
  renderExamTable();
