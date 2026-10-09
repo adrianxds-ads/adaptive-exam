@@ -322,3 +322,16 @@ html body[data-nucleo-game] #gameScreen .timer strong{
  color:#263F52!important;
  text-shadow:0 1px rgba(255,255,255,.8);
 }
+
+/* 360px: keep B2 Transform statistics readable without horizontal scrolling. */
+@media(max-width:400px){
+ html body[data-nucleo-game="keyword"] .mini-stats{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+ html body[data-nucleo-game="keyword"] .mini-stats .stat:last-child{
+  grid-column:1/-1;
+ }
+ html body[data-nucleo-game="keyword"] .mini-stats .stat{
+  min-width:0;
+ }
+}
