@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#10271d">
 <title>Cambridge B2 · Quiz</title>
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./cambridge-quiz.css?v=0.5.0">
+<link rel="stylesheet" href="./cambridge-quiz.css?v=0.5.1">
 </head>
 <body>
 <div class="app">
@@ -69,7 +69,7 @@
     <div id="quizBase" class="base-word hidden"></div>
     <div id="quizAnswerArea" class="answer-area"></div>
     <div id="quizFeedback" class="feedback hidden" aria-live="polite"></div>
-    <div class="actions"><button id="skipQuiz" class="soft-btn" type="button">Pasar</button><button id="submitQuiz" class="main-btn hidden" type="button">Comprobar</button><button id="nextQuiz" class="main-btn hidden" type="button">Siguiente →</button></div>
+    <div class="actions"><button id="skipQuiz" class="soft-btn" type="button">Pasar</button><button id="submitQuiz" class="main-btn hidden" type="button">Comprobar</button></div>
   </article>
 </main>
 <main id="quizFinish" class="screen hidden">
@@ -78,6 +78,12 @@
     <div id="finishBadge"></div>
     <div id="finishSummary" class="stats-grid"></div>
     <div id="finishChart"></div>
+    <button id="showSolutions" class="main-btn full" type="button" aria-controls="finishSolutions" aria-expanded="false">Mirar soluciones</button>
+    <section id="finishSolutions" class="solutions-panel hidden" aria-label="Soluciones de la ronda">
+      <h2>Soluciones de todas las preguntas</h2>
+      <p class="solutions-hint">Revisamos qué respondimos, cuál era la solución y dónde encaja en el texto.</p>
+      <div id="solutionList"></div>
+    </section>
     <button id="repeatQuiz" class="main-btn full" type="button">Otra ronda</button>
     <button id="nextExamQuiz" class="main-btn full hidden" type="button">Siguiente examen</button>
     <button id="finishHome" class="soft-btn full" type="button">Cambiar modalidad</button>
@@ -91,6 +97,6 @@
 <script src="./data/cambridge-quiz-transcribed.js?v=0.5.0"></script>
 <script src="./data/engexam-bank.js"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-keyboard.js?v=4.1.2-20261007"></script>
-<script src="./cambridge-quiz.js?v=0.5.0"></script>
+<script src="./cambridge-quiz.js?v=0.5.1"></script>
 </body>
 </html>

@@ -49,3 +49,10 @@ Verificación: 36 rondas completas, móvil 412 px y escritorio 1280 px, ambos ti
 Lista de Exam 01–30 por parte: completado, número de rondas completas, últimos fallos, mejores Exam points y Game points, acceso directo para jugar/repetir. Usa los intentos existentes de Quiz por examen 1.2.18 sin migración. Rondas incompletas y quiz mezclado excluidos de la tabla. Gráfica de histórico completo del modo por examen, ampliable. Resultado identificado por número y parte; repetir, siguiente examen (misma parte/tiempo), elegir examen y volver a la lista. Exam 30 no reinicia la secuencia.
 
 Pruebas a 360/412/1280 px: treinta filas en orden, pendientes, dos repeticiones con 7 y 6 aciertos (dos últimos fallos y mejor 7/8), independencia por parte, ronda abandonada excluida, siguiente y elección, límite Exam 30, recarga, 39 registros en la gráfica sin limitar a treinta. Captura móvil revisada. Pruebas aisladas y sin progreso real. Evidencia: EXAM_TRACKER_ACCEPTANCE_2026-10-08.json.
+
+
+## 1.2.21 · 2026-10-09
+
+Cambridge Quiz: avance automático tras cada respuesta (850 ms acierto; 1300 ms error; 1000 ms paso/caducidad); sin botón Siguiente. El texto mantiene, durante la ronda, las palabras elegidas en verde o rojo para huecos del mismo examen. Pitido discreto al fallar; soluciones y explicaciones reunidas al terminar mediante Mirar soluciones. Área de lectura ampliada con degradado conservado. Funciona en quiz mezclado y por examen.
+
+QA: PASS en Edge headless, 360/390/500/1280 px sin desbordamiento; prueba completa de 8 preguntas, 1 fallo y 7 aciertos, 8 soluciones al final, respuesta escrita incorrecta, omisión, conservación del guardado y salida sin avance fantasma. Pruebas aisladas del progreso real: C:\Users\adria\quiz-qa\cambridge-quiz-auto-smoke.cjs. Pendiente prueba directa en Pixel.

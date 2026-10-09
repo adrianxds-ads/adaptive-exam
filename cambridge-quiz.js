@@ -32,6 +32,21 @@ const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
 const uid=()=>globalThis.crypto&&crypto.randomUUID?crypto.randomUUID():"q"+Date.now()+"-"+Math.random().toString(36).slice(2);
 let session=null;
 let timerId=null;
+let advanceTimer=null;
+const clearAdvance=()=>{if(advanceTimer!==null){clearTimeout(advanceTimer);advanceTimer=null;}};
+function playIncorrectBeep(){
+ try{
+  const Audio=window.AudioContext||window.webkitAudioContext;
+  if(!Audio)return;
+  const ctx=new Audio(),osc=ctx.createOscillator(),gain=ctx.createGain();
+  osc.type="sine";osc.frequency.setValueAtTime(285,ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(220,ctx.currentTime+.11);
+  gain.gain.setValueAtTime(.025,ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.12);
+  osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+.125);
+  osc.onended=()=>ctx.close().catch(()=>{});
+ }catch(_){/* Feedback visual siempre disponible, incluso sin audio. */}
+}
 
 function loadStore(){
  try{const x=JSON.parse(localStorage.getItem(KEY)||"{}");return x&&Array.isArray(x.attempts)?x:{attempts:[]};}
@@ -140,7 +155,7 @@ function updateQuizKind(){
  $("quizExamPicker").classList.toggle("hidden",quizKind!=="exam");
  $("examListSection").classList.toggle("hidden",quizKind!=="exam");
  if(quizKind==="exam")renderExamTable();
- $("quizRouteHint").textContent=quizKind==="exam"?"Elige el examen y la parte. Sus 8 preguntas originales aparecen en orden, con corrección después de cada respuesta.":"15 preguntas de distintos exámenes, seleccionadas para practicar.";
+ $("quizRouteHint").textContent=quizKind==="exam"?"Elige el examen y la parte. Sus 8 preguntas originales aparecen en orden; verás cada acierto o error y revisarás las soluciones al terminar.":"15 preguntas de distintos exámenes, seleccionadas para practicar.";
  updateTiming();
 }
 function renderScores(){
@@ -149,6 +164,7 @@ function renderScores(){
 }
 function startQuiz(part,paperId=null){
  if(!LIMIT[part])return;
+ clearAdvance();stopTimer();
  const sourcePaperId=paperId||(quizKind==="exam"?$("quizExam").value:null);
  const questions=sourcePaperId?ALL.filter(q=>q.part===part&&q.paper.id===sourcePaperId).sort((a,b)=>Number(a.item.n)-Number(b.item.n)):drawQuestions(part);
  if(!questions.length){alert("Esta modalidad aún no contiene preguntas estructuradas.");return;}
@@ -159,7 +175,13 @@ function startQuiz(part,paperId=null){
 function contextHTML(q){
  return "<p>"+q.segments.map(seg=>{
   if(typeof seg==="string")return esc(seg);
-  if(seg.n===q.item.n)return "<mark id='targetGap' aria-label='Hueco actual'>____</mark>";
+  const current=Number(seg.n)===Number(q.item.n);
+  const answer=session?.answers.find(a=>a.q.part===q.part&&a.q.paper.id===q.paper.id&&Number(a.q.item.n)===Number(seg.n));
+  if(answer){
+   const label=answer.reason==="answer"?(answer.correct?"Acierto":"Error"):answer.reason==="timeout"?"Tiempo agotado":"Pasada";
+   return "<mark "+(current?"id='targetGap' ":"")+"class='gap-answer "+(answer.correct?"gap-correct":"gap-incorrect")+"' aria-label='"+label+"'>"+esc(String(answer.raw||"").trim()||"—")+"</mark>";
+  }
+  if(current)return "<mark id='targetGap' aria-label='Hueco actual'>____</mark>";
   return "<span class='other-gap' aria-label='Otro hueco'> […] </span>";
  }).join("")+"</p>";
 }
@@ -174,7 +196,8 @@ function tick(){
  if(seconds<=0)acceptAnswer("timeout");
 }
 function renderQuestion(){
- stopTimer();
+ clearAdvance();stopTimer();
+ window.scrollTo(0,0);
  const part=session.part,q=session.questions[session.index];
  session.answered=false;
  $("quizPosition").textContent=(session.index+1)+" / "+session.questions.length;
@@ -188,7 +211,6 @@ function renderQuestion(){
  $("quizFeedback").className="feedback hidden";
  $("quizFeedback").textContent="";
  $("skipQuiz").classList.remove("hidden");
- $("nextQuiz").classList.add("hidden");
  $("submitQuiz").classList.toggle("hidden",part===1);
  const host=$("quizAnswerArea");host.className="answer-area"+(part===1?"":" typing");
  if(part===1){
@@ -242,23 +264,48 @@ function acceptAnswer(reason,raw="",button=null){
  window.AdrianKeyboard?.close?.();
  const buttons=$("quizAnswerArea").querySelectorAll("button,input");
  buttons.forEach(el=>{el.disabled=true;if(el===button)el.classList.add("chosen");});
- const good=q.item.answers?.[0]||q.item.answer||"—";
- const expl=q.item.explanation||"Respuesta del banco original.";
- const message=ok?"Correcto. +1 Exam point · +"+points+" Game points":"Respuesta correcta: "+good+" · +0 Exam points · +0 Game points";
+ if(button)button.classList.add(ok?"is-correct":"is-incorrect");
+ const input=$("quizInput");if(input)input.classList.add(ok?"is-correct":"is-incorrect");
+ const passage=$("quizContext"),scroll=passage.scrollTop;
+ passage.innerHTML=contextHTML(q);passage.scrollTop=scroll;
+ if(reason==="answer"&&!ok)playIncorrectBeep();
+ const message=ok?"✓ Correcto · +"+points+" Game points":reason==="timeout"?"Tiempo agotado":reason==="skip"?"Pasada":"✕ Incorrecto";
  const f=$("quizFeedback");
- f.className="feedback"+(ok?" ok":"");
- f.innerHTML="<strong>"+esc(message)+"</strong><div>"+esc(expl)+"</div>"+(saved?"":"<small>No se ha podido guardar el progreso en este dispositivo.</small>");
+ f.className="feedback compact"+(ok?" ok":"");
+ f.innerHTML="<strong>"+esc(message)+"</strong>"+(saved?"":"<small>No se ha podido guardar el progreso en este dispositivo.</small>");
  $("skipQuiz").classList.add("hidden");$("submitQuiz").classList.add("hidden");
- $("nextQuiz").classList.remove("hidden");
- $("nextQuiz").textContent=session.index===session.questions.length-1?"Ver resultado →":"Siguiente →";
  renderScores();
+ advanceTimer=setTimeout(()=>{advanceTimer=null;nextQuestion();},ok?850:reason==="answer"?1300:1000);
 }
 function nextQuestion(){
  if(!session||!session.answered)return;
+ clearAdvance();
  if(++session.index>=session.questions.length){finishQuiz();return;}
  renderQuestion();
 }
-
+function reviewSnippet(q){
+ const i=q.segments.findIndex(s=>typeof s==="object"&&Number(s.n)===Number(q.item.n));
+ const before=typeof q.segments[i-1]==="string"?q.segments[i-1].slice(-110):"";
+ const after=typeof q.segments[i+1]==="string"?q.segments[i+1].slice(0,110):"";
+ const expected=q.item.answers?.[0]||q.item.answer||"—";
+ return "<p class='solution-snippet'>…"+esc(before)+" <mark>"+esc(expected)+"</mark> "+esc(after)+"…</p>";
+}
+function renderSolutions(){
+ $("finishSolutions").classList.add("hidden");
+ $("showSolutions").setAttribute("aria-expanded","false");
+ $("showSolutions").textContent="Mirar soluciones · "+session.answers.length;
+ $("solutionList").innerHTML=session.answers.map((a,i)=>{
+  const expected=a.q.item.answers?.[0]||a.q.item.answer||"—";
+  const given=a.reason==="timeout"?"Tiempo agotado":a.reason==="skip"?"Pasada":a.raw||"—";
+  const explanation=a.q.item.explanation||"";
+  return "<article class='solution-card "+(a.correct?"solved":"missed")+"'>"+
+   "<h3><span>"+(a.correct?"✓":"✕")+" Pregunta "+(i+1)+" · Exam "+String(a.q.paper.examNumber).padStart(2,"0")+" · nº "+esc(a.q.item.n)+"</span></h3>"+
+   "<p><b>Tu respuesta:</b> <span class='given'>"+esc(given)+"</span></p>"+
+   "<p><b>Solución:</b> <strong>"+esc(expected)+"</strong></p>"+
+   reviewSnippet(a.q)+(explanation?"<p class='solution-explanation'>"+esc(explanation)+"</p>":"")+
+   "</article>";
+ }).join("");
+}
 function finishQuiz(){
  stopTimer();window.AdrianKeyboard?.close?.();
  const count=session.questions.length,fast=session.answers.filter(a=>a.correct&&a.sec<=AUTO_SEC[session.part]).length;
@@ -280,18 +327,24 @@ function finishQuiz(){
  achievement?.play?.(null,session.correct,count);
  const hist=completed.filter(x=>x.part===session.part&&x.quizKind===session.quizKind).map(r=>({...r,score:100*r.correct/r.total,automaticity:100*r.auto/r.total}));
  $("finishChart").innerHTML=chart(hist,"Acierto · evolución","score")+chart(hist,"Automatismo · evolución","automaticity");
+ renderSolutions();
  show("quizFinish");
 }
 document.querySelectorAll("#quizModes [data-part]").forEach(b=>b.addEventListener("click",()=>startQuiz(Number(b.dataset.part))));
 $("skipQuiz").addEventListener("click",()=>acceptAnswer("skip"));
 $("submitQuiz").addEventListener("click",()=>acceptAnswer("answer",$("quizInput")?.value||""));
-$("nextQuiz").addEventListener("click",nextQuestion);
-$("quitQuiz").addEventListener("click",()=>{stopTimer();window.AdrianKeyboard?.close?.();session=null;renderHome();show("quizHome");});
+$("showSolutions").addEventListener("click",()=>{
+ const panel=$("finishSolutions"),open=panel.classList.toggle("hidden");
+ $("showSolutions").setAttribute("aria-expanded",String(!open));
+ $("showSolutions").textContent=open?"Mirar soluciones · "+session.answers.length:"Ocultar soluciones";
+ if(!open)panel.scrollIntoView({block:"start",behavior:"smooth"});
+});
+$("quitQuiz").addEventListener("click",()=>{clearAdvance();stopTimer();window.AdrianKeyboard?.close?.();session=null;renderHome();show("quizHome");});
 $("finishHome").addEventListener("click",()=>{if(session?.quizKind==="exam"){chooseExam();return;}session=null;renderHome();show("quizHome");});
 $("nextExamQuiz").addEventListener("click",()=>{const p=nextExamPaper();if(p)startQuiz(session.part,p.id);});
 $("examListPart").addEventListener("change",renderExamTable);
 $("repeatQuiz").addEventListener("click",()=>{if(session)startQuiz(session.part,session.sourcePaperId);});
-window.addEventListener("pagehide",stopTimer);
+window.addEventListener("pagehide",()=>{clearAdvance();stopTimer();});
 window.addEventListener("storage",e=>{if(e.key===KEY&&!session)renderHome();});
 document.querySelectorAll("[name=quizTiming]").forEach(x=>x.addEventListener("change",()=>{
  timingMode=x.value;try{localStorage.setItem(TIME_KEY,timingMode);}catch(_){}updateTiming();
