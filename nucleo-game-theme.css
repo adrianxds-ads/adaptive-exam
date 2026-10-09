@@ -1,0 +1,324 @@
+
+/* Núcleo Visual · Editorial Luminous: Quiz Shell v1 (2026-10-09).
+ * CARCASA solamente. No afecta a las cuatro respuestas cromáticas, estados
+ * correct/wrong, temporizadores, medallas, arcos de progreso o puntuaciones.
+ * Se importa al final del HEAD de cada aplicación.
+ */
+:root{
+ --ng-bg:#EAF0F5;
+ --ng-ink:#25282C;
+ --ng-muted:#46596B;
+ --ng-surface:#FFFFFF;
+ --ng-edge:#C0CFDB;
+ --ng-accent:#286B88;
+ --ng-halo:rgba(57,133,172,.14);
+ --ng-wash:#D6EFFF;
+ --nucleo-font:Roboto,"Segoe UI",Arial,system-ui,sans-serif;
+ --nucleo-reading-size:19px;
+ --nucleo-reading-line:1.35;
+}
+body[data-nucleo-game="english"]{--ng-accent:#24628E;--ng-halo:rgba(44,125,177,.14);--ng-wash:#D6EFFF}
+body[data-nucleo-game="phrasal"]{--ng-accent:#336B42;--ng-halo:rgba(64,149,90,.13);--ng-wash:#DCF2DB}
+body[data-nucleo-game="pizarras"]{--ng-accent:#856019;--ng-halo:rgba(175,134,40,.13);--ng-wash:#FFF1C8}
+body[data-nucleo-game="cloze"]{--ng-accent:#655099;--ng-halo:rgba(134,113,192,.14);--ng-wash:#EAE1FF}
+body[data-nucleo-game="cambridge"]{--ng-accent:#435FA3;--ng-halo:rgba(101,121,200,.14);--ng-wash:#DCE8FF}
+body[data-nucleo-game="keyword"]{--ng-accent:#955449;--ng-halo:rgba(173,102,97,.13);--ng-wash:#FFE3E0}
+body[data-nucleo-game="catala"]{--ng-accent:#855623;--ng-halo:rgba(182,133,58,.14);--ng-wash:#FFE9CB}
+body[data-nucleo-game="hoti"]{--ng-accent:#236D72;--ng-halo:rgba(55,149,158,.13);--ng-wash:#D5F1EF}
+
+html:has(body[data-nucleo-game]){background:var(--ng-bg);color-scheme:light}
+body[data-nucleo-game]{
+ --bg:#EAF0F5;
+ --text:#25282C;
+ --muted:#46596B;
+ --line:#C0CFDB;
+ color:#25282C;
+ background:
+  radial-gradient(ellipse at 100% 0%,var(--ng-wash),transparent 41%),
+  radial-gradient(ellipse at 0% 90%,var(--ng-halo),transparent 55%),
+  var(--ng-bg)!important;
+ font-family:var(--nucleo-font);
+ font-size:19px;
+ line-height:1.35;
+ color-scheme:light;
+}
+body[data-nucleo-game] :is(h1,h2,h3){color:#1C3344}
+body[data-nucleo-game] :is(.panel,.paper,.kq-panel){
+ background:#FFFFFF;
+ color:#25282C;
+ border:1px solid #C8D6E0;
+ box-shadow:0 9px 30px rgba(38,69,93,.08);
+}
+body[data-nucleo-game] :is(.subtitle,.intro,.meta,.kicker,.eyebrow,
+ .progress-label,.class-card p,.class-card small,.bank-progress,
+ .origin,.submenu-head p,.part-desc,.exercise-source,.exercise-meta){
+ color:#425B6A;
+}
+body[data-nucleo-game] :is(.kicker,.eyebrow,.origin){
+ color:var(--ng-accent);
+ letter-spacing:.08em;
+ font-size:max(15px,1rem);
+}
+body[data-nucleo-game] :is(.subtitle,.intro){
+ font-size:19px;
+ line-height:1.4;
+}
+body[data-nucleo-game] :is(.meta,.progress-label,.card span,.stat span,
+ .read-first-row small,.read-first-mode small,.status,.statusbox,
+ .part-desc,.exercise-meta,.exercise-source){
+ font-size:16px;
+ line-height:1.42;
+}
+body[data-nucleo-game] :is(.card,.stat,.mini-stats .stat,
+ .class-card,.statusbox,.status,.phase-note,.kq-note){
+ background:linear-gradient(135deg,#F5F9FC,var(--ng-wash));
+ border:1px solid #C6D7E2;
+ border-radius:16px;
+ color:#263E50;
+}
+body[data-nucleo-game] :is(.card span,.stat span,.class-card small,
+ .kq-note span:last-child){color:#425B6A}
+body[data-nucleo-game] :is(.primary,.secondary,.ghost,.back){
+ min-height:52px;
+ border-radius:14px;
+ font-size:18px;
+}
+body[data-nucleo-game] :is(.primary,.start-btn,#startBtn,#startClassBtn){
+ background:var(--ng-accent);
+ color:#FFFFFF;
+ border:1px solid var(--ng-accent);
+ box-shadow:inset 0 1px rgba(255,255,255,.2),0 0 17px var(--ng-halo);
+}
+body[data-nucleo-game] :is(.secondary,.ghost,.back){
+ background:#EFF5F9;
+ color:#24465D;
+ border:1px solid #ADBFCD;
+}
+body[data-nucleo-game] :is(.dashboard-menu .menu-btn,.menu-btn,
+ .part-card,.exercise-card,.exam-tile,.mode-card,.mode){
+ background:linear-gradient(125deg,var(--ng-wash),#FFFFFF);
+ color:#233A4D;
+ border:1px solid #B8C9D6;
+ border-radius:17px;
+ box-shadow:0 3px 13px rgba(38,69,93,.07);
+}
+body[data-nucleo-game] :is(.part-desc,.part-count,.exercise-meta,.exercise-source,
+ .exam-mini,.exam-status){color:#435A6C}
+body[data-nucleo-game] :is(.class-card,.panel h1,.hero h1){
+ text-shadow:none;
+}
+body[data-nucleo-game] :is(.question,.question-card,.game-card){
+ background:#FFFFFF;
+ color:#25282C;
+ border-color:#BFD2DF;
+}
+body[data-nucleo-game] :is(.question h2,.question-text,.question p){
+ color:#25282C;
+ line-height:1.21;
+}
+body[data-nucleo-game] :is(.read-first-toggle[aria-pressed="true"]){
+ color:#205B62!important;
+ border-color:#6EAEB0!important;
+ background:#DDF1EF!important;
+}
+body[data-nucleo-game] :is(.paper-head,.topbar){
+ background:#E3EFF6;
+ color:#264153;
+ border-color:#B7CFDE;
+}
+body[data-nucleo-game] :is(.topbar strong,.paper-title,
+ .paper-title b,.paper-title span){color:#2B495D}
+body[data-nucleo-game] :is(.home-details summary,.study-stats summary,
+ .kq-footnote){color:#38576B;font-size:17px}
+/* The following elements deliberately retain the existing color semantics:
+   .answer, .option, .kq-option, .choice, .timer, .medal-*,
+   .feedback, .good, .bad, .correct, .wrong, charts and gold awards. */
+body[data-nucleo-game] :is(a,button,input,select,summary):focus-visible{
+ outline:3px solid var(--ng-accent);
+ outline-offset:3px;
+}
+@media(max-width:560px){
+ body[data-nucleo-game] :is(.screen){padding-left:13px;padding-right:13px}
+ body[data-nucleo-game] :is(.panel){padding:19px 16px}
+ body[data-nucleo-game] :is(.part-card,.exercise-card,.mode-card){
+  padding:17px 14px;
+ }
+}
+/* Quiz-writing and exam answer papers: keep their document typography intact. */
+body[data-nucleo-game="cambridge"] :is(.exam-paper,.paper-sheet,
+ .paper-content,.paper-host,#paperHost){color:#25282C}
+body[data-nucleo-game="keyword"] :is(.paper,.kq-panel){color:#25282C}
+body[data-nucleo-game="hoti"] :is(.brand a,.brand a span,
+ .note,.position){color:#355267}
+body[data-nucleo-game="hoti"] :is(.mode-card,.stats>div){
+ background:linear-gradient(125deg,var(--ng-wash),#FFFFFF);
+ color:#253A4A;
+ border:1px solid #B8CBD8;
+}
+body[data-nucleo-game="hoti"] :is(.mode-icon){color:var(--ng-accent)}
+body[data-nucleo-game="hoti"] :is(.mode-card span span,
+ .stats span){color:#445D6B}
+body[data-nucleo-game="hoti"] :is(select,input:not([type="checkbox"])){
+ background:#FFFFFF;color:#25282C;border:1px solid #AFC4D2;
+}
+body[data-nucleo-game="hoti"] button:not(.option):not(.primary){
+ background:#EBF3F8;
+ color:#24465B;
+ border-color:#AEC4D2;
+}
+body[data-nucleo-game="hoti"] button.primary{
+ background:var(--ng-accent);color:#FFFFFF;
+ border-color:var(--ng-accent);
+}
+body[data-nucleo-game="keyword"] :is(.hero .panel,.panel.hero,
+ .paper,.mode-note){background:#FFFFFF;color:#25282C}
+body[data-nucleo-game="keyword"] :is(.mode-note,.stat){
+ background:var(--ng-wash);color:#2E4B58;
+}
+body[data-nucleo-game="keyword"] :is(.subtitle,.support,.question-no){
+ color:#455C6B;
+}
+body[data-nucleo-game="keyword"] :is(.first,.second,.kq-original){
+ color:#263A47;
+}
+body[data-nucleo-game="keyword"] :is(.topbar,.progress,.score-top){
+ color:#264153;
+}
+body[data-nucleo-game="keyword"] .timer:after{background:#EAF0F5}
+
+/* Protect against higher-specificity runtime rank/cover skins.
+   Rank data and celebration colors remain untouched; only the reading surfaces
+   take the light theme. */
+html body[data-nucleo-game] #startScreen,
+html body[data-nucleo-game] #endScreen,
+html body[data-nucleo-game] #partScreen,
+html body[data-nucleo-game] #exerciseScreen{
+ background:transparent!important;
+ color:#25282C!important;
+}
+html body[data-nucleo-game] :is(.screen > .panel,.screen .panel,.panel.hero){
+ background:#FFFFFF!important;
+ background-image:linear-gradient(145deg,#FFFFFF,#F5F9FC)!important;
+ color:#25282C!important;
+ border-color:#C0D2DE!important;
+ box-shadow:0 8px 27px rgba(40,75,100,.10)!important;
+}
+html body[data-nucleo-game] :is(#startScreen,#endScreen,#partScreen,#exerciseScreen)
+ :is(h1,h2,h3,.subtitle,.meta,.kicker,.bank-progress){
+ color:#233E50!important;
+ text-shadow:none!important;
+}
+html body[data-nucleo-game] :is(#startScreen,#endScreen,#partScreen,#exerciseScreen)
+ .kicker{color:var(--ng-accent)!important}
+html body[data-nucleo-game] :is(#startScreen,#endScreen,#partScreen,#exerciseScreen)
+ :is(.subtitle,.meta,.part-desc,.exercise-meta){
+ color:#425B6A!important;
+}
+html body[data-nucleo-game] #gameScreen :is(.question,.question-card,.game-card){
+ background:#FFFFFF!important;
+ background-image:none!important;
+ color:#25282C!important;
+ border:1px solid #BFCFD9!important;
+}
+html body[data-nucleo-game] #gameScreen :is(.question h2,.question p,.question-text){
+ color:#25282C!important;
+ text-shadow:none!important;
+}
+/* Timed pre-roll, reward overlay, answer buttons and medals remain unchanged. */
+
+/* Explicit id selectors beat the dynamic AVS grade cover rules, which otherwise
+   repaint the home panel dark after stylesheets have loaded. */
+html body[data-nucleo-game] #startScreen .panel,
+html body[data-nucleo-game] #partScreen .panel,
+html body[data-nucleo-game] #exerciseScreen .panel,
+html body[data-nucleo-game] #endScreen .panel,
+html body[data-nucleo-game] #gameScreen .panel,
+html body[data-nucleo-game] .app #startScreen > .panel{
+  background:#FFFFFF!important;
+  background-image:linear-gradient(140deg,#FFFFFF,#F6F9FC)!important;
+  color:#25282C!important;
+  border:1px solid #C0D2DE!important;
+  box-shadow:0 8px 27px rgba(40,75,100,.10)!important;
+}
+html body[data-nucleo-game] #startScreen .panel h1,
+html body[data-nucleo-game] #startScreen .panel .subtitle,
+html body[data-nucleo-game] #startScreen .panel .meta{
+ color:#253F50!important;
+}
+
+/* Contrast audit: dynamic pre-existing skins paint some helper text white
+   and some focus chips transparent; correct only the study-reading shell. */
+html body[data-nucleo-game] #startScreen :is(
+ .read-first-row small,.read-first-mode small,.read-first-note,
+ .home-details summary,.study-stats summary,
+ .level-title-row p,.kq-note,.mode-note,
+ .progress-label,.subtitle,.meta,.statusbox,.kq-footnote,
+ .stat span,.class-card small
+){
+ color:#40596A!important;
+ opacity:1;
+}
+html body[data-nucleo-game] #startScreen :is(.home-details summary,
+ .study-stats summary){
+ background:#ECF4F9!important;
+ border:1px solid #B5C9D6!important;
+ border-radius:12px;
+ padding:12px 14px;
+ font-size:17px!important;
+ font-weight:750!important;
+}
+html body[data-nucleo-game] #startScreen :is(.chip,.filters .chip){
+ background:#E8F1F7!important;
+ border:1px solid #AFC5D3!important;
+ color:#25465B!important;
+ font-size:16px!important;
+ min-height:50px;
+}
+html body[data-nucleo-game] #startScreen :is(.chip.active,
+ .filters .chip.active){
+ background:var(--ng-accent)!important;
+ border-color:var(--ng-accent)!important;
+ color:#FFFFFF!important;
+}
+html body[data-nucleo-game] #startScreen :is(.primary,#startBtn,#startClassBtn){
+ background:linear-gradient(130deg,color-mix(in srgb,var(--ng-accent) 87%,#FFFFFF),var(--ng-accent))!important;
+ color:#FFFFFF!important;
+ border:1px solid var(--ng-accent)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.25),0 0 16px var(--ng-halo)!important;
+}
+html body[data-nucleo-game] #startScreen :is(.mode-note,.stat){
+ color:#2B485A!important;
+ background:linear-gradient(140deg,#F3F8FC,var(--ng-wash))!important;
+ border:1px solid #C4D6E2!important;
+}
+html body[data-nucleo-game] #startScreen :is(.mode-note,.stat) :is(span,small,b,strong){
+ color:#355468!important;
+ opacity:1;
+}
+html body[data-nucleo-game="hoti"] #courseNow h2,
+html body[data-nucleo-game="hoti"] #courseNow h3,
+html body[data-nucleo-game="hoti"] #courseNow .course-now-title,
+html body[data-nucleo-game="hoti"] #courseNow .course-title{
+ color:#E7F2F7!important;
+}
+
+/* HOTI keeps the course itinerary as a dark informational inset: ensure its
+   heading contrast is deliberate instead of mixing dark text with dark fill. */
+html body[data-nucleo-game="hoti"] .course-now{
+ color:#EEF6F8!important;
+}
+html body[data-nucleo-game="hoti"] .course-now .course-now-head>strong{
+ color:#F2F8FA!important;
+}
+
+/* In the light gameplay HUD, ensure the level/target and timing labels are
+   legible while preserving rainbow ring geometry and answer colors. */
+html body[data-nucleo-game] #gameScreen :is(.leveltag,
+ .qnum span,.qnum small,.question-label,.question-no){
+ color:#315267!important;
+ text-shadow:none!important;
+}
+html body[data-nucleo-game] #gameScreen .timer strong{
+ color:#263F52!important;
+ text-shadow:0 1px rgba(255,255,255,.8);
+}
