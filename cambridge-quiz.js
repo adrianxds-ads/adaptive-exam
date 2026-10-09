@@ -59,6 +59,7 @@ function historyMap(part){
  const m=new Map();
  for(const a of quizAttempts().filter(a=>Number(a.part)===part)){
   const item=a.items[0],k=item.sourceKey,st=m.get(k)||{n:0,errors:0,fast:0};
+  const at=Date.parse(a.completedAt);if(Number.isFinite(at))Object.assign(st,QuizLearning.space(st,!!item.correct,Number(item.responseSec)<=AUTO_SEC[part],at));st.recent=(st.recent||[]).concat(!!item.correct).slice(-5);
   st.n++;if(!item.correct)st.errors++;if(item.correct&&Number(item.responseSec)<=AUTO_SEC[part])st.fast++;
   m.set(k,st);
  }
@@ -69,7 +70,7 @@ function drawQuestions(part){
  const pool=ALL.filter(q=>q.part===part).map(q=>({q,weight:1}));
  for(const p of pool){
   const s=stats.get(p.q.key);
-  p.weight=!s?3:clamp(1+2*s.errors/(s.n||1)+Math.max(0,5-s.n)*.25,1,5);
+  const error=s?.recent?.length?1-s.recent.filter(Boolean).length/s.recent.length:0;p.weight=!s?4:QuizLearning.ready(s,0)?6+error*3:.25+error*.5;
  }
  const chosen=[];
  while(pool.length&&chosen.length<QUESTION_COUNT){
@@ -98,7 +99,7 @@ function historySessions(attempts){
 }
 function chart(rows,title,key,max=100){
  if(!window.HubCharts?.chart||!rows.length)return "";
- const data=rows.slice(-30).map(r=>({at:r.at,value:r[key]}));
+ const data=rows.map(r=>({at:r.at,value:r[key]}));
  return "<div class='chart-shell'><h3>"+esc(title)+"</h3>"+window.HubCharts.chart(data,{max,title})+"</div>";
 }
 function examPapers(){
@@ -135,7 +136,7 @@ function nextExamPaper(){
  const papers=examPapers(),i=papers.findIndex(p=>p.id===session.sourcePaperId);
  return i>=0?papers[i+1]||null:null;
 }
-function renderHome(){
+function renderHome(){QuizLearning.evidence(quizAttempts().flatMap(a=>(a.items||[]).map(item=>({...item,at:Date.parse(a.completedAt),retrievalMode:Number(a.part)===1?"RECOGNITION":"PRODUCTION"}))),"#quizHomeStats");
  const attempts=quizAttempts(),runs=historySessions(attempts).filter(s=>s.total>=s.roundSize);
  const correct=attempts.filter(a=>a.correct).length,fast=attempts.filter(a=>a.correct&&Number(a.items[0].responseSec)<=AUTO_SEC[a.part]).length;
  const coverage=new Set(attempts.map(a=>a.items[0].sourceKey)).size;
@@ -179,7 +180,7 @@ function contextHTML(q){
   const answer=session?.answers.find(a=>a.q.part===q.part&&a.q.paper.id===q.paper.id&&Number(a.q.item.n)===Number(seg.n));
   if(answer){
    const label=answer.reason==="answer"?(answer.correct?"Acierto":"Error"):answer.reason==="timeout"?"Tiempo agotado":"Pasada";
-   return "<mark "+(current?"id='targetGap' ":"")+"class='gap-answer "+(answer.correct?"gap-correct":"gap-incorrect")+"' aria-label='"+label+"'>"+esc(String(answer.raw||"").trim()||"—")+"</mark>";
+   return "<mark "+(current?"id='targetGap' ":"")+"class='gap-answer "+(answer.correct?"gap-correct":"gap-incorrect")+"' aria-label='"+label+"'>"+esc(String(seg.answers?.[0]||seg.answer||answer.raw||"").trim()||"—")+"</mark>";
   }
   if(current)return q.part===1?"<mark id='targetGap' aria-label='Hueco actual'>____</mark>":"<mark id='targetGap' class='editable-gap'><input id='quizInput' class='inline-answer-input' type='text' data-ad-keyboard='en' inputmode='none' autocomplete='off' autocorrect='off' autocapitalize='none' spellcheck='false' aria-label='Escribe la respuesta en este hueco'></mark>";
   return "<span class='other-gap' aria-label='Otro hueco'> […] </span>";
@@ -195,7 +196,7 @@ function tick(){
  $("quizClock").style.setProperty("--fill",(seconds/limit*100).toFixed(1)+"%");
  if(seconds<=0)acceptAnswer("timeout");
 }
-function renderQuestion(){
+function renderQuestion(){QuizLearning.clear();
  clearAdvance();stopTimer();
  window.scrollTo(0,0);
  const part=session.part,q=session.questions[session.index];
@@ -276,7 +277,7 @@ function acceptAnswer(reason,raw="",button=null){
  if(button)button.classList.add(ok?"is-correct":"is-incorrect");
  const input=$("quizInput");if(input)input.classList.add(ok?"is-correct":"is-incorrect");
  const passage=$("quizContext"),scroll=passage.scrollTop;
- passage.innerHTML=contextHTML(q);passage.scrollTop=scroll;
+ passage.innerHTML=contextHTML(q);passage.scrollTop=scroll;QuizLearning.gap(document.querySelector("#targetGap"),q.item.answers?.[0]||q.item.answer||"");
  if(reason==="answer"&&!ok)playIncorrectBeep();
  const message=ok?"✓ Correcto · +"+points+" Game points":reason==="timeout"?"Tiempo agotado":reason==="skip"?"Pasada":"✕ Incorrecto";
  const f=$("quizFeedback");
@@ -284,7 +285,7 @@ function acceptAnswer(reason,raw="",button=null){
  f.innerHTML="<strong>"+esc(message)+"</strong>"+(saved?"":"<small>No se ha podido guardar el progreso en este dispositivo.</small>");
  $("skipQuiz").classList.add("hidden");$("submitQuiz").classList.add("hidden");
  renderScores();
- advanceTimer=setTimeout(()=>{advanceTimer=null;nextQuestion();},ok?850:reason==="answer"?1300:1000);
+ advanceTimer=setTimeout(()=>{advanceTimer=null;nextQuestion();},QuizLearning.HOLD_MS);
 }
 function nextQuestion(){
  if(!session||!session.answered)return;
