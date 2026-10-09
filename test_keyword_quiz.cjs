@@ -32,6 +32,14 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));let browser,ws;
  await run('document.querySelector("#kqQuit").click();document.querySelector("input[value=normal]").click();document.querySelector("#kqReadFirst").click();document.querySelector("#kqStart").click();true');
  const normal=await run('({count:document.querySelectorAll(".kq-choice").length,clock:document.querySelector("#kqSeconds").textContent,mode:window.KeywordQuizPilot.status.mode,readFirst:window.KeywordQuizPilot.status.readFirst,overflow:document.documentElement.scrollWidth-innerWidth,stored:window.KeywordQuizPilot.status.attempts})');
  assert(normal.count===4&&normal.mode==='normal'&&normal.readFirst===false&&Number(normal.clock)<=15&&normal.stored===1&&normal.overflow<=1,'Normal malfunction '+JSON.stringify(normal));
- console.log(JSON.stringify({result:'PASS',initial,reading,tricky,first,advanced,normal}));
+ // Complete the entire round: answers, automatic transitions, medals and persisted session.
+ for(let i=0;i<15;i++){
+  const check=await run('(()=>{const st=window.KeywordQuizPilot;const q=st.bank.find(x=>x.id===st.status.questionId);const b=[...document.querySelectorAll(".kq-choice")].find(x=>x.textContent.includes(q.correct));if(!b)throw Error("Correct option missing on question "+st.status.questionId);b.click();return document.querySelector("#kqSecond").textContent.includes(q.correct)})()');
+  assert(check,'Correct answer not shown inline at step '+i);
+  await sleep(1750);
+ }
+ const finished=await run('(()=>{const db=JSON.parse(localStorage.getItem("cambridgeKeywordQuizPilotV1"));return {visible:!document.querySelector("#kqFinish").classList.contains("hidden"),title:document.querySelector("#kqFinishTitle").textContent,total:db.attempts.length,sessions:db.sessions.length,correct:db.sessions.at(-1).correct,medal:document.querySelector("#kqMedals").textContent}})()');
+ assert(finished.visible&&finished.title==="15 / 15 correctas"&&finished.total===16&&finished.sessions===1&&finished.correct===15,'Full round malfunction '+JSON.stringify(finished));
+ console.log(JSON.stringify({result:'PASS',initial,reading,tricky,first,advanced,normal,finished}));
  await send('Browser.close');
 })().catch(e=>{console.error('FAIL',e.stack||e);process.exitCode=1;}).finally(()=>{try{ws?.close();}catch{}try{browser?.kill();}catch{}setTimeout(()=>process.exit(),600);});
