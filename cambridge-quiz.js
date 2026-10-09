@@ -3,7 +3,7 @@
 const $=id=>document.getElementById(id);
 const KEY="cambridgeB2ExerciseStatsV3";
 const QUESTION_COUNT=15;
-let quizKind="mixed";
+let quizKind="exam";
 const LIMIT={1:53,2:53,3:45};
 const TIME_KEY="cambridgeQuizTimingV1";
 let timingMode="recommended";

@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#10271d">
 <title>Cambridge B2 · Quiz</title>
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./cambridge-quiz.css?v=0.5.1">
+<link rel="stylesheet" href="./cambridge-quiz.css?v=0.5.2">
 </head>
 <body>
 <div class="app">
@@ -19,8 +19,8 @@
   <h1>Cambridge Quiz</h1>
   <p class="intro">Elige un tipo de ejercicio. Preguntas originales, una por pantalla, con tiempo y corrección inmediata.</p>
   <fieldset class="timing-settings"><legend>Cómo queremos practicar</legend>
-<label><input type="radio" name="quizKind" value="mixed" checked><span><b>Quiz mezclado</b><small>15 preguntas de distintos exámenes.</small></span></label>
-<label><input type="radio" name="quizKind" value="exam"><span><b>Quiz por examen</b><small>Las 8 preguntas originales de una parte, en orden.</small></span></label>
+<label><input type="radio" name="quizKind" value="exam" checked><span><b>Quiz por examen</b><small>Las 8 preguntas originales de una parte, en orden.</small></span></label>
+<label><input type="radio" name="quizKind" value="mixed"><span><b>Quiz mezclado</b><small>15 preguntas de distintos exámenes.</small></span></label>
 <div id="quizExamPicker" class="exam-picker hidden"><label for="quizExam">Elegir examen</label><select id="quizExam" aria-label="Elegir examen"></select></div>
 </fieldset>
 <p id="quizRouteHint" class="bank-note"></p>
@@ -74,6 +74,11 @@
 </main>
 <main id="quizFinish" class="screen hidden">
   <div class="eyebrow" id="finishExamLabel">RONDA TERMINADA</div><h1 id="finishTitle">Resultado</h1>
+  <nav class="finish-quick-actions" aria-label="Continuar después del quiz">
+    <button id="nextExamQuiz" class="main-btn full hidden" type="button">Siguiente examen</button>
+    <button id="repeatQuiz" class="main-btn full" type="button">Repetir examen</button>
+    <button id="finishHome" class="soft-btn full" type="button">Elegir examen</button>
+  </nav>
   <section class="finish-panel">
     <div id="finishBadge"></div>
     <div id="finishSummary" class="stats-grid"></div>
@@ -84,9 +89,6 @@
       <p class="solutions-hint">Revisamos qué respondimos, cuál era la solución y dónde encaja en el texto.</p>
       <div id="solutionList"></div>
     </section>
-    <button id="repeatQuiz" class="main-btn full" type="button">Otra ronda</button>
-    <button id="nextExamQuiz" class="main-btn full hidden" type="button">Siguiente examen</button>
-    <button id="finishHome" class="soft-btn full" type="button">Cambiar modalidad</button>
   </section>
 </main>
 </div>
@@ -97,6 +99,6 @@
 <script src="./data/cambridge-quiz-transcribed.js?v=0.5.0"></script>
 <script src="./data/engexam-bank.js"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-keyboard.js?v=4.1.2-20261007"></script>
-<script src="./cambridge-quiz.js?v=0.5.1"></script>
+<script src="./cambridge-quiz.js?v=0.5.2"></script>
 </body>
 </html>
