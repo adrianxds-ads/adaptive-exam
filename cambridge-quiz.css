@@ -27,7 +27,9 @@ h1{font-size:clamp(38px,8.5vw,60px);letter-spacing:-.045em;line-height:1;margin:
 .inline-answer-input:focus{border-color:#276f94;outline:3px solid #276f9470}
 .inline-answer-input.is-correct{border-color:#3b9b6e}.inline-answer-input.is-incorrect{border-color:#cb5656}
 .other-gap{color:#637367;background:#e5e9e2;padding:1px 3px;border-radius:3px}
-.base-word{display:inline-flex;border-radius:9px;background:#ddc078;color:#193326;padding:8px 16px;font-size:21px;font-weight:950;letter-spacing:.06em;margin:18px 0 0}
+.base-word{display:inline-flex;max-width:100%;overflow-wrap:anywhere;border-radius:9px;background:#ddc078;color:#193326;padding:8px 16px;font-size:21px;font-weight:950;letter-spacing:.06em;margin:0 0 12px}
+/* Keep the supplied Word Formation root above the reading passage and in sight while typing. */
+body.ad-keyboard-open #quizPlay .base-word:not(.hidden){position:sticky;top:max(8px,env(safe-area-inset-top));z-index:4;box-shadow:0 6px 16px rgba(0,0,0,.25)}
 .answer-area{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:23px}.answer-area.typing{grid-template-columns:1fr}.answer-area.inline-entry{margin-top:7px}
 .option-btn{min-height:67px;border:1px solid rgba(255,255,255,.17);border-radius:13px;padding:13px 14px;text-align:left;background:rgba(255,255,255,.075);color:#f4f7f5;font-size:19px;font-weight:750;cursor:pointer;overflow-wrap:anywhere}
 .option-btn span{display:inline-grid;place-items:center;width:29px;height:29px;margin-right:8px;border-radius:7px;background:rgba(255,255,255,.1);font-size:13px;color:var(--accent)}

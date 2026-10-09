@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#10271d">
 <title>Cambridge B2 · Quiz</title>
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./cambridge-quiz.css?v=0.5.3">
+<link rel="stylesheet" href="./cambridge-quiz.css?v=0.5.4">
 </head>
 <body>
 <div class="app">
@@ -65,8 +65,8 @@
   <div class="progress-rail"><div id="quizProgressBar"></div></div>
   <article class="question-panel">
     <p class="origin" id="quizOrigin"></p>
+    <div id="quizBase" class="base-word hidden" aria-label="Palabra base para transformar"></div>
     <div id="quizContext" class="passage" aria-label="Fragmento original del examen"></div>
-    <div id="quizBase" class="base-word hidden"></div>
     <div id="quizAnswerArea" class="answer-area"></div>
     <div id="quizFeedback" class="feedback hidden" aria-live="polite"></div>
     <div class="actions"><button id="skipQuiz" class="soft-btn" type="button">Pasar</button><button id="submitQuiz" class="main-btn hidden" type="button" data-ad-keyboard-keep-open>Comprobar</button></div>
@@ -100,6 +100,6 @@
 <script src="./data/cambridge-quiz-transcribed.js?v=0.5.0"></script>
 <script src="./data/engexam-bank.js"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-keyboard.js?v=4.1.3-20261009"></script>
-<script src="./cambridge-quiz.js?v=1.3.1"></script>
+<script src="./cambridge-quiz.js?v=1.3.2"></script>
 </body>
 </html>
