@@ -117,6 +117,12 @@ body[data-nucleo-game="cambridge"] #quizHome .intro{color:#34444e;font-size:19px
 <script src="./data/engexam-bank.js"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-keyboard.js?v=4.1.3-20261009"></script>
 <script src="./cambridge-quiz.js?v=1.3.2"></script>
+<script id="cambridge-background-update">
+/* Refresh the integrity-checked SW in the background; never interrupt a round. */
+if("serviceWorker" in navigator && location.protocol==="https:"){
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}),{once:true});
+}
+</script>
 <script id="cambridge-keyboard-clearance">
 /* A custom keyboard can resize the viewport as well as overlay it.
    Measure the visible keyboard, never subtract its height twice. */
