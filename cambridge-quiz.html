@@ -6,8 +6,22 @@
 <meta name="theme-color" content="#EAF0F5">
 <title>Cambridge B2 · Quiz</title>
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./cambridge-quiz.css?v=0.5.4">
+<link rel="stylesheet" href="./cambridge-quiz.css?v=0.5.6">
 <link rel="stylesheet" href="./nucleo-game-theme.css?v=1.1.0">
+<style id="cambridge-critical-mobile-layout">
+/* Resilient skeleton: works even if the full stylesheet is temporarily unavailable. */
+html,body{margin:0;box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
+body[data-nucleo-game="cambridge"] .app{max-width:840px;margin:auto}
+body[data-nucleo-game="cambridge"] .screen{padding:18px 13px 35px}
+body[data-nucleo-game="cambridge"] .hidden{display:none!important}
+body[data-nucleo-game="cambridge"] .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 13px;flex-wrap:wrap}
+body[data-nucleo-game="cambridge"] .timing-settings{display:block;min-width:0;margin:18px 0;padding:12px;border:1px solid #b5c9d7;border-radius:14px}
+body[data-nucleo-game="cambridge"] .timing-settings>label{display:grid;grid-template-columns:24px minmax(0,1fr);gap:12px;align-items:start;margin:7px 0;padding:12px 8px}
+body[data-nucleo-game="cambridge"] .timing-settings>label>span,body[data-nucleo-game="cambridge"] .timing-settings>label b,body[data-nucleo-game="cambridge"] .timing-settings>label small{display:block}
+body[data-nucleo-game="cambridge"] .mode-list{display:grid;gap:12px}
+body[data-nucleo-game="cambridge"] #quizModes .mode{display:grid;grid-template-columns:45px minmax(0,1fr) 20px;gap:10px;align-items:center;min-width:0}
+body[data-nucleo-game="cambridge"] #quizHome .intro{color:#34444e;font-size:19px;line-height:1.4}
+</style>
 </head>
 <body data-nucleo-game="cambridge">
 <div class="app">
@@ -103,5 +117,39 @@
 <script src="./data/engexam-bank.js"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-keyboard.js?v=4.1.3-20261009"></script>
 <script src="./cambridge-quiz.js?v=1.3.2"></script>
+<script id="cambridge-keyboard-clearance">
+/* A custom keyboard can resize the viewport as well as overlay it.
+   Measure the visible keyboard, never subtract its height twice. */
+(()=>{
+ const submit=document.getElementById("submitQuiz");
+ if(!submit)return;
+ let pending=false;
+ function sync(){
+  const kb=document.querySelector(".ad-keyboard.open");
+  if(!document.body.classList.contains("ad-keyboard-open")||!kb||submit.classList.contains("hidden")){
+   submit.style.removeProperty("--cambridge-submit-bottom");
+   return;
+  }
+  const top=kb.getBoundingClientRect().top;
+  const cssBottom=parseFloat(getComputedStyle(submit).bottom)||0;
+  const fixedEdge=submit.getBoundingClientRect().bottom+cssBottom;
+  const clearance=Math.max(6,Math.round(fixedEdge-top+8));
+  submit.style.setProperty("--cambridge-submit-bottom",clearance+"px");
+  const focused=document.activeElement;
+  if(focused?.matches?.("#quizInput,.inline-answer-input")){
+   const inputRect=focused.getBoundingClientRect();
+   const buttonTop=submit.getBoundingClientRect().top;
+   if(inputRect.bottom+12>buttonTop&&inputRect.top>0)
+    window.scrollBy(0,inputRect.bottom+16-buttonTop);
+  }
+ }
+ function queue(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;sync()})}
+ new MutationObserver(queue).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class"]});
+ window.addEventListener("resize",queue,{passive:true});
+ window.visualViewport?.addEventListener("resize",queue,{passive:true});
+ document.addEventListener("focusin",()=>{queue();requestAnimationFrame(queue)});
+ queue();
+})();
+</script>
 </body>
 </html>

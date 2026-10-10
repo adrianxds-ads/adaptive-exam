@@ -137,3 +137,67 @@ body{background:radial-gradient(ellipse at 95% 0%,rgba(175,207,224,.45),transpar
 .bank-note{background:rgba(255,255,255,.65)}
 @supports(backdrop-filter:blur(12px)){.topbar,.mode,.stats-panel,.finish-panel,.question-panel{backdrop-filter:blur(12px)}}
 @media(max-width:520px){.screen{padding-bottom:calc(28px + env(safe-area-inset-bottom))}}
+
+/* Núcleo Visual · Cambridge Keys v1.2 · mobile/contrast/glass · 2026-10-10
+ * No changes to quizzes, timers, scores or storage. */
+body[data-nucleo-game="cambridge"]{--accent:#8d671d;color:#25282c}
+#quizHome>.eyebrow{color:#435fa3;line-height:1.4}
+#quizHome h1{color:#253c50;line-height:1.08;font-size:clamp(36px,9vw,54px)}
+#quizHome .intro{color:#34444e;font-size:19px;line-height:1.43;font-weight:550}
+.topbar{min-height:58px;height:auto;flex-wrap:wrap;gap:8px;background:rgba(255,255,255,.78)}
+.topbar strong{font-size:13px;letter-spacing:.035em;color:#344b62}
+.study-link{min-height:44px;display:inline-flex;align-items:center;color:#284f70;font-size:15px}
+.timing-settings{display:block;min-inline-size:0;width:100%;border:1px solid #b5c9d7;border-radius:17px;background:rgba(255,255,255,.78);padding:10px 12px 12px;color:#25282c;box-shadow:0 8px 23px rgba(35,68,92,.05)}
+.timing-settings legend{color:#273f51;font-size:17px;font-weight:850;padding:0 8px}
+.timing-settings>label{display:grid;grid-template-columns:25px minmax(0,1fr);align-items:start;gap:12px;margin:7px 0;padding:13px 12px;min-height:62px;border:1px solid #cad8e0;border-radius:12px;background:#f7f9fb;color:#25282c;line-height:1.3}
+.timing-settings>label:has(input:checked){background:#e9f2fc;border-color:#6d92be}
+.timing-settings>label>span{min-width:0;display:block}
+.timing-settings>label b{display:block;font-size:18px;line-height:1.27;color:#233d52;font-weight:850}
+.timing-settings>label small{display:block;font-size:15px;line-height:1.4;color:#3c5364;font-weight:550;margin-top:4px}
+.timing-settings input{display:block;margin:2px 0 0;width:22px;height:22px;accent-color:#355e96}
+.timing-advice{background:rgba(255,255,255,.72);border:1px solid #bdd0db;border-radius:14px;color:#283f50}
+.timing-advice summary{font-size:16px;line-height:1.4}
+.timing-advice a{color:#215a87;text-decoration:underline}
+.timing-table-wrap th,.timing-table-wrap td{border-bottom-color:#cbd8df}
+.exam-picker{display:grid;gap:7px;padding:12px 6px 3px}
+.exam-picker label{padding:0;font-size:15px;color:#344b5d}
+.exam-picker select,.exam-part-select{width:100%;background:#fff;color:#25282c;border:1px solid #9fb8c8;border-radius:10px;padding:10px 12px;min-height:52px;font-size:18px}
+.bank-note{background:rgba(255,255,255,.70);border-color:#c0d1dc;color:#334b5c;line-height:1.5}
+#quizModes .mode{min-width:0;min-height:94px;background:rgba(255,255,255,.86);border-color:#bad0dd;color:#25282c;box-shadow:0 9px 27px rgba(39,73,102,.055)}
+#quizModes .mode b{color:#273d51;font-size:21px;line-height:1.23}
+#quizModes .mode small{color:#445969;font-size:15px;line-height:1.35}
+#quizModes .mode-num{color:#785718}
+#quizModes a.mode[href$="keyword-quiz.html"]{background:rgba(255,250,236,.92)!important;border-color:#bd9b56!important}
+.metric span{font-size:12px;color:#3d5363}
+.scoreboard span{background:#f2f7fa;color:#33495b;border-color:#c0d1db;font-size:15px}
+.scoreboard #quizExamScore{color:#235a43}
+.scoreboard #quizScore{color:#80580c}
+.position{color:#334b5d}
+.exam-table thead th,.exam-table td small{color:#41586a;font-size:13px}
+.exam-done{color:#196e48}.exam-pending{color:#8c3942}
+.exam-play{background:#fff4dc;border-color:#a98539;color:#68490e;font-size:14px}
+.exam-table-note,.solutions-hint,.solution-explanation{color:#465a6a}
+.solution-card{background:#f7fafc;border-color:#c4d2dc;border-left-color:#bd5b65;color:#25282c}
+.solution-card.solved{border-left-color:#22805a}
+.solution-card .given{color:#8b3044}
+.solution-card.solved .given{color:#1c6a48}
+.option-btn.chosen.is-correct{background:#dbf4e6;color:#174e35;border-color:#298459}
+.option-btn.chosen.is-incorrect{background:#ffe3e6;color:#862d40;border-color:#bf5668}
+.finish-quick-actions #repeatQuiz{background:#274f6d;color:#fff;border-color:#274f6d}
+.finish-quick-actions #finishHome{background:#e8f1f7;color:#28485d;border-color:#a8bfce}
+#quizHome button:focus-visible,#quizHome select:focus-visible,.timing-settings input:focus-visible{outline:3px solid #8b641a;outline-offset:3px}
+@media(max-width:520px){
+ .topbar{padding:7px 12px;min-height:48px}
+ .topbar strong{font-size:11px}
+ .screen{padding:18px 13px calc(32px + env(safe-area-inset-bottom))}
+ .timing-settings{padding:10px}
+ .timing-settings>label{padding:12px 9px;gap:10px}
+ .timing-settings>label b{font-size:18px}
+ .timing-settings>label small{font-size:15px}
+ .mode{grid-template-columns:46px minmax(0,1fr) 20px}
+ .mode-list{gap:11px}
+ .scoreboard span{font-size:14px}
+}
+
+/* Keep Confirmar immediately above the visible custom keyboard, even if its reported height includes Android insets. */
+body.ad-keyboard-open #submitQuiz:not(.hidden){bottom:var(--cambridge-submit-bottom, calc(var(--ad-keyboard-height,294px) + 6px));box-shadow:0 0 0 4px #eaf0f5,0 -5px 18px rgba(35,67,89,.16)}
