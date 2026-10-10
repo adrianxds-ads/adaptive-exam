@@ -1,0 +1,123 @@
+/* Núcleo Visual · auditoría de interiores Cambridge · 2026-10-10
+   Solamente presentación; no altera exámenes, lógica, tiempos ni datos. */
+body[data-nucleo-game="cambridge"]{
+  --cam-ui-ink:#24394A;--cam-ui-muted:#3B5365;--cam-ui-line:#B5C9D7;
+}
+/* Modo Estudio: cabecera condensada, texto de lectura y huecos táctiles. */
+#partScreen .paper-head,#paperScreen .paper-head,#resultScreen .paper-head{
+ background:rgba(237,246,251,.96);border-bottom:1px solid #B5C9D7;
+ box-shadow:0 4px 16px rgba(31,70,91,.06);
+}
+#partScreen .paper-title,#paperScreen .paper-title,#resultScreen .paper-title{
+ min-width:0;max-width:100%;color:#24394A;line-height:1.2;
+}
+#partScreen .paper-title b,#paperScreen .paper-title b,#resultScreen .paper-title b{
+ color:#24394A;font-size:18px!important;line-height:1.2!important;
+}
+#partScreen .paper-title span,#paperScreen .paper-title span,#resultScreen .paper-title span{
+ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+ overflow:hidden;overflow-wrap:anywhere;
+ color:#425A69!important;font-size:12px!important;font-weight:700!important;
+ line-height:1.25!important;letter-spacing:0!important;
+}
+#partScreen .paper-head-row,#paperScreen .paper-head-row,#resultScreen .paper-head-row{
+ grid-template-columns:52px minmax(0,1fr) 52px;gap:7px;
+}
+#partScreen .back,#paperScreen .back,#resultScreen .back{
+ width:52px;height:52px;min-height:52px;
+}
+#paperScreen .paper{color:#25282C;background:#fff}
+#paperScreen .part-label{color:#3E5360;font-size:15px;line-height:1.4}
+#paperScreen .exercise-meta-fold summary{
+ font-size:16px!important;line-height:1.4!important;
+ color:#29485C!important;min-height:52px;
+}
+#paperScreen .exercise-meta-fold,#paperScreen .answer-progress{
+ border-color:#B7CBD8;background:#ECF3F7;color:#29485C;
+}
+#paperScreen .answer-progress{font-size:15px;line-height:1.35}
+#paperScreen .answer-progress strong{color:#234358;font-size:17px}
+#paperScreen .source-box small{color:#435D6C;font-size:15px}
+#paperScreen .gap-choice,#paperScreen .gap-choice.empty{
+ min-height:46px;min-width:82px;padding:7px 10px;
+ border:1px solid #97B2C3;border-bottom:3px solid #426D82;
+ border-radius:10px;background:#E8F2F7;color:#29485B;
+ font-size:17px;line-height:1.2;box-shadow:0 2px 0 rgba(43,86,108,.05);
+}
+#paperScreen .gap-choice:focus-visible{
+ outline:3px solid #2E789B;outline-offset:3px;
+}
+#paperScreen .gap-num{color:#395767;font-size:13px}
+#paperScreen .exam-text{font-size:clamp(22px,5.7vw,25px);line-height:1.67}
+#paperScreen .instructions,#paperScreen .worksheet-prompt{
+ color:#253743;line-height:1.54;
+}
+#paperScreen .scan-choice,#paperScreen .worksheet-choice{
+ min-height:52px;font-size:18px;line-height:1.3;
+}
+#paperScreen .review-answer small,#resultScreen .review-answer small{
+ font-size:14px;color:#475D6B;
+}
+/* Cambridge Quiz: metadatos visibles y corrección con contraste. */
+#quizPlay .position,#quizPlay .session-bar{color:#2F485B;font-size:16px;line-height:1.3}
+#quizPlay .scoreboard span{
+ color:#304B5D;font-size:16px;line-height:1.35;
+}
+#quizPlay .origin{color:#354E60;font-size:16px;line-height:1.4}
+#quizPlay .answer-tip{color:#3C5362;font-size:16px;line-height:1.5}
+#quizPlay .option-btn{min-height:67px;font-size:18px;line-height:1.35}
+#quizPlay .feedback{font-size:17px;line-height:1.48;color:#24394A}
+#quizPlay .passage{color:#24352E;scrollbar-color:#819DAA #EAF0F5}
+#quizPlay .passage mark{color:#24352E}
+/* Keyword Quiz: reparar herencia de colores del antiguo tema oscuro. */
+.kq-app .topbar strong{color:#344B62!important;font-size:14px}
+.kq-app #kqHome .kq-note,
+.kq-app #kqHome .kq-read-toggle{
+ background:rgba(255,255,255,.86);
+ border:1px solid #BDD0DD;
+ color:#263C4B;
+}
+.kq-app #kqHome .kq-note strong{color:#334A5A;font-size:18px}
+.kq-app #kqHome .kq-note span,.kq-app #kqHome .kq-note span:last-child{
+ color:#3B5365;font-size:16px;line-height:1.45;
+}
+.kq-app #kqHome .kq-read-toggle b{color:#243D50;font-size:18px}
+.kq-app #kqHome .kq-read-toggle small{color:#42586B;font-size:16px;line-height:1.45}
+.kq-app .kq-footnote{color:#455B69;font-size:16px;line-height:1.5}
+.kq-app .session-bar{font-size:15px;line-height:1.35;color:#2A4355;flex-wrap:wrap}
+.kq-app .origin{font-size:16px;color:#3B5365;line-height:1.35}
+.kq-app #kqPlay .kq-panel{background:rgba(255,255,255,.92)!important;border-color:#B8CBD8}
+.kq-app #kqPlay .kq-original{
+ color:#24394A!important;font:700 21px/1.48 Georgia,'Times New Roman',serif;
+ letter-spacing:0;padding-bottom:14px;
+}
+.kq-app #kqPlay .kq-rewrite{background:#F7F6F0;color:#233C34;border:1px solid #D9E0D9}
+.kq-app #kqPlay .kq-keyline{color:#41596B;font-size:14px;line-height:1.4;letter-spacing:0}
+.kq-app #kqPlay .kq-keyline b{background:#F0CB65;color:#332C1B;font-size:19px}
+.kq-app #kqPlay .kq-rewrite p{font-size:21px;line-height:1.53}
+.kq-app #kqPlay .kq-rule{font-size:16px;color:#42596A!important;line-height:1.45}
+.kq-app #kqPlay .kq-choice{
+ min-height:70px;border:1px solid #A8C0D0;
+ background:#F3F8FB!important;color:#24394A!important;
+ font-size:18px;line-height:1.38;opacity:1;
+}
+.kq-app #kqPlay .kq-choice b{
+ background:#E8F0F5;color:#36536B;min-width:32px;height:32px;font-size:15px;
+}
+.kq-app #kqPlay .kq-choice:disabled{opacity:.9}
+.kq-app #kqPlay .kq-choice.selected.correct{background:#DBF2E5!important;border:2px solid #228055;color:#164D35!important}
+.kq-app #kqPlay .kq-choice.selected.wrong{background:#FFE5E9!important;border:2px solid #B84860;color:#852D42!important}
+.kq-app #kqPlay .kq-feedback{
+ background:#EEF5FA;color:#253B4A;border:1px solid #AFC7D5;
+ font-size:17px;line-height:1.5;
+}
+.kq-app #kqPlay .kq-feedback strong{color:#203A4F;font-size:18px}
+.kq-app #kqPlay .kq-feedback.bad{background:#FFF0F2;color:#772D40;border-color:#D9A4AE}
+.kq-app #kqPlay .kq-feedback.bad strong{color:#772D40}
+@media(max-width:560px){
+ #paperScreen .paper{padding:18px 13px}
+ #paperScreen .paper-head{padding:8px 7px}
+ #paperScreen .paper h2{font-size:clamp(27px,7.6vw,34px);line-height:1.13}
+ .kq-app #kqPlay .kq-choices{grid-template-columns:1fr;gap:10px}
+ .kq-app #kqPlay .kq-choice{min-height:62px;padding:13px 12px}
+}
