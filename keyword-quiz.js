@@ -129,6 +129,14 @@ function renderQuestion(){
  $('kqClock').style.setProperty('--fill','100%');
  if(state.readFirst)delay=setTimeout(reveal,READ_MS);else reveal();
 }
+
+// During READ_FIRST, tapping the non-interactive game area reveals answers early.
+document.addEventListener('pointerdown', event=>{
+  if(!(state && state.readFirst && !state.answered && delay!==null && $('kqChoices').classList.contains('hidden')))return;
+  if(event.target.closest('button,a,input,textarea,select,[role="button"],[contenteditable="true"]'))return;
+  if(event.cancelable)event.preventDefault();
+  reveal();
+},true);
 function reveal(){
  if(!state||state.answered||!$('kqChoices').classList.contains('hidden'))return;
  clearTimeout(delay);delay=null;
