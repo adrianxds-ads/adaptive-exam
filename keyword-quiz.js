@@ -124,45 +124,66 @@ function renderQuestion(){
  host.classList.add('hidden');host.innerHTML=state.options.map((o,i)=>
   '<button class="kq-choice" type="button" data-answer="'+i+'"><b>'+String.fromCharCode(65+i)+'</b><span>'+esc(o.value)+'</span></button>').join('');
  host.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>answer(Number(b.dataset.answer))));
- $('kqReveal').classList.toggle('hidden',!state.readFirst);
+ $('kqReveal').classList.add('hidden');
  $('kqSeconds').textContent=state.readFirst?'…':String(limit);
  $('kqClock').style.setProperty('--fill','100%');
  if(state.readFirst){NucleoReadFirstSkip.show('kqOriginal',reveal);delay=setTimeout(reveal,READ_MS);}else{NucleoReadFirstSkip.hide();reveal();}
 }
 
-// A dedicated, accessible target prevents the reveal gesture selecting an answer.
+// Centered, touch-safe four-colour reveal control.
 const NucleoReadFirstSkip=(()=>{
-  let button=null,action=null;
+  let button=null,action=null,waitingForFreshGesture=false;
+  const ANSWERS='.answer,.option,.kq-choice';
+  // An answer must always begin a NEW gesture after the reveal button's click.
+  document.addEventListener('pointerdown',event=>{
+    if(waitingForFreshGesture&&event.target?.closest?.(ANSWERS))waitingForFreshGesture=false;
+  },true);
+  document.addEventListener('keydown',event=>{
+    if(waitingForFreshGesture&&(event.key==='Enter'||event.key===' ')&&event.target?.closest?.(ANSWERS))
+      waitingForFreshGesture=false;
+  },true);
+  document.addEventListener('click',event=>{
+    if(!waitingForFreshGesture||!event.target?.closest?.(ANSWERS))return;
+    event.preventDefault();event.stopImmediatePropagation();
+  },true);
   function ensure(){
     if(button)return button;
-    const css=document.createElement('style');
-    css.id='nucleo-read-skip-style';
+    const css=document.createElement('style');css.id='nucleo-read-skip-style';
     css.textContent=[
-      '.nucleo-read-skip{appearance:none;display:grid;place-items:center;width:82px;height:76px;margin:0 auto 12px;padding:9px;background:#EAF0F5;border:2px solid #25282C;border-radius:15px;box-shadow:0 3px 11px rgba(0,0,0,.17);cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;flex:0 0 auto;position:relative;z-index:5}',
+      '.nucleo-read-skip-host{position:relative!important}',
+      '.nucleo-read-skip-host.read-first-hidden{visibility:visible!important;opacity:1!important;pointer-events:auto!important}',
+      '.nucleo-read-skip-host.read-first-hidden > :not(.nucleo-read-skip){visibility:hidden!important;pointer-events:none!important}',
+      '.nucleo-read-skip-host.prethink-hidden{display:grid!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}',
+      '#gameScreen #answers.nucleo-read-skip-host.prethink-hidden{display:grid!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}',
+      '.nucleo-read-skip-host.prethink-hidden > :not(.nucleo-read-skip){visibility:hidden!important;pointer-events:none!important}',
+      '.nucleo-read-skip-host.kq-choices.hidden{display:grid!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}',
+      '.nucleo-read-skip-host.kq-choices.hidden > :not(.nucleo-read-skip){visibility:hidden!important;pointer-events:none!important}',
+      '.nucleo-read-skip{appearance:none;position:absolute;z-index:20;top:50%;left:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:100px;height:92px;margin:0;padding:10px;background:#EAF0F5;border:2px solid #25282C;border-radius:17px;box-shadow:0 4px 16px rgba(0,0,0,.24);cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}',
       '.nucleo-read-skip[hidden]{display:none!important}',
-      '.nucleo-read-skip:active{transform:scale(.96)}',
+      '.nucleo-read-skip:active{transform:translate(-50%,-50%) scale(.96)}',
       '.nucleo-read-skip:focus-visible{outline:3px solid #ffd566;outline-offset:3px}',
-      '.nucleo-read-skip-tiles{width:56px;height:52px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px}',
-      '.nucleo-read-skip-tiles i{display:block;border-radius:5px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.20)}',
+      '.nucleo-read-skip-tiles{width:72px;height:66px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:5px}',
+      '.nucleo-read-skip-tiles i{display:block;border-radius:6px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.20)}',
       '.nucleo-read-skip-tiles i:nth-child(1){background:#77531f}',
       '.nucleo-read-skip-tiles i:nth-child(2){background:#1f6264}',
       '.nucleo-read-skip-tiles i:nth-child(3){background:#405582}',
       '.nucleo-read-skip-tiles i:nth-child(4){background:#74405a}',
-      '@media(max-width:520px){.nucleo-read-skip{width:76px;height:70px;margin-bottom:9px}.nucleo-read-skip-tiles{width:52px;height:48px}}'
+      '@media(max-width:520px){.nucleo-read-skip{width:94px;height:88px}.nucleo-read-skip-tiles{width:68px;height:63px}}'
     ].join('');
     document.head.append(css);
-    button=document.createElement('button');
-    button.type='button';button.className='nucleo-read-skip';button.hidden=true;
+    button=document.createElement('button');button.type='button';
+    button.className='nucleo-read-skip';button.hidden=true;
     button.setAttribute('aria-label','Mostrar las cuatro respuestas ahora');
     button.title='Mostrar respuestas';
     button.innerHTML='<span class="nucleo-read-skip-tiles" aria-hidden="true"><i></i><i></i><i></i><i></i></span>';
-    // Reveal only on click, AFTER pointerup: never reveal on pointerdown.
-    for(const type of ['pointerdown','pointerup','touchstart','touchend'])button.addEventListener(type,e=>e.stopPropagation());
-    button.addEventListener('click',e=>{
-      e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+    for(const type of ['pointerdown','pointerup','touchstart','touchend'])
+      button.addEventListener(type,event=>event.stopPropagation());
+    button.addEventListener('click',event=>{
+      event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();
       if(!action||button.hidden)return;
       const reveal=action;action=null;button.disabled=true;
       reveal();
+      waitingForFreshGesture=true;
     });
     return button;
   }
@@ -170,10 +191,16 @@ const NucleoReadFirstSkip=(()=>{
     show(anchorId,onReveal){
       const anchor=document.getElementById(anchorId);
       if(!anchor||typeof onReveal!=='function')return;
-      const target=anchorId==='kqOriginal'?anchor:(anchor.closest('.question')||anchor);
+      let host;
+      if(anchorId==='gameCard')host=anchor.querySelector('.options');
+      else if(anchorId==='kqOriginal')host=document.getElementById('kqChoices');
+      else host=document.getElementById('answers');
+      if(!host)return;
       const b=ensure();
-      if(b.nextElementSibling!==target)target.before(b);
-      action=onReveal;b.disabled=false;b.hidden=false;
+      host.classList.add('nucleo-read-skip-host');
+      if(b.parentElement!==host)host.appendChild(b);
+      action=onReveal;waitingForFreshGesture=false;
+      b.disabled=false;b.hidden=false;
     },
     hide(){action=null;if(button){button.hidden=true;button.disabled=true;}},
     get button(){return button;}
