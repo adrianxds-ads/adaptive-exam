@@ -1,4 +1,4 @@
-const APP_VERSION="1.3.6";
+const APP_VERSION="1.3.7";
 let pendingStats=null;
 function safeDecoration(run,fallback=""){try{return run()??fallback;}catch(e){console.warn("Decoration unavailable",e);return fallback;}}
 const PAPERS=[...(window.ADAPTIVE_EXAM_CAMBRIDGE_PAPERS||[]),...(window.ADAPTIVE_EXAM_PAPERS||[])].sort((a,b)=>(Number(a.examNumber)||99)-(Number(b.examNumber)||99));
@@ -46,6 +46,11 @@ function paperByNumber(n){return PAPERS.find(p=>Number(p.examNumber)===Number(n)
 function currentPart(){return activePaper?.parts?.[activePart];}
 function getSource(paper,part){return paper.parts?.[part]?.source||paper.source||{type:"unknown",label:"Fuente no especificada",detail:"No hay información de procedencia registrada."};}
 function sourceLine(src){return [src.type,src.label].filter(Boolean).join(" · ");}
+function headerSourceLine(src){
+  // Short visible mobile/desktop label only; full provenance remains in exercise details.
+  const label=String(src?.label||""),match=src?.type==="EngExam"&&label.match(/\bRUOE\s*·\s*Practice Test\s+\d+\b/i);
+  return match?match[0]:sourceLine(src);
+}
 
 function partItems(p=currentPart()){
   if(!p)return [];
@@ -191,7 +196,8 @@ function startExercise(id){
   activePaper=ex.paper;activePart=ex.part;activeExerciseId=id;answers={};checked=false;exerciseStartedAt=Date.now();gapTiming={};lastExamInput=null;
   const src=getSource(activePaper,activePart);
   $("headPart").textContent="Exam "+String(activePaper.examNumber).padStart(2,"0")+" · Part "+activePart;
-  $("headSource").textContent=sourceLine(src);
+  $("headSource").textContent=headerSourceLine(src);
+  $("headSource").title=sourceLine(src);
   showScreen("paperScreen");renderPart();window.scrollTo(0,0);
 }
 function renderPart(){
@@ -315,7 +321,8 @@ function checkPart(){
 function renderCorrection(result,details){
   const src=getSource(activePaper,activePart),pct=Math.round(result.correct/result.total*100),bad=details.filter(d=>!d.correct),ok=details.filter(d=>d.correct);
   $("resultTitle").textContent="Corrección · Part "+activePart;
-  $("resultSource").textContent=sourceLine(src);
+  $("resultSource").textContent=headerSourceLine(src);
+  $("resultSource").title=sourceLine(src);
   $("reviewSummary").innerHTML="<div class='review-score'><b>"+result.correct+" / "+result.total+"</b><span>"+pct+"% de acierto</span></div>"+
     (safeDecoration(()=>window.AdrianAchievements?.medalStripHtml?.(cambridgeMedalCounts(),{context:"summary"})))+
     "<details class='exercise-meta-fold'><summary>FUENTE DEL EJERCICIO</summary><div class='source-box'><span>"+esc(sourceLine(src))+"</span><small>"+esc(src.detail||"")+"</small></div></details>";

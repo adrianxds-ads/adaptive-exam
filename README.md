@@ -2,6 +2,11 @@
 
 Paper-first practice app for Cambridge B2 First.
 
+## v1.3.7 · Mobile exam header (2026-10-10)
+- Shortens only the visible EngExam provenance in exam and correction headers to `RUOE · Practice Test 01`, while preserving the complete original source in exercise details and the element tooltip.
+- Reduces the sticky header from approximately 84 px to 69 px on 320–412 px layouts; retains a readable 16 px secondary label and 52 px Back control.
+- Does not change question banks, official answers, checking, achievements, timers or stored progress. Verified in isolated Chromium at 320/360/390/412/768 px.
+
 ## v0.2
 - The unit of practice is now the **whole Cambridge Part**, not an isolated question.
 - Part 1 shows one complete text with 8 gaps; each gap opens its own A/B/C/D selector.
