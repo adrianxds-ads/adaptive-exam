@@ -114,3 +114,26 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
  .finish-quick-actions{grid-template-columns:1fr;gap:9px;margin:13px 0}
  .finish-quick-actions>button{min-height:52px;padding:12px 14px;font-size:18px}
 }
+
+/* Núcleo Visual · Cambridge Keys: lectura prioritaria y cristal discreto */
+:root{--bg:#eaf0f5;--panel:#fff;--muted:#394b55;--line:rgba(48,69,85,.20)}
+html,body{background:#eaf0f5;color:#25282c}
+body{background:radial-gradient(ellipse at 95% 0%,rgba(175,207,224,.45),transparent 52%),linear-gradient(180deg,#f3f7fa,#eaf0f5 60%);color:#25282c}
+.topbar{background:rgba(255,255,255,.68);border-bottom-color:rgba(48,69,85,.16)}
+.topbar strong,.eyebrow,.origin,.position,.mode small,.bank-note,.metric span,.answer-tip,.clock small{color:#394b55}
+.study-link,.plain-back,.soft-btn{color:#25282c;background:rgba(255,255,255,.82);border-color:rgba(48,69,85,.23)}
+.intro{color:#34444e}
+.mode,.stats-panel,.finish-panel,.question-panel{background:rgba(255,255,255,.86);color:#25282c;border:1px solid rgba(48,69,85,.18);box-shadow:0 10px 30px rgba(34,57,75,.06)}
+.mode:hover,.mode:focus-visible{background:#fff;border-color:#8a6b21}
+.mode-num{color:#76530c}
+.metric,.option-btn{background:#f5f8fb;color:#25282c;border-color:rgba(48,69,85,.22)}
+.option-btn span{color:#76530c;background:#f5e9c7}
+.option-btn.chosen{background:#fff3d2;border-color:#967321}
+.option-btn:disabled{opacity:.85}
+.clock{color:#25282c;background:conic-gradient(#b08322 var(--fill),#d9e1e7 var(--fill))}
+.clock:before{background:#fff}
+.progress-rail{background:#dce4e9}
+.feedback{background:#f4f7fa;color:#25282c}.feedback strong{color:#25282c}
+.bank-note{background:rgba(255,255,255,.65)}
+@supports(backdrop-filter:blur(12px)){.topbar,.mode,.stats-panel,.finish-panel,.question-panel{backdrop-filter:blur(12px)}}
+@media(max-width:520px){.screen{padding-bottom:calc(28px + env(safe-area-inset-bottom))}}
