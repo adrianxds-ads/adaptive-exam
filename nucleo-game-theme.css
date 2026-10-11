@@ -365,3 +365,97 @@ html body[data-nucleo-game] #gameScreen .quiz-game-footer .exit{
  font-size:18px!important;color:#24465D!important;background:#EFF5F9!important;
  min-height:44px!important;border:1px solid #9EB7C9!important;opacity:1!important;
 }
+/* Núcleo Editorial Luminous 1.2 · reading contracts for prose/Coach/errors.
+ * Canonical change only: no question/timer/score/storage behaviour is modified.
+ * Keep individual accent colours for badges; give all long-form prose opaque ink.
+ */
+html body[data-nucleo-game] #coachScreen :is(.local-coach-hero,.coach-narrative,.coach-card,.mistake-card,.mistake-choice>div,.coach-prompt-box textarea){
+  background:#F3F8FB!important;background-image:none!important;color:#25282C!important;
+  border:1px solid #B5C9D7!important;box-shadow:none!important;opacity:1!important;
+}
+html body[data-nucleo-game] #coachScreen .local-coach-hero{
+  background:#E9F3F9!important;border-left:6px solid var(--ng-accent)!important;
+}
+html body[data-nucleo-game] #coachScreen .coach-narrative{background:#FFFFFF!important}
+html body[data-nucleo-game] #coachScreen :is(.coach-card,.mistake-card){padding:16px!important;border-radius:14px}
+html body[data-nucleo-game] #coachScreen :is(.local-coach-hero,.coach-narrative,.coach-card,.mistake-card) :is(h2,h3,b,strong,.coach-score){
+  color:#233E50!important;text-shadow:none!important;opacity:1!important;
+}
+html body[data-nucleo-game] #coachScreen :is(.local-coach-hero,.coach-narrative,.coach-card,.mistake-card,.resulttitle) p{
+  color:#25282C!important;font:500 19px/1.5 var(--nucleo-font)!important;
+  opacity:1!important;text-shadow:none!important;overflow-wrap:anywhere;
+}
+html body[data-nucleo-game] #coachScreen :is(.local-coach-hero,.coach-narrative,.coach-card,.mistake-card) :is(small,em,.coach-method){
+  color:#46596B!important;font-size:16px!important;line-height:1.45!important;opacity:1!important;
+}
+html body[data-nucleo-game] #coachScreen .coach-card .coach-score{
+  color:var(--ng-accent)!important;font-size:18px!important;
+}
+html body[data-nucleo-game] #coachScreen :is(.formula,.mistake-choice>div){
+  background:#E6F0F6!important;border:1px solid #AFC5D3!important;
+  color:#233E50!important;font-size:18px!important;line-height:1.45!important;
+  overflow-wrap:anywhere;
+}
+html body[data-nucleo-game] #coachScreen .mistake-choice .correct{
+  background:#DFF2E4!important;border-color:#83B994!important;color:#194F32!important;
+}
+html body[data-nucleo-game] #coachScreen .mistake-choice .wrong{
+  background:#FBE9E9!important;border-color:#DFA7AA!important;color:#852E36!important;
+}
+html body[data-nucleo-game] #coachScreen :is(.skillrow,.section,.statusbox,.coach-method){
+  color:#25282C!important;opacity:1!important;
+}
+html body[data-nucleo-game] #coachScreen :is(.skillrow,.section) :is(span,small,p){
+  color:#46596B!important;font-size:16px!important;line-height:1.4!important;opacity:1!important;
+}
+html body[data-nucleo-game] #coachScreen .coach-prompt-box textarea{
+  display:block;width:100%;min-height:230px;padding:15px;resize:vertical;
+  font:500 16px/1.5 ui-monospace,Consolas,monospace!important;
+  border-radius:12px!important;white-space:pre-wrap;overflow-wrap:anywhere;
+}
+
+/* Error laboratory: explanatory text had inherited light-on-dark styles. */
+html body[data-nucleo-game] #errorsScreen :is(.error-lab,.error-coach-card,.error-detail,.error-quick,.error-music>div){
+  background:#F3F8FB!important;background-image:none!important;
+  border:1px solid #B5C9D7!important;color:#25282C!important;
+  box-shadow:none!important;opacity:1!important;
+}
+html body[data-nucleo-game] #errorsScreen .error-coach-card{
+  border-left:5px solid var(--error-accent,var(--ng-accent))!important;
+}
+html body[data-nucleo-game] #errorsScreen :is(.error-lab-title,.error-coach-head,.error-example-q,.error-detail,.error-quick,.error-music,.error-solved,.secret-key-copy) :is(h3,b,strong){
+  color:#233E50!important;text-shadow:none!important;opacity:1!important;
+}
+html body[data-nucleo-game] #errorsScreen :is(.error-example-q,.error-detail-body p,.error-quick span,.error-solved,.secret-key-copy,.error-music b){
+  color:#25282C!important;font-size:19px!important;line-height:1.5!important;
+  opacity:1!important;text-shadow:none!important;overflow-wrap:anywhere;
+}
+html body[data-nucleo-game] #errorsScreen :is(.error-coach-head small,.error-lab-title span,.error-lab-title small,.error-music small,.error-music span,.error-detail summary,.error-quick b){
+  color:#46596B!important;font-size:16px!important;line-height:1.4!important;
+  opacity:1!important;letter-spacing:normal!important;
+}
+html body[data-nucleo-game] #errorsScreen :is(.error-example-q>b,.error-coach-head>span){
+  color:#23465A!important;background:#DDECF5!important;border-color:#AFC5D3!important;
+}
+html body[data-nucleo-game] #errorsScreen :is(.error-detail summary,.error-formula,.secret-key-copy){
+  background:#E7F1F7!important;color:#233E50!important;
+  border:1px solid #AFC5D3!important;
+}
+html body[data-nucleo-game] #errorsScreen .error-detail-body{
+  background:#FFFFFF!important;border-top:1px solid #B5C9D7!important;
+}
+html body[data-nucleo-game] #errorsScreen .error-coach-card .mistake-choice>div{
+  background:#E6F0F6!important;color:#233E50!important;
+  border:1px solid #AFC5D3!important;font-size:18px!important;line-height:1.45!important;
+}
+html body[data-nucleo-game] #errorsScreen .error-coach-card .mistake-choice .correct{
+  background:#DFF2E4!important;border-color:#83B994!important;color:#194F32!important;
+}
+html body[data-nucleo-game] #errorsScreen .error-coach-card .mistake-choice .wrong{
+  background:#FBE9E9!important;border-color:#DFA7AA!important;color:#852E36!important;
+}
+@media(max-width:560px){
+  html body[data-nucleo-game] #coachScreen :is(.local-coach-hero,.coach-narrative,.coach-card){padding:16px!important}
+  html body[data-nucleo-game] :is(#coachScreen,#errorsScreen) :is(.coach-head,.error-coach-head){flex-wrap:wrap}
+  html body[data-nucleo-game] :is(#coachScreen,#errorsScreen) .mistake-choice{grid-template-columns:minmax(0,1fr)!important}
+}
