@@ -1,7 +1,7 @@
 /* Núcleo Editorial Luminous 1.1 · verified reading surfaces, 2026-10-10.
  * Canonical source: adrian-core/design/nucleo-game-theme.css.
  * Presentation only. Question banks, timing, scoring and storage are untouched.
- * !important is limited to components repainted by legacy/runtime rank skins.
+ * is limited to components repainted by legacy/runtime rank skins.
  */
 :root{
  --ng-bg:#EAF0F5;--ng-ink:#25282C;--ng-muted:#46596B;
@@ -21,26 +21,26 @@ body[data-nucleo-game="hoti"]{--ng-accent:#236D72;--ng-wash:#D5F1EF}
 html:has(body[data-nucleo-game]){background:var(--ng-bg);color-scheme:light}
 body[data-nucleo-game]{
  --bg:#EAF0F5;--text:#25282C;--muted:#46596B;--line:#B5C9D7;
- background:radial-gradient(ellipse at 100% 0%,var(--ng-wash),transparent 41%),var(--ng-bg)!important;
+ background:radial-gradient(ellipse at 100% 0%,var(--ng-wash),transparent 41%),var(--ng-bg);
  color:var(--ng-ink);font:500 19px/1.35 var(--nucleo-font);color-scheme:light;
 }
 html body[data-nucleo-game] :is(#startScreen,#endScreen,#resultScreen,#partScreen,#exerciseScreen){
- background:transparent!important;color:var(--ng-ink)!important;
+ background:transparent;color:var(--ng-ink);
 }
 html body[data-nucleo-game] :is(.screen .panel,.panel.hero,.paper,.kq-panel),
 html body[data-nucleo-game] #startScreen>.panel,
 html body[data-nucleo-game] #endScreen>.panel,
 html body[data-nucleo-game] #resultScreen>.panel{
- background:#FFFFFF!important;background-image:none!important;
- color:var(--ng-ink)!important;border:1px solid var(--ng-edge)!important;
- box-shadow:0 8px 27px rgba(40,75,100,.09)!important;
+ background:#FFFFFF;background-image:none;
+ color:var(--ng-ink);border:1px solid var(--ng-edge);
+ box-shadow:0 8px 27px rgba(40,75,100,.09);
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(h1,h2,h3){color:#233E50;text-shadow:none}
 html body[data-nucleo-game] :is(#startScreen,#endScreen,#partScreen,#exerciseScreen) :is(h1,h2,h3){
- color:#233E50!important;text-shadow:none!important;
+ color:#233E50;text-shadow:none;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.subtitle,.intro){
- color:#334D60!important;font-size:19px!important;line-height:1.4!important;font-weight:650;
+ color:#334D60;font-size:19px;line-height:1.4;font-weight:650;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.meta,.kicker,.eyebrow,.progress-label,.bank-progress,
  .read-first-row small,.read-first-mode small,.read-first-note,.class-card small,
@@ -48,54 +48,54 @@ html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScre
  .footerline,.release-info summary,.release-info summary b,.release-info summary span,
  .chartmeta,.support,.speech-help,.native-hint,.mic-status,.question-no,.kq-footnote,
  .mode-note,.question-label,.origin){
- color:var(--ng-muted)!important;font-size:16px!important;line-height:1.4!important;
- font-weight:550!important;opacity:1;
+ color:var(--ng-muted);font-size:16px;line-height:1.4;
+ font-weight:550;opacity:1;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.kicker,.eyebrow,.origin){
- color:var(--ng-accent)!important;letter-spacing:.045em!important;font-weight:750!important;
+ color:var(--ng-accent);letter-spacing:.045em;font-weight:750;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.card,.stat,.class-card,.statusbox,.status,.phase-note,
  .kq-note,.mode-note,.dashboard-menu .menu-btn,.part-card,.exercise-card,.exam-tile,.mode-card,.mode){
- background:#F2F7FA!important;color:var(--ng-ink)!important;
- border:1px solid var(--ng-edge)!important;border-radius:16px;
+ background:#F2F7FA;color:var(--ng-ink);
+ border:1px solid var(--ng-edge);border-radius:16px;
  box-shadow:0 3px 13px rgba(38,69,93,.05);
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.card,.stat,.class-card,.statusbox,.kq-note,.mode-note,
  .menu-btn,.part-card,.exercise-card,.mode-card) :is(span,small,p){
- color:var(--ng-muted)!important;font-size:16px!important;line-height:1.4!important;
- font-weight:550!important;opacity:1;
+ color:var(--ng-muted);font-size:16px;line-height:1.4;
+ font-weight:550;opacity:1;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.card,.stat) :is(b,strong){
- color:#233E50!important;font-size:clamp(25px,6vw,34px)!important;
- font-weight:800!important;line-height:1.2;font-variant-numeric:tabular-nums;
+ color:#233E50;font-size:clamp(25px,6vw,34px);
+ font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.primary,.secondary,.ghost,.back,.start-btn,
  #startBtn,#startClassBtn,.soundbtn,.exit){
- font-family:var(--nucleo-font)!important;font-size:18px!important;
- font-weight:750!important;min-height:52px;border-radius:14px;
+ font-family:var(--nucleo-font);font-size:18px;
+ font-weight:750;min-height:52px;border-radius:14px;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.primary,#startBtn,#startClassBtn){
- background:var(--ng-accent)!important;color:#FFFFFF!important;
- border:1px solid var(--ng-accent)!important;
- box-shadow:0 4px 12px var(--ng-halo)!important;
+ background:var(--ng-accent);color:#FFFFFF;
+ border:1px solid var(--ng-accent);
+ box-shadow:0 4px 12px var(--ng-halo);
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.secondary,.ghost,.back,.soundbtn,.exit){
- background:#EFF5F9!important;color:#24465D!important;border:1px solid #9EB7C9!important;
+ background:#EFF5F9;color:#24465D;border:1px solid #9EB7C9;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .soundbtn{min-width:52px;width:52px;height:52px;padding:8px}
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .read-first-toggle[aria-pressed="true"]{
- color:#205B62!important;border-color:#6EAEB0!important;background:#DDF1EF!important;
+ color:#205B62;border-color:#6EAEB0;background:#DDF1EF;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.home-details summary,.study-stats summary,.end-collapsible>summary){
- color:#294B61!important;background:#ECF4F9!important;border:1px solid #B5C9D6!important;
- border-radius:12px;padding:14px;font-size:18px!important;font-weight:750!important;min-height:52px;
+ color:#294B61;background:#ECF4F9;border:1px solid #B5C9D6;
+ border-radius:12px;padding:14px;font-size:18px;font-weight:750;min-height:52px;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .chip{
- background:#E8F1F7!important;border:1px solid #AFC5D3!important;
- color:#25465B!important;font-size:16px!important;min-height:52px;
+ background:#E8F1F7;border:1px solid #AFC5D3;
+ color:#25465B;font-size:16px;min-height:52px;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .chip.active{
- background:var(--ng-accent)!important;color:white!important;border-color:var(--ng-accent)!important;
+ background:var(--ng-accent);color:white;border-color:var(--ng-accent);
 }
 /* Statistics are light reading cards. Rank colour lives on borders/swatches,
  * rather than on the value itself (brown, gold and pastel ranks failed contrast). */
@@ -103,32 +103,32 @@ html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScre
  .lp-homebar,.lp-homecell,.lp-summary,.focus-panel,.peer-box,.peer-values>div,
  .next-campaign-box,.readiness-box,.campaign-eta-mini,.ai-handoff-card,
  .error-session-handoff,.league-report,.league-note,.target-result){
- background:#F2F7FA!important;background-image:none!important;color:var(--ng-ink)!important;
- border:1px solid var(--ng-edge)!important;border-radius:15px;box-shadow:none!important;
+ background:#F2F7FA;background-image:none;color:var(--ng-ink);
+ border:1px solid var(--ng-edge);border-radius:15px;box-shadow:none;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.ai-valuation-box,.learning-score-box,.ald-score){
- border-left:5px solid var(--ai-color,var(--ng-accent))!important;
+ border-left:5px solid var(--ai-color,var(--ng-accent));
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.ai-valuation-box,.learning-score-box,.ald-score,
  .lp-homebar,.focus-panel,.peer-box,.next-campaign-box,.readiness-box,
  .campaign-eta-mini,.ai-handoff-card,.error-session-handoff,.league-report,
  .target-result) :is(span,small,p,em,.ald-rank,.peer-delta,.learning-direction){
- color:var(--ng-muted)!important;font-size:16px!important;
- font-weight:550!important;line-height:1.4!important;opacity:1!important;text-shadow:none!important;
+ color:var(--ng-muted);font-size:16px;
+ font-weight:550;line-height:1.4;opacity:1;text-shadow:none;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.ai-valuation-box,.learning-score-box,.ald-score,
  .lp-homebar,.focus-panel,.peer-box,.next-campaign-box,.readiness-box,
  .campaign-eta-mini,.ai-handoff-card,.target-result) :is(b,strong){
- color:#233E50!important;font-weight:800!important;opacity:1!important;
- text-shadow:none!important;font-variant-numeric:tabular-nums;line-height:1.2!important;
+ color:#233E50;font-weight:800;opacity:1;
+ text-shadow:none;font-variant-numeric:tabular-nums;line-height:1.2;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.ai-valuation-box,.learning-score-box,.ald-score) b{
- font-size:clamp(32px,8vw,44px)!important;
+ font-size:clamp(32px,8vw,44px);
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.lp-homecell b,.peer-values b,.next-campaign-head b,
- .focus-head strong,.campaign-eta-mini strong){font-size:28px!important}
+ .focus-head strong,.campaign-eta-mini strong){font-size:28px}
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.progress-label strong,#coverageText,#masteryText){
- color:#233E50!important;font-size:18px!important;line-height:1.3!important;
+ color:#233E50;font-size:18px;line-height:1.3;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .ai-valuation-box>em{display:none}
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .focus-head{flex-wrap:wrap;align-items:flex-start}
@@ -136,38 +136,38 @@ html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScre
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .focus-targets{display:flex;flex-wrap:wrap;gap:10px}
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .focus-week-head{flex-wrap:wrap}
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .focus-week-bars{gap:6px}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .focus-day{min-width:0;opacity:1!important}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .focus-day :is(b,small){font-size:16px!important;color:#46596B!important}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .focus-day{min-width:0;opacity:1}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .focus-day :is(b,small){font-size:16px;color:#46596B}
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .peer-values{grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.learning-direction,.peer-delta,.delta).good{color:#246239!important}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.learning-direction,.peer-delta,.delta).bad{color:#9D293F!important}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.learning-direction,.peer-delta,.delta).neutral{color:#46596B!important}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.learning-direction,.peer-delta,.delta).good{color:#246239}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.learning-direction,.peer-delta,.delta).bad{color:#9D293F}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.learning-direction,.peer-delta,.delta).neutral{color:#46596B}
 /* Medal totals: keep blue/violet/gold identities, and make zero counts readable.
  * Celebration overlays are deliberately outside this scope. */
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.medal-summary-host .ad-medal-strip,.ad-medal-strip.context-summary){
  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.medal-summary-host,.panel,.paper) .ad-medal-stat{
- min-width:0;min-height:60px;padding:10px 12px;gap:10px;filter:none!important;
- opacity:1!important;background:#F2F7FA!important;border:1px solid #B5C9D7!important;box-shadow:none!important;
+ min-width:0;min-height:60px;padding:10px 12px;gap:10px;filter:none;
+ opacity:1;background:#F2F7FA;border:1px solid #B5C9D7;box-shadow:none;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.medal-summary-host,.panel,.paper) .ad-medal-stat.earned{
- border-color:var(--ach)!important;background:color-mix(in srgb,var(--ach) 12%,white)!important;
+ border-color:var(--ach);background:color-mix(in srgb,var(--ach) 12%,white);
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.medal-summary-host,.panel,.paper) .ad-medal-stat :is(i,b,b em){
- color:#294456!important;text-shadow:none!important;font-family:var(--nucleo-font)!important;
- font-weight:800!important;line-height:1.2!important;letter-spacing:0!important;
+ color:#294456;text-shadow:none;font-family:var(--nucleo-font);
+ font-weight:800;line-height:1.2;letter-spacing:0;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.medal-summary-host,.panel,.paper) .ad-medal-stat i{
- width:38px;height:38px;flex-basis:38px;font-size:22px!important;
- background:white!important;border:2px solid var(--ach,#B5C9D7)!important;box-shadow:none!important;
+ width:38px;height:38px;flex-basis:38px;font-size:22px;
+ background:white;border:2px solid var(--ach,#B5C9D7);box-shadow:none;
 }
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.medal-summary-host,.panel,.paper) .ad-medal-stat b{font-size:16px!important}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.medal-summary-host,.panel,.paper) .ad-medal-stat b{font-size:16px}
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.medal-summary-host,.panel,.paper) .ad-medal-stat-star i{
- color:#795700!important;border:0!important;background:transparent!important;font-size:30px!important;
+ color:#795700;border:0;background:transparent;font-size:30px;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.medal-summary-host,.panel,.paper) .ad-medal-stat-star b em{
- font-size:22px!important;background:transparent!important;padding:0;
+ font-size:22px;background:transparent;padding:0;
 }
 /* Key diary: the original generic .card/.panel rules accidentally lightened the
  * flashcard background but retained gold/white text. Give the whole component a contract. */
@@ -176,76 +176,76 @@ html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScre
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.daily-key-head,.key-slide-meta,.key-carousel-hint,
  .keyring-item) :is(span,small,b,em){
- color:#655015!important;font-size:16px!important;line-height:1.4!important;
+ color:#655015;font-size:16px;line-height:1.4;
 }
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .key-carousel-hint{color:#46596B!important;font-size:16px!important}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .key-carousel-hint{color:#46596B;font-size:16px}
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.daily-key-card,.daily-key-card.locked-card){
- background:#FFF8E6!important;background-image:none!important;border:1px solid #C5AE6C!important;
- color:#342D1C!important;box-shadow:0 4px 14px rgba(110,89,27,.08)!important;
+ background:#FFF8E6;background-image:none;border:1px solid #C5AE6C;
+ color:#342D1C;box-shadow:0 4px 14px rgba(110,89,27,.08);
 }
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .daily-key-card.discovery-card{background:#EEF8F2!important;border-color:#95BDA3!important}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .daily-key-card.discovery-card{background:#EEF8F2;border-color:#95BDA3}
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .daily-key-face :is(small,span,b){
- color:#655015!important;font-size:16px!important;line-height:1.4!important;
+ color:#655015;font-size:16px;line-height:1.4;
 }
 html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .daily-key-face strong{
- color:#342D1C!important;font-size:clamp(25px,6.5vw,34px)!important;line-height:1.3!important;
- text-shadow:none!important;font-weight:750!important;
+ color:#342D1C;font-size:clamp(25px,6.5vw,34px);line-height:1.3;
+ text-shadow:none;font-weight:750;
 }
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .key-slide-locked{opacity:1!important}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .key-spotify-open{font-size:16px!important;min-height:44px;line-height:1.4}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .keyring-item{background:#FFF8E6!important;border-color:#C5AE6C!important}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .key-slide-locked{opacity:1}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .key-spotify-open{font-size:16px;min-height:44px;line-height:1.4}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .keyring-item{background:#FFF8E6;border-color:#C5AE6C}
 /* Gameplay counters and reading prompts. Rainbow/answer/reward geometry stays local. */
 html body[data-nucleo-game] #gameScreen :is(.question,.question-card,.game-card){
- background:#FFFFFF!important;background-image:none!important;color:#25282C!important;
- border:1px solid #BFCFD9!important;
+ background:#FFFFFF;background-image:none;color:#25282C;
+ border:1px solid #BFCFD9;
 }
 html body[data-nucleo-game] #gameScreen :is(.question h2,.question p,.question-text){
- color:#25282C!important;text-shadow:none!important;line-height:1.3;
+ color:#25282C;text-shadow:none;line-height:1.3;
 }
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.topbar,.paper-head){background:#E3EFF6!important;color:#264153!important;border-color:#B7CFDE!important}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.topbar strong,.paper-title,.paper-title b,.paper-title span,#paperLabel){color:#294B61!important;font-size:18px!important}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.topbar,.paper-head){background:#E3EFF6;color:#264153;border-color:#B7CFDE}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.topbar strong,.paper-title,.paper-title b,.paper-title span,#paperLabel){color:#294B61;font-size:18px}
 html body[data-nucleo-game] #gameScreen :is(.qnum span,.qnum small,.leveltag,.level-target,#comboHud,#levelHud,.categoryline){
- color:#315267!important;font-size:16px!important;line-height:1.3!important;
- text-shadow:none!important;letter-spacing:0!important;
+ color:#315267;font-size:16px;line-height:1.3;
+ text-shadow:none;letter-spacing:0;
 }
 html body[data-nucleo-game] #gameScreen .leveltag{max-width:none;white-space:normal}
-html body[data-nucleo-game] #gameScreen .level-target{white-space:normal;background:#E1EDF5!important;border:1px solid #AFC5D3!important;padding:4px 6px}
+html body[data-nucleo-game] #gameScreen .level-target{white-space:normal;background:#E1EDF5;border:1px solid #AFC5D3;padding:4px 6px}
 html body[data-nucleo-game] #gameScreen .toprow{grid-template-columns:72px minmax(0,1fr) minmax(118px,auto);gap:8px}
 html body[data-nucleo-game] #gameScreen .hudright{flex-wrap:wrap;min-width:0;max-width:160px;gap:6px}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .timer{background-color:#EAF0F5!important;background-image:none!important;box-shadow:none!important}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .timer strong{color:#263F52!important;font-size:28px!important;text-shadow:none!important}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .timer.urgent strong{color:#9D293F!important}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.score-float,.score-top,.points-hud){background:#EDF4F9!important;color:#294B61!important;border-color:#AFC5D3!important}
-html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.score-float,.score-top,.points-hud) :is(b,small,span){color:#294B61!important;font-size:18px!important}
-html body[data-nucleo-game="catala"] :is(.tense-prompt,.person-prompt){color:#294B61!important;text-shadow:none!important}
-html body[data-nucleo-game="catala"] .person-prompt.cue-new{color:#24628E!important}
-html body[data-nucleo-game="catala"] .person-prompt.cue-review{color:#655099!important}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .timer{background-color:#EAF0F5;background-image:none;box-shadow:none}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .timer strong{color:#263F52;font-size:28px;text-shadow:none}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) .timer.urgent strong{color:#9D293F}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.score-float,.score-top,.points-hud){background:#EDF4F9;color:#294B61;border-color:#AFC5D3}
+html body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,#leagueScreen,#coachScreen,#errorsScreen) :is(.score-float,.score-top,.points-hud) :is(b,small,span){color:#294B61;font-size:18px}
+html body[data-nucleo-game="catala"] :is(.tense-prompt,.person-prompt){color:#294B61;text-shadow:none}
+html body[data-nucleo-game="catala"] .person-prompt.cue-new{color:#24628E}
+html body[data-nucleo-game="catala"] .person-prompt.cue-review{color:#655099}
 /* Turismo itinerary is a coherent light document, including nested summaries. */
 html body[data-nucleo-game="hoti"] :is(.course-now,.course-uf,.course-ud,
  .uf-introduction,.module-exam-card,.course-next-block,.exam-confirmed,.exam-provisional){
- background:#F2F8FA!important;background-image:none!important;color:#25282C!important;
- border-color:#AFC7D1!important;box-shadow:none!important;opacity:1!important;
+ background:#F2F8FA;background-image:none;color:#25282C;
+ border-color:#AFC7D1;box-shadow:none;opacity:1;
 }
 html body[data-nucleo-game="hoti"] #courseNow :is(h2,h3,strong,b){
- color:#233E50!important;font-size:19px!important;line-height:1.35!important;opacity:1!important;
+ color:#233E50;font-size:19px;line-height:1.35;opacity:1;
 }
 html body[data-nucleo-game="hoti"] #courseNow :is(span,small,p,nav,a,.intro-item){
- color:#355267!important;font-size:16px!important;line-height:1.4!important;opacity:1!important;
+ color:#355267;font-size:16px;line-height:1.4;opacity:1;
 }
-html body[data-nucleo-game="hoti"] #courseNow .course-now-head>strong{font-size:24px!important}
+html body[data-nucleo-game="hoti"] #courseNow .course-now-head>strong{font-size:24px}
 html body[data-nucleo-game="hoti"] :is(.course-activity,.course-final-test,.deadline-row){
- background:#FFFFFF!important;color:#25282C!important;border-color:#B7CFD9!important;
+ background:#FFFFFF;color:#25282C;border-color:#B7CFD9;
 }
 html body[data-nucleo-game="hoti"] :is(.course-ud summary,.course-ud.active summary){
- background:#E7F1F5!important;grid-template-columns:54px minmax(0,1fr);gap:10px;
+ background:#E7F1F5;grid-template-columns:54px minmax(0,1fr);gap:10px;
 }
 html body[data-nucleo-game="hoti"] .ud-meta{grid-column:2;text-align:left}
-html body[data-nucleo-game="hoti"] :is(.uf-status,.intro-label){background:#DFEDF2!important;color:#355267!important}
+html body[data-nucleo-game="hoti"] :is(.uf-status,.intro-label){background:#DFEDF2;color:#355267}
 html body[data-nucleo-game="hoti"] .course-breadcrumb{white-space:normal;overflow-wrap:anywhere}
 html body[data-nucleo-game="hoti"] :is(select,input:not([type="checkbox"])){background:white;color:#25282C;border:1px solid #AFC4D2;font-size:18px}
-html body[data-nucleo-game="hoti"] .bank-head :is(p,span){color:#46596B!important;font-size:16px!important}
-html body[data-nucleo-game="keyword"] :is(.first,.second,.kq-original){color:#263A47!important}
-html body[data-nucleo-game="keyword"] :is(.paper,.kq-panel,.mode-note){color:#25282C!important}
+html body[data-nucleo-game="hoti"] .bank-head :is(p,span){color:#46596B;font-size:16px}
+html body[data-nucleo-game="keyword"] :is(.first,.second,.kq-original){color:#263A47}
+html body[data-nucleo-game="keyword"] :is(.paper,.kq-panel,.mode-note){color:#25282C}
 body[data-nucleo-game] :is(a,button,input,select,summary):focus-visible{outline:3px solid var(--ng-accent);outline-offset:3px}
 @media(max-width:560px){
  body[data-nucleo-game] .screen{padding-left:12px;padding-right:12px}
@@ -254,10 +254,10 @@ body[data-nucleo-game] :is(a,button,input,select,summary):focus-visible{outline:
  html body[data-nucleo-game] .mini-stats .stat:last-child{grid-column:1/-1}
  html body[data-nucleo-game] :is(.stat,.card){min-width:0}
  html body[data-nucleo-game] .progress-label{flex-wrap:wrap;gap:6px}
- html body[data-nucleo-game] .focus-day small{font-size:14px!important;overflow-wrap:anywhere}
+ html body[data-nucleo-game] .focus-day small{font-size:14px;overflow-wrap:anywhere}
  html body[data-nucleo-game] .next-campaign-head{flex-wrap:wrap;align-items:flex-start}
  html body[data-nucleo-game] .next-campaign-head em{text-align:left}
- html body[data-nucleo-game="hoti"] .course-activity{grid-template-columns:1fr!important}
+ html body[data-nucleo-game="hoti"] .course-activity{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){
  body[data-nucleo-game] :is(.card,.stat,:is(.medal-summary-host,.panel,.paper) .ad-medal-stat){transition:none}
@@ -265,261 +265,310 @@ body[data-nucleo-game] :is(a,button,input,select,summary):focus-visible{outline:
 
 /* External utility badges and non-screen HOTI controls have their own surface. */
 html body[data-nucleo-game] .adrian-session-points{
- background:#EDF4F9!important;color:#294B61!important;border-color:#AFC5D3!important;
+ background:#EDF4F9;color:#294B61;border-color:#AFC5D3;
 }
-html body[data-nucleo-game] .adrian-session-points :is(b,small,span){color:#294B61!important;font-size:18px!important}
-html body[data-nucleo-game] .adrian-tech-button{background:#294B61!important;color:white!important;border-color:#294B61!important}
-html body[data-nucleo-game] .dashboard-menu .menu-btn b{font-size:19px!important;color:#233E50!important}
-html body[data-nucleo-game] .dashboard-menu .menu-btn span{font-size:16px!important;color:#46596B!important}
-html body[data-nucleo-game="hoti"] .brand :is(a,span){color:#355267!important;font-size:18px!important}
-html body[data-nucleo-game="hoti"] .stats span{color:#46596B!important;font-size:16px!important}
+html body[data-nucleo-game] .adrian-session-points :is(b,small,span){color:#294B61;font-size:18px}
+html body[data-nucleo-game] .adrian-tech-button{background:#294B61;color:white;border-color:#294B61}
+html body[data-nucleo-game] .dashboard-menu .menu-btn b{font-size:19px;color:#233E50}
+html body[data-nucleo-game] .dashboard-menu .menu-btn span{font-size:16px;color:#46596B}
+html body[data-nucleo-game="hoti"] .brand :is(a,span){color:#355267;font-size:18px}
+html body[data-nucleo-game="hoti"] .stats span{color:#46596B;font-size:16px}
 html body[data-nucleo-game="hoti"] button:not(.option):not(.primary){
- background:#EBF3F8!important;color:#24465B!important;border-color:#AEC4D2!important;
+ background:#EBF3F8;color:#24465B;border-color:#AEC4D2;
  min-height:52px;font-size:18px;
 }
-html body[data-nucleo-game="hoti"] :is(.note,.position,.manuals-link){color:#355267!important;font-size:16px!important}
+html body[data-nucleo-game="hoti"] :is(.note,.position,.manuals-link){color:#355267;font-size:16px}
 
 html body[data-nucleo-game] .lp-game-score{
- background:#EDF4F9!important;background-image:none!important;color:#294B61!important;
- border:1px solid #AFC5D3!important;box-shadow:0 3px 10px rgba(38,69,93,.08)!important;
+ background:#EDF4F9;background-image:none;color:#294B61;
+ border:1px solid #AFC5D3;box-shadow:0 3px 10px rgba(38,69,93,.08);
  min-height:52px;max-width:calc(100vw - 24px);
 }
 html body[data-nucleo-game] .lp-game-score :is(b,small,span,strong){
- color:#294B61!important;font-size:18px!important;line-height:1.2!important;
+ color:#294B61;font-size:18px;line-height:1.2;
 }
-html body[data-nucleo-game] .lp-game-main b{font-size:24px!important}
+html body[data-nucleo-game] .lp-game-main b{font-size:24px}
 
 /* Shared statistics/chart module and skill lists are nested components.
  * Their original dark inset must not inherit the light page heading ink. */
 html body[data-nucleo-game] :is(.adp-summary,.adp-card,.adp-note,.adp-chart,
  .hub-chart,.hc-modal-card,.score-modal-card,.skillrow,.error-coach-card){
- background:#F2F7FA!important;background-image:none!important;color:#25282C!important;
- border:1px solid #B5C9D7!important;box-shadow:none!important;
+ background:#F2F7FA;background-image:none;color:#25282C;
+ border:1px solid #B5C9D7;box-shadow:none;
 }
 html body[data-nucleo-game] :is(.adp-summary,.hub-chart,.hc-modal-card,.score-modal-card) :is(h2,h3){
- color:#233E50!important;font-size:22px!important;line-height:1.3!important;text-shadow:none!important;
+ color:#233E50;font-size:22px;line-height:1.3;text-shadow:none;
 }
 html body[data-nucleo-game] :is(.adp-summary,.hub-chart,.hc-modal-card,.score-modal-card)
  :is(span,small,p,.adp-kicker,.hub-chart-empty,.hc-note,.hc-subtitle){
- color:#46596B!important;font-size:16px!important;line-height:1.4!important;
- font-weight:550!important;opacity:1!important;
+ color:#46596B;font-size:16px;line-height:1.4;
+ font-weight:550;opacity:1;
 }
 html body[data-nucleo-game] .adp-summary :is(b,strong){
- color:#233E50!important;font-size:26px!important;font-weight:800!important;line-height:1.2;
+ color:#233E50;font-size:26px;font-weight:800;line-height:1.2;
 }
-html body[data-nucleo-game] .adp-summary .adp-score b{font-size:36px!important}
+html body[data-nucleo-game] .adp-summary .adp-score b{font-size:36px}
 html body[data-nucleo-game] :is(.adp-summary,.hub-chart,.hc-modal-card) button{
- background:#EBF3F8!important;color:#24465B!important;border:1px solid #AFC5D3!important;
- min-height:52px;font-size:18px!important;line-height:1.3!important;white-space:normal;
+ background:#EBF3F8;color:#24465B;border:1px solid #AFC5D3;
+ min-height:52px;font-size:18px;line-height:1.3;white-space:normal;
 }
 html body[data-nucleo-game] :is(.adp-summary,.hub-chart,.hc-modal-card,.score-modal-card) svg text{
- fill:#46596B!important;
+ fill:#46596B;
 }
-html body[data-nucleo-game] .adp-skill{grid-template-columns:minmax(0,1fr) minmax(48px,.4fr) auto!important;gap:10px}
-html body[data-nucleo-game] .adp-skill b{font-size:18px!important}
+html body[data-nucleo-game] .adp-skill{grid-template-columns:minmax(0,1fr) minmax(48px,.4fr) auto;gap:10px}
+html body[data-nucleo-game] .adp-skill b{font-size:18px}
 html body[data-nucleo-game] :is(.skill-name-text,.pct,.skill-rank,.rank-move){
- color:#294B61!important;font-size:16px!important;line-height:1.4!important;text-shadow:none!important;
+ color:#294B61;font-size:16px;line-height:1.4;text-shadow:none;
 }
-html body[data-nucleo-game] .skill-rank{background:#E3EEF5!important}
-html body[data-nucleo-game] .skillrow{grid-template-columns:auto minmax(0,1fr) minmax(45px,.6fr) auto!important}
-html body[data-nucleo-game] .skill-name-hit{color:#294B61!important;background:transparent!important}
-html body[data-nucleo-game] .skill-name-hit .skill-name-text{color:#294B61!important}
+html body[data-nucleo-game] .skill-rank{background:#E3EEF5}
+html body[data-nucleo-game] .skillrow{grid-template-columns:auto minmax(0,1fr) minmax(45px,.6fr) auto}
+html body[data-nucleo-game] .skill-name-hit{color:#294B61;background:transparent}
+html body[data-nucleo-game] .skill-name-hit .skill-name-text{color:#294B61}
 html body[data-nucleo-game] #gameScreen #languagePointsHud,
 html body[data-nucleo-game] #gameScreen .quiz-game-footer #pointsHud{
- background:#E1EDF5!important;opacity:1!important;padding:8px 12px!important;
- min-height:44px!important;border:1px solid #AFC5D3!important;border-radius:12px!important;
- color:#294B61!important;font-size:20px!important;
+ background:#E1EDF5;opacity:1;padding:8px 12px;
+ min-height:44px;border:1px solid #AFC5D3;border-radius:12px;
+ color:#294B61;font-size:20px;
 }
 html body[data-nucleo-game] #gameScreen #languagePointsHud .lp-game-main :is(b,small){
- font-size:20px!important;color:#294B61!important;
+ font-size:20px;color:#294B61;
 }
-html body[data-nucleo-game] #gameScreen .answer.good{color:#07150E!important;text-shadow:none!important}
+html body[data-nucleo-game] #gameScreen .answer.good{color:#07150E;text-shadow:none}
 html body[data-nucleo-game] :is(#partScreen,#exerciseScreen) :is(#partMenuSubtitle,.bank-source){
- color:#46596B!important;font-size:16px!important;line-height:1.4!important;
+ color:#46596B;font-size:16px;line-height:1.4;
 }
 html body[data-nucleo-game] :is(.stats-card span,.focus-week-head b,.statusbox,.status,
- .round-position,.question-meta){font-size:16px!important;line-height:1.4!important}
-html body[data-nucleo-game] .dashboard-menu .menu-btn :is(b,span){font-size:18px!important}
+ .round-position,.question-meta){font-size:16px;line-height:1.4}
+html body[data-nucleo-game] .dashboard-menu .menu-btn :is(b,span){font-size:18px}
 html body[data-nucleo-game] #endScreen :is(.status,.status>strong,.review-panel h3,#nextClass){
- font-size:16px!important;line-height:1.4!important;
+ font-size:16px;line-height:1.4;
 }
 
 html body[data-nucleo-game] .league-study-open{
- background:#EAF2F7!important;color:#294B61!important;border:1px solid #AFC5D3!important;
+ background:#EAF2F7;color:#294B61;border:1px solid #AFC5D3;
  min-height:52px;flex-wrap:wrap;
 }
 html body[data-nucleo-game] .league-study-open :is(span,b,em){
- color:#294B61!important;font-size:16px!important;line-height:1.4!important;
+ color:#294B61;font-size:16px;line-height:1.4;
 }
 html body[data-nucleo-game] :is(#statsScreen,#leagueScreen) .skillrow strong{
- color:#294B61!important;font-size:18px!important;line-height:1.3!important;
+ color:#294B61;font-size:18px;line-height:1.3;
 }
-html body[data-nucleo-game] .stats-card{background:#F2F7FA!important;border:1px solid #B5C9D7!important}
-html body[data-nucleo-game] .stats-card span{color:#46596B!important;font-size:16px!important}
+html body[data-nucleo-game] .stats-card{background:#F2F7FA;border:1px solid #B5C9D7}
+html body[data-nucleo-game] .stats-card span{color:#46596B;font-size:16px}
 html body[data-nucleo-game] :is(.avs-legend-wrap,.avs-legend-title,.ai-legend-wrap)>span,
 html body[data-nucleo-game] :is(.avs-legend-item,.ai-legend-item) b{
- color:#46596B!important;font-size:16px!important;line-height:1.4!important;
+ color:#46596B;font-size:16px;line-height:1.4;
 }
-html body[data-nucleo-game] #gameScreen #answers .answer{font-size:clamp(20px,5.2vw,27px)!important;font-weight:750!important}
+html body[data-nucleo-game] #gameScreen #answers .answer{font-size:clamp(20px,5.2vw,27px);font-weight:750}
 html body[data-nucleo-game] #gameScreen .quiz-game-footer .exit{
- font-size:18px!important;color:#24465D!important;background:#EFF5F9!important;
- min-height:44px!important;border:1px solid #9EB7C9!important;opacity:1!important;
+ font-size:18px;color:#24465D;background:#EFF5F9;
+ min-height:44px;border:1px solid #9EB7C9;opacity:1;
 }
 /* Núcleo Editorial Luminous 1.2 · reading contracts for prose/Coach/errors.
  * Canonical change only: no question/timer/score/storage behaviour is modified.
  * Keep individual accent colours for badges; give all long-form prose opaque ink.
  */
 html body[data-nucleo-game] #coachScreen :is(.local-coach-hero,.coach-narrative,.coach-card,.mistake-card,.mistake-choice>div,.coach-prompt-box textarea){
-  background:#F3F8FB!important;background-image:none!important;color:#25282C!important;
-  border:1px solid #B5C9D7!important;box-shadow:none!important;opacity:1!important;
+  background:#F3F8FB;background-image:none;color:#25282C;
+  border:1px solid #B5C9D7;box-shadow:none;opacity:1;
 }
 html body[data-nucleo-game] #coachScreen .local-coach-hero{
-  background:#E9F3F9!important;border-left:6px solid var(--ng-accent)!important;
+  background:#E9F3F9;border-left:6px solid var(--ng-accent);
 }
-html body[data-nucleo-game] #coachScreen .coach-narrative{background:#FFFFFF!important}
-html body[data-nucleo-game] #coachScreen :is(.coach-card,.mistake-card){padding:16px!important;border-radius:14px}
+html body[data-nucleo-game] #coachScreen .coach-narrative{background:#FFFFFF}
+html body[data-nucleo-game] #coachScreen :is(.coach-card,.mistake-card){padding:16px;border-radius:14px}
 html body[data-nucleo-game] #coachScreen :is(.local-coach-hero,.coach-narrative,.coach-card,.mistake-card) :is(h2,h3,b,strong,.coach-score){
-  color:#233E50!important;text-shadow:none!important;opacity:1!important;
+  color:#233E50;text-shadow:none;opacity:1;
 }
 html body[data-nucleo-game] #coachScreen :is(.local-coach-hero,.coach-narrative,.coach-card,.mistake-card,.resulttitle) p{
-  color:#25282C!important;font:500 19px/1.5 var(--nucleo-font)!important;
-  opacity:1!important;text-shadow:none!important;overflow-wrap:anywhere;
+  color:#25282C;font:500 19px/1.5 var(--nucleo-font);
+  opacity:1;text-shadow:none;overflow-wrap:anywhere;
 }
 html body[data-nucleo-game] #coachScreen :is(.local-coach-hero,.coach-narrative,.coach-card,.mistake-card) :is(small,em,.coach-method){
-  color:#46596B!important;font-size:16px!important;line-height:1.45!important;opacity:1!important;
+  color:#46596B;font-size:16px;line-height:1.45;opacity:1;
 }
 html body[data-nucleo-game] #coachScreen .coach-card .coach-score{
-  color:var(--ng-accent)!important;font-size:18px!important;
+  color:var(--ng-accent);font-size:18px;
 }
 html body[data-nucleo-game] #coachScreen :is(.formula,.mistake-choice>div){
-  background:#E6F0F6!important;border:1px solid #AFC5D3!important;
-  color:#233E50!important;font-size:18px!important;line-height:1.45!important;
+  background:#E6F0F6;border:1px solid #AFC5D3;
+  color:#233E50;font-size:18px;line-height:1.45;
   overflow-wrap:anywhere;
 }
 html body[data-nucleo-game] #coachScreen .mistake-choice .correct{
-  background:#DFF2E4!important;border-color:#83B994!important;color:#194F32!important;
+  background:#DFF2E4;border-color:#83B994;color:#194F32;
 }
 html body[data-nucleo-game] #coachScreen .mistake-choice .wrong{
-  background:#FBE9E9!important;border-color:#DFA7AA!important;color:#852E36!important;
+  background:#FBE9E9;border-color:#DFA7AA;color:#852E36;
 }
 html body[data-nucleo-game] #coachScreen :is(.skillrow,.section,.statusbox,.coach-method){
-  color:#25282C!important;opacity:1!important;
+  color:#25282C;opacity:1;
 }
 html body[data-nucleo-game] #coachScreen :is(.skillrow,.section) :is(span,small,p){
-  color:#46596B!important;font-size:16px!important;line-height:1.4!important;opacity:1!important;
+  color:#46596B;font-size:16px;line-height:1.4;opacity:1;
 }
 html body[data-nucleo-game] #coachScreen .coach-prompt-box textarea{
   display:block;width:100%;min-height:230px;padding:15px;resize:vertical;
-  font:500 16px/1.5 ui-monospace,Consolas,monospace!important;
-  border-radius:12px!important;white-space:pre-wrap;overflow-wrap:anywhere;
+  font:500 16px/1.5 ui-monospace,Consolas,monospace;
+  border-radius:12px;white-space:pre-wrap;overflow-wrap:anywhere;
 }
 
 /* Error laboratory: explanatory text had inherited light-on-dark styles. */
 html body[data-nucleo-game] #errorsScreen :is(.error-lab,.error-coach-card,.error-detail,.error-quick,.error-music>div){
-  background:#F3F8FB!important;background-image:none!important;
-  border:1px solid #B5C9D7!important;color:#25282C!important;
-  box-shadow:none!important;opacity:1!important;
+  background:#F3F8FB;background-image:none;
+  border:1px solid #B5C9D7;color:#25282C;
+  box-shadow:none;opacity:1;
 }
 html body[data-nucleo-game] #errorsScreen .error-coach-card{
-  border-left:5px solid var(--error-accent,var(--ng-accent))!important;
+  border-left:5px solid var(--error-accent,var(--ng-accent));
 }
 html body[data-nucleo-game] #errorsScreen :is(.error-lab-title,.error-coach-head,.error-example-q,.error-detail,.error-quick,.error-music,.error-solved,.secret-key-copy) :is(h3,b,strong){
-  color:#233E50!important;text-shadow:none!important;opacity:1!important;
+  color:#233E50;text-shadow:none;opacity:1;
 }
 html body[data-nucleo-game] #errorsScreen :is(.error-example-q,.error-detail-body p,.error-quick span,.error-solved,.secret-key-copy,.error-music b){
-  color:#25282C!important;font-size:19px!important;line-height:1.5!important;
-  opacity:1!important;text-shadow:none!important;overflow-wrap:anywhere;
+  color:#25282C;font-size:19px;line-height:1.5;
+  opacity:1;text-shadow:none;overflow-wrap:anywhere;
 }
 html body[data-nucleo-game] #errorsScreen :is(.error-coach-head small,.error-lab-title span,.error-lab-title small,.error-music small,.error-music span,.error-detail summary,.error-quick b){
-  color:#46596B!important;font-size:16px!important;line-height:1.4!important;
-  opacity:1!important;letter-spacing:normal!important;
+  color:#46596B;font-size:16px;line-height:1.4;
+  opacity:1;letter-spacing:normal;
 }
 html body[data-nucleo-game] #errorsScreen :is(.error-example-q>b,.error-coach-head>span){
-  color:#23465A!important;background:#DDECF5!important;border-color:#AFC5D3!important;
+  color:#23465A;background:#DDECF5;border-color:#AFC5D3;
 }
 html body[data-nucleo-game] #errorsScreen :is(.error-detail summary,.error-formula,.secret-key-copy){
-  background:#E7F1F7!important;color:#233E50!important;
-  border:1px solid #AFC5D3!important;
+  background:#E7F1F7;color:#233E50;
+  border:1px solid #AFC5D3;
 }
 html body[data-nucleo-game] #errorsScreen .error-detail-body{
-  background:#FFFFFF!important;border-top:1px solid #B5C9D7!important;
+  background:#FFFFFF;border-top:1px solid #B5C9D7;
 }
 html body[data-nucleo-game] #errorsScreen .error-coach-card .mistake-choice>div{
-  background:#E6F0F6!important;color:#233E50!important;
-  border:1px solid #AFC5D3!important;font-size:18px!important;line-height:1.45!important;
+  background:#E6F0F6;color:#233E50;
+  border:1px solid #AFC5D3;font-size:18px;line-height:1.45;
 }
 html body[data-nucleo-game] #errorsScreen .error-coach-card .mistake-choice .correct{
-  background:#DFF2E4!important;border-color:#83B994!important;color:#194F32!important;
+  background:#DFF2E4;border-color:#83B994;color:#194F32;
 }
 html body[data-nucleo-game] #errorsScreen .error-coach-card .mistake-choice .wrong{
-  background:#FBE9E9!important;border-color:#DFA7AA!important;color:#852E36!important;
+  background:#FBE9E9;border-color:#DFA7AA;color:#852E36;
 }
 @media(max-width:560px){
-  html body[data-nucleo-game] #coachScreen :is(.local-coach-hero,.coach-narrative,.coach-card){padding:16px!important}
+  html body[data-nucleo-game] #coachScreen :is(.local-coach-hero,.coach-narrative,.coach-card){padding:16px}
   html body[data-nucleo-game] :is(#coachScreen,#errorsScreen) :is(.coach-head,.error-coach-head){flex-wrap:wrap}
-  html body[data-nucleo-game] :is(#coachScreen,#errorsScreen) .mistake-choice{grid-template-columns:minmax(0,1fr)!important}
+  html body[data-nucleo-game] :is(#coachScreen,#errorsScreen) .mistake-choice{grid-template-columns:minmax(0,1fr)}
 }
 /* Núcleo Luminous 1.3 · verified Coach text audit.
  * The campaign estimate was outside the v1.2 Coach selectors. Repaint the
  * actual reading surfaces instead of layering pale text over a white screen.
  */
 html body[data-nucleo-game] :is(.campaign-eta,.campaign-eta-mini){
- background:#F2F7FA!important;background-image:none!important;
- color:#25282C!important;border:1px solid #AFC5D3!important;
- box-shadow:none!important;opacity:1!important;
+ background:#F2F7FA;background-image:none;
+ color:#25282C;border:1px solid #AFC5D3;
+ box-shadow:none;opacity:1;
 }
-html body[data-nucleo-game] .campaign-eta{border-left:5px solid var(--ng-accent)!important}
+html body[data-nucleo-game] .campaign-eta{border-left:5px solid var(--ng-accent)}
 html body[data-nucleo-game] .campaign-eta :is(h2,aside b){
- color:#233E50!important;text-shadow:none!important;opacity:1!important;
+ color:#233E50;text-shadow:none;opacity:1;
 }
 html body[data-nucleo-game] .campaign-eta :is(p,aside b){
- font-size:19px!important;line-height:1.45!important;font-weight:700!important;
+ font-size:19px;line-height:1.45;font-weight:700;
 }
 html body[data-nucleo-game] .campaign-eta :is(small,aside span,aside em,.campaign-eta-range,footer){
- color:#334554!important;font-size:16px!important;line-height:1.5!important;
- font-weight:600!important;letter-spacing:normal!important;opacity:1!important;
- text-shadow:none!important;
+ color:#334554;font-size:16px;line-height:1.5;
+ font-weight:600;letter-spacing:normal;opacity:1;
+ text-shadow:none;
 }
-html body[data-nucleo-game] .campaign-eta p{color:#25282C!important;font-weight:600!important}
+html body[data-nucleo-game] .campaign-eta p{color:#25282C;font-weight:600}
 html body[data-nucleo-game] .campaign-eta aside{
- background:#E6F0F6!important;border:1px solid #AFC5D3!important;
+ background:#E6F0F6;border:1px solid #AFC5D3;
  border-radius:12px;padding:14px;min-width:0;overflow-wrap:anywhere;
 }
 html body[data-nucleo-game] .campaign-eta footer{
- border-top:1px solid #B5C9D7!important;padding-top:12px;
+ border-top:1px solid #B5C9D7;padding-top:12px;
 }
 html body[data-nucleo-game] .campaign-plan-scenarios span{
- background:#E0EDF5!important;border:1px solid #AFC5D3!important;
- color:#263E51!important;font-size:16px!important;line-height:1.4!important;
- font-weight:700!important;letter-spacing:normal!important;
+ background:#E0EDF5;border:1px solid #AFC5D3;
+ color:#263E51;font-size:16px;line-height:1.4;
+ font-weight:700;letter-spacing:normal;
 }
 html body[data-nucleo-game] .campaign-eta-mini :is(strong,b,span,small){
- color:#263E51!important;opacity:1!important;text-shadow:none!important;
+ color:#263E51;opacity:1;text-shadow:none;
 }
 html body[data-nucleo-game] .campaign-eta-mini :is(b,span,small){
- font-size:16px!important;line-height:1.45!important;font-weight:650!important;
- letter-spacing:normal!important;
+ font-size:16px;line-height:1.45;font-weight:650;
+ letter-spacing:normal;
 }
 /* Whole-text QA uncovered undersized Coach paragraphs and skill rows. */
 html body[data-nucleo-game] #coachScreen .resulttitle .kicker{
- color:#263E51!important;font-size:18px!important;opacity:1!important;
+ color:#263E51;font-size:18px;opacity:1;
 }
 html body[data-nucleo-game] #coachScreen :is(.statusbox,.coach-card p,.mistake-card p,.coach-narrative p){
- color:#25282C!important;font-size:19px!important;
- font-weight:550!important;line-height:1.5!important;opacity:1!important;
+ color:#25282C;font-size:19px;
+ font-weight:550;line-height:1.5;opacity:1;
 }
 html body[data-nucleo-game] #coachScreen :is(.coach-card h3,.coach-narrative h3,.mistake-card>b,.section h3){
- color:#233E50!important;font-size:20px!important;
- font-weight:750!important;line-height:1.35!important;opacity:1!important;
+ color:#233E50;font-size:20px;
+ font-weight:750;line-height:1.35;opacity:1;
 }
 html body[data-nucleo-game] #coachScreen .skillrow{
- color:#25282C!important;font-size:17px!important;line-height:1.4!important;
+ color:#25282C;font-size:17px;line-height:1.4;
 }
 html body[data-nucleo-game] #coachScreen .skillrow :is(.skill-name-text,.skill-name-hit,.pct,.skill-rank,.rank-move,span,b,small){
- color:#263E51!important;font-size:16px!important;font-weight:650!important;opacity:1!important;
+ color:#263E51;font-size:16px;font-weight:650;opacity:1;
 }
 @media(max-width:560px){
- html body[data-nucleo-game] .campaign-eta{grid-template-columns:minmax(0,1fr)!important;gap:12px}
+ html body[data-nucleo-game] .campaign-eta{grid-template-columns:minmax(0,1fr);gap:12px}
  html body[data-nucleo-game] .campaign-eta :is(aside,footer){grid-column:1/-1}
- html body[data-nucleo-game] #coachScreen .skillrow{grid-template-columns:auto minmax(0,1fr) auto!important}
+ html body[data-nucleo-game] #coachScreen .skillrow{grid-template-columns:auto minmax(0,1fr) auto}
+}
+
+
+/* ============================================================
+   ERGONOMÍA LENTES RELAX & OLED DARK (REFRACTORIZACIÓN ATÓMICA)
+   ============================================================ */
+:root {
+  --bg-oled: #000000;
+  --card-surface: #1B2228;
+  --border-subtle: #414B54;
+  --text-primary: #EAF0F5;
+  --text-secondary: #9AA7B2;
+  --line-height-relax: 1.45;
+}
+
+body {
+  background-color: var(--bg-oled);
+  color: var(--text-primary);
+}
+
+/* Centro de gravedad visual: tercio inferior (área de descanso focal y pulgar) */
+.game-layout, .quiz-layout, .quiz-container, .main-board, main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: calc(100vh - 75px);
+  padding-bottom: 2rem;
+}
+
+/* Enunciados compactados hacia abajo con interlineado descansado */
+.question-box, .prompt-card, .quiz-prompt, .exercise-card {
+  background: var(--card-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  line-height: var(--line-height-relax);
+  margin-top: auto;
+  margin-bottom: 1.25rem;
+}
+
+.options-grid, .answers-grid, .choices-container {
+  margin-bottom: 1.25rem;
+}
+
+/* My Coach & Study File: fichas con interlineado descansado */
+.coach-feedback, .study-card, .explanation-card, .coach-card {
+  background: var(--card-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  line-height: var(--line-height-relax);
 }

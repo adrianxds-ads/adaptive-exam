@@ -22,163 +22,163 @@ html:root body[data-nucleo-game] {
 /* One compact header: question number, live timer and existing exit/score controls.
    Hide redundancies but preserve engine-owned countdown, combo and mode semantics. */
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.top{
- flex:0 0 auto!important;margin:0!important;padding:5px 12px 0!important;
- min-height:0!important;height:auto!important;
- background:transparent!important;border:0!important;box-shadow:none!important;
+ flex:0 0 auto;margin:0;padding:5px 12px 0;
+ min-height:0;height:auto;
+ background:transparent;border:0;box-shadow:none;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.top .toprow,
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.toprow{
- display:flex!important;align-items:center!important;justify-content:space-between!important;
- gap:8px!important;height:auto!important;min-height:44px!important;
- padding:4px 7px!important;margin:0!important;
- background:transparent!important;border:0!important;box-shadow:none!important;
+ display:flex;align-items:center;justify-content:space-between;
+ gap:8px;height:auto;min-height:44px;
+ padding:4px 7px;margin:0;
+ background:transparent;border:0;box-shadow:none;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.top .toprow>.qnum,
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.toprow>.qnum{
- display:inline-flex!important;align-items:baseline!important;
- flex:0 1 auto!important;gap:4px!important;
- width:auto!important;min-width:0!important;margin:0!important;padding:0!important;
+ display:inline-flex;align-items:baseline;
+ flex:0 1 auto;gap:4px;
+ width:auto;min-width:0;margin:0;padding:0;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow>.qnum>span:first-child{
- display:none!important;
+ display:none;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow>.qnum>b{
- font:800 22px/1 Roboto,system-ui,sans-serif!important;
- color:var(--n44-ink)!important;
+ font:800 22px/1 Roboto,system-ui,sans-serif;
+ color:var(--n44-ink);
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow>.qnum>span{
- font:700 14px/1.1 Roboto,system-ui,sans-serif!important;
- color:var(--n44-soft)!important;
+ font:700 14px/1.1 Roboto,system-ui,sans-serif;
+ color:var(--n44-soft);
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow>.timer{
- display:inline-flex!important;align-items:center!important;justify-content:center!important;
- order:2!important;min-width:72px!important;width:auto!important;
- height:38px!important;min-height:38px!important;max-height:38px!important;
- padding:3px 9px!important;margin:0!important;
- border:1px solid var(--n44-line)!important;border-radius:999px!important;
- background:#141C22!important;
- box-shadow:none!important;clip-path:none!important;opacity:1!important;
- visibility:visible!important;transform:none!important;
+ display:inline-flex;align-items:center;justify-content:center;
+ order:2;min-width:72px;width:auto;
+ height:38px;min-height:38px;max-height:38px;
+ padding:3px 9px;margin:0;
+ border:1px solid var(--n44-line);border-radius:999px;
+ background:#141C22;
+ box-shadow:none;clip-path:none;opacity:1;
+ visibility:visible;transform:none;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow>.timer::before,
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow>.timer::after{
- display:none!important;
+ display:none;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow>.timer>strong{
- display:block!important;color:var(--n44-ink)!important;
- font:800 18px/1 Roboto,system-ui,sans-serif!important;
- font-variant-numeric:tabular-nums!important;
+ display:block;color:var(--n44-ink);
+ font:800 18px/1 Roboto,system-ui,sans-serif;
+ font-variant-numeric:tabular-nums;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow>.hudright{
- display:flex!important;align-items:center!important;
- width:auto!important;min-width:0!important;
- flex:0 1 auto!important;justify-content:flex-end!important;
- gap:5px!important;order:3!important;
+ display:flex;align-items:center;
+ width:auto;min-width:0;
+ flex:0 1 auto;justify-content:flex-end;
+ gap:5px;order:3;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow .soundbtn,
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow .leveltag,
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow .level-target{
- display:none!important;
+ display:none;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow #comboHud,
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow #classClock{
- color:var(--n44-soft)!important;font-size:13px!important;
+ color:var(--n44-soft);font-size:13px;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.segments,
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.seconds-bar{
- min-height:3px!important;height:3px!important;margin:1px 12px!important;
- opacity:.5!important;
+ min-height:3px;height:3px;margin:1px 12px;
+ opacity:.5;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.quiz-game-footer{
- min-height:44px!important;padding:5px 12px!important;
- background:transparent!important;color:var(--n44-ink)!important;
- border-top:1px solid var(--n44-line)!important;
+ min-height:44px;padding:5px 12px;
+ background:transparent;color:var(--n44-ink);
+ border-top:1px solid var(--n44-line);
 }
 /* Phrasal Sprint's dark, colored-edge answer grammar, normalized for every 4-option set.
    Preserve 5-choice Catalan exercises and Read First overlay controls. */
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers:has(>.answer:nth-child(4):last-child){
- display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
- gap:var(--ad-space-2,8px)!important;align-items:stretch!important;
- min-width:0!important;
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:var(--ad-space-2,8px);align-items:stretch;
+ min-width:0;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers:has(>.answer:nth-child(4):last-child)>.answer{
- display:flex!important;align-items:center!important;justify-content:center!important;
- width:100%!important;min-width:0!important;height:auto!important;
- min-height:clamp(88px,14dvh,128px)!important;
- padding:11px 9px!important;
- background:color-mix(in srgb,var(--n44-edge,#617587) 9%,var(--n44-surface))!important;
- border:2px solid var(--n44-edge,#617587)!important;
- border-radius:12px!important;color:var(--n44-ink)!important;
- font:760 clamp(18px,4.65vw,22px)/1.3 Roboto,"Segoe UI",sans-serif!important;
- text-align:center!important;overflow-wrap:anywhere!important;
- box-shadow:none!important;text-shadow:none!important;opacity:1!important;
+ display:flex;align-items:center;justify-content:center;
+ width:100%;min-width:0;height:auto;
+ min-height:clamp(88px,14dvh,128px);
+ padding:11px 9px;
+ background:color-mix(in srgb,var(--n44-edge,#617587) 9%,var(--n44-surface));
+ border:2px solid var(--n44-edge,#617587);
+ border-radius:12px;color:var(--n44-ink);
+ font:760 clamp(18px,4.65vw,22px)/1.3 Roboto,"Segoe UI",sans-serif;
+ text-align:center;overflow-wrap:anywhere;
+ box-shadow:none;text-shadow:none;opacity:1;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(1){--n44-edge:var(--n44-a)}
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(2){--n44-edge:var(--n44-b)}
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(3){--n44-edge:var(--n44-c)}
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(4){--n44-edge:var(--n44-d)}
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer.good{
- background:#153E32!important;border-color:#76D7A5!important;color:var(--n44-ink)!important;
+ background:#153E32;border-color:#76D7A5;color:var(--n44-ink);
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer.bad{
- background:#48212D!important;border-color:#E28B9B!important;color:var(--n44-ink)!important;
+ background:#48212D;border-color:#E28B9B;color:var(--n44-ink);
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer.dim{
- background:#192025!important;border-color:#53616C!important;color:#C3CDD5!important;opacity:1!important;
+ background:#192025;border-color:#53616C;color:#C3CDD5;opacity:1;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:disabled{
- pointer-events:none!important;
+ pointer-events:none;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .question{
- background:var(--n44-surface)!important;
- border:1px solid var(--n44-line)!important;color:var(--n44-ink)!important;
- border-radius:12px!important;box-shadow:none!important;
+ background:var(--n44-surface);
+ border:1px solid var(--n44-line);color:var(--n44-ink);
+ border-radius:12px;box-shadow:none;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .question :is(h1,h2,h3,p,span,strong,b){
- color:var(--n44-ink)!important;
+ color:var(--n44-ink);
 }
 /* Coach, Study File and diary reading cards preserve their component-owned
    ink/background pairing. Broad forced-dark overrides removed in rescue audit. */
 html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#errorsScreen,#quizHome,#kqHome)
  :is(.hub-chart,.adp-chart,.adp-summary,.adp-card,.chart-section)
  :is(button,a:not(.primary)){
- background-color:#202A33!important;color:var(--n44-ink)!important;
- border-color:#526473!important;
+ background-color:#202A33;color:var(--n44-ink);
+ border-color:#526473;
 }
 html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#errorsScreen,#leagueScreen)
  :is(svg,canvas){
- background:var(--n44-surface)!important;border-radius:9px!important;
+ background:var(--n44-surface);border-radius:9px;
 }
 html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#errorsScreen,#leagueScreen)
- svg text{fill:var(--n44-ink)!important}
+ svg text{fill:var(--n44-ink)}
 /* Cambridge's essay/manuscript editor, HOTI course prose and canvas diagrams
    are not quiz answers; preserve their content semantics while darkening containers. */
 html:root body[data-nucleo-game="hoti"] #gameCard .options > .option{
- background:#1B2228!important;
- border-color:#617587!important;color:#EAF0F5!important;
- box-shadow:none!important;
+ background:#1B2228;
+ border-color:#617587;color:#EAF0F5;
+ box-shadow:none;
 }
 html:root body[data-nucleo-game="hoti"] #gameCard .options>.option.correct{
- background:#153E32!important;border-color:#76D7A5!important;
+ background:#153E32;border-color:#76D7A5;
 }
 html:root body[data-nucleo-game="hoti"] #gameCard .options>.option.wrong{
- background:#48212D!important;border-color:#E28B9B!important;
+ background:#48212D;border-color:#E28B9B;
 }
 html:root body[data-nucleo-game="cambridge"] :is(#quizHome,#quizModes,#kqHome,#kqPlay,#quizPlay,#quizStats,#kqFinish)
  :is(.mode,.question-panel,.solution-card,.kq-note,.kq-panel,.kq-rewrite,.metric,.stats-grid,.panel,.card){
- background:#1B2228!important;
- border-color:#414B54!important;color:#EAF0F5!important;
- box-shadow:none!important;
+ background:#1B2228;
+ border-color:#414B54;color:#EAF0F5;
+ box-shadow:none;
 }
 html:root body[data-nucleo-game="cambridge"] :is(#quizHome,#quizModes,#kqHome,#kqPlay,#quizPlay,#quizStats,#kqFinish)
  :is(.mode,.question-panel,.solution-card,.kq-note,.kq-panel,.kq-rewrite,.metric,.stats-grid,.panel,.card)
- :is(h1,h2,h3,h4,b,strong,p,small,span){color:#EAF0F5!important}
+ :is(h1,h2,h3,h4,b,strong,p,small,span){color:#EAF0F5}
 @media(max-height:700px){
  html:root body[data-nucleo-game] #gameScreen:not(.hidden) .playfield{
-  padding:5px 11px!important;
+  padding:5px 11px;
  }
  html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers:has(>.answer:nth-child(4):last-child)>.answer{
-  min-height:78px!important;padding:8px 7px!important;
+  min-height:78px;padding:8px 7px;
  }
 }
 
@@ -189,9 +189,9 @@ html:root body[data-nucleo-game]
      .lp-homecell,.error-session-handoff,.ald-score,.ad-medal-summary,
      .readiness-box,.target-stats-section,.learning-target,.valoration-card,
      .stats-summary,.rank-card,.streak-card){
- background:#1B2228!important;
- border-color:#414B54!important;color:#EAF0F5!important;
- box-shadow:none!important;
+ background:#1B2228;
+ border-color:#414B54;color:#EAF0F5;
+ box-shadow:none;
 }
 html:root body[data-nucleo-game]
  :is(.ad-medal-stat,.ai-valuation-box,.learning-score-box,.peer-box,.lp-homebar,
@@ -199,22 +199,22 @@ html:root body[data-nucleo-game]
      .readiness-box,.target-stats-section,.learning-target,.valoration-card,
      .stats-summary,.rank-card,.streak-card)
  :is(span,b,strong,p,small,em,li,h1,h2,h3,h4){
- color:#EAF0F5!important;opacity:1!important;text-shadow:none!important;
+ color:#EAF0F5;opacity:1;text-shadow:none;
 }
 html:root body[data-nucleo-game]
  :is(#startScreen,#statsScreen,#coachScreen,#errorsScreen,#endScreen,#home,#stats,#statistics,#leagueScreen)
  :is(.ghost,.secondary,.soft-btn,summary,.menu-btn){
- background:#202A33!important;
- color:#EAF0F5!important;border-color:#526473!important;
+ background:#202A33;
+ color:#EAF0F5;border-color:#526473;
 }
 html:root body[data-nucleo-game]
  :is(.peer-box,.ai-valuation-box,.learning-score-box,.ald-score)
  :is(div,section,article):not(.chart-bar):not(.progress-fill):not(.fill){
- background-color:#202A33!important;color:#EAF0F5!important;
+ background-color:#202A33;color:#EAF0F5;
 }
 html:root body[data-nucleo-game]
  :is(.peer-box,.ai-valuation-box,.learning-score-box,.ald-score)
- :is(label,span,small,b,strong,p){color:#EAF0F5!important;}
+ :is(label,span,small,b,strong,p){color:#EAF0F5;}
 /* HOTI0108: user's global no-light-card rule supersedes legacy course styling.
  * Keep the original course structure, hierarchy and downloadable activities. */
 html:root body[data-nucleo-game="hoti"] #courseNow,
@@ -223,29 +223,29 @@ html:root body[data-nucleo-game="hoti"] #courseNow :is(.course-now,.course-uf,.c
  .course-next-block,.module-exam-card,.exam-confirmed,.exam-provisional,.course-summary,summary,
  .uf-title,.ud-title,.course-content,.course-metadata,.course-map,.course-card,.ud-card,
  .uf-status,.course-status){
- background:#1B2228!important;
- border-color:#414B54!important;color:#EAF0F5!important;box-shadow:none!important;
+ background:#1B2228;
+ border-color:#414B54;color:#EAF0F5;box-shadow:none;
 }
 html:root body[data-nucleo-game="hoti"] #courseNow :is(h1,h2,h3,h4,h5,h6,p,span,small,
  strong,b,em,label,li,summary,a){
- color:#EAF0F5!important;text-shadow:none!important;opacity:1!important;
+ color:#EAF0F5;text-shadow:none;opacity:1;
 }
 html:root body[data-nucleo-game="hoti"] #courseNow a{
- text-decoration-color:#8DB7E5!important;
+ text-decoration-color:#8DB7E5;
 }
 html:root body[data-nucleo-game="hoti"] #courseNow :is(.uf-status,.course-status){
- background:#243445!important;color:#CDE4F8!important;border:1px solid #607B93!important;
+ background:#243445;color:#CDE4F8;border:1px solid #607B93;
 }
 
-/* Specificity guard against legacy #screen .panel .item light !important selectors. */
+/* Specificity guard against legacy #screen .panel .item light selectors. */
 html:root body[data-nucleo-game]
  :is(#startScreen,#statsScreen,#coachScreen,#errorsScreen,#endScreen,#resultScreen,#home,#quizHome,#kqHome,#kqFinish,#courseNow,#examSetup,#stats)
  :is(.ad-medal-stat,.ai-valuation-box,.learning-score-box,.peer-box,.lp-homebar,
  .lp-homecell,.error-session-handoff,.ald-score,.readiness-box,.target-stats-section,
  .course-final-test,.deadline-row,.progress-report,.learning-target,.ai-handoff-card){
- background:#1B2228!important;
- color:#EAF0F5!important;border-color:#414B54!important;
- box-shadow:none!important;
+ background:#1B2228;
+ color:#EAF0F5;border-color:#414B54;
+ box-shadow:none;
 }
 html:root body[data-nucleo-game]
  :is(#startScreen,#statsScreen,#coachScreen,#errorsScreen,#endScreen,#resultScreen,#home,#quizHome,#kqHome,#kqFinish,#courseNow,#stats)
@@ -253,27 +253,27 @@ html:root body[data-nucleo-game]
  .lp-homecell,.error-session-handoff,.ald-score,.readiness-box,.target-stats-section,
  .course-final-test,.deadline-row,.progress-report,.learning-target,.ai-handoff-card)
  :is(div,span,small,b,strong,p,em,li,h1,h2,h3,h4,a){
- color:#EAF0F5!important;text-shadow:none!important;
+ color:#EAF0F5;text-shadow:none;
 }
 html:root body[data-nucleo-game]
  :is(#startScreen,#statsScreen,#coachScreen,#errorsScreen,#endScreen,#resultScreen,#home,#quizHome,#kqHome,#courseNow)
  :is(.panel,.paper,.medal-summary-host,.stat,.card) .ad-medal-stat{
- background:#1B2228!important;
- color:#EAF0F5!important;border-color:#414B54!important;box-shadow:none!important;
+ background:#1B2228;
+ color:#EAF0F5;border-color:#414B54;box-shadow:none;
 }
 html:root body[data-nucleo-game]
  :is(#startScreen,#statsScreen,#coachScreen,#errorsScreen,#endScreen,#home,#courseNow)
  :is(.panel,.paper,.medal-summary-host,.card) .ad-medal-stat :is(span,small,b,em,strong){
- color:#EAF0F5!important;
+ color:#EAF0F5;
 }
 html:root body[data-nucleo-game="hoti"] #courseNow
  :is(.course-final-test,.deadline-row,.deadline-calendar,.course-activity,.course-activity a){
- background:#1B2228!important;
- color:#EAF0F5!important;border-color:#414B54!important;
+ background:#1B2228;
+ color:#EAF0F5;border-color:#414B54;
 }
 html:root body[data-nucleo-game="hoti"] #courseNow :is(.course-final-test,.deadline-row)
  :is(div,span,small,b,strong,p,em,h2,h3,li){
- color:#EAF0F5!important;
+ color:#EAF0F5;
 }
 
 /* Final automated contrast audit: readiness, learning comparisons and HOTI actions. */
@@ -281,66 +281,66 @@ html:root body[data-nucleo-game]
  :is(#startScreen,#statsScreen,#home,#stats,#statistics,#courseNow)
  :is(.next-campaign-box,.campaign-eta-mini,.readiness-box,.readiness-section,
  .readiness-metrics,.readiness-panel,.learner-metrics,.course-final-test,.deadline-row){
- background:#1B2228!important;
- color:#EAF0F5!important;border-color:#414B54!important;
- box-shadow:none!important;
+ background:#1B2228;
+ color:#EAF0F5;border-color:#414B54;
+ box-shadow:none;
 }
 html:root body[data-nucleo-game]
  :is(#startScreen,#statsScreen,#home,#stats,#courseNow)
  :is(.next-campaign-box,.campaign-eta-mini,.readiness-box,.readiness-section,.peer-box)
  :is(h1,h2,h3,h4,p,span,b,strong,small,em,li){
- color:#EAF0F5!important;
+ color:#EAF0F5;
 }
 html:root body[data-nucleo-game]
  :is(.peer-box,.ai-valuation-box,.learning-score-box,.lp-homebar,.readiness-box)
  div:not([class]):not([style]){
- background:#202A33!important;color:#EAF0F5!important;
+ background:#202A33;color:#EAF0F5;
 }
 html:root body[data-nucleo-game]
  :is(.peer-box,.ai-valuation-box,.learning-score-box,.lp-homebar,.readiness-box)
  div:not([class]):not([style]) :is(b,strong,span,small,p){
- color:#EAF0F5!important;
+ color:#EAF0F5;
 }
 html:root body[data-nucleo-game="hoti"]
  :is(#openStats,.ql-history){
- background:#202A33!important;
- color:#EAF0F5!important;border:1px solid #526473!important;
+ background:#202A33;
+ color:#EAF0F5;border:1px solid #526473;
 }
 
 /* Plain metric tiles inside the learner comparison use a legacy high-specificity pale rule. */
 html:root body[data-nucleo-game] :is(#startScreen,#statsScreen,#home,#stats,#statistics)
  .peer-box .peer-values > div{
- background:#202A33!important;
- border:1px solid #414B54!important;color:#EAF0F5!important;
- box-shadow:none!important;
+ background:#202A33;
+ border:1px solid #414B54;color:#EAF0F5;
+ box-shadow:none;
 }
 html:root body[data-nucleo-game] :is(#startScreen,#statsScreen,#home,#stats,#statistics)
  .peer-box .peer-values > div :is(b,strong,span,small){
- color:#EAF0F5!important;
+ color:#EAF0F5;
 }
 
 /* Deep specificity for adaptive learning comparison metrics, tested on all routes. */
 html:root body[data-nucleo-game] :is(#startScreen,#statsScreen)
  .panel .peer-box .peer-values > div{
- background:#202A33!important;
- border-color:#414B54!important;color:#EAF0F5!important;
+ background:#202A33;
+ border-color:#414B54;color:#EAF0F5;
 }
 html:root body[data-nucleo-game] :is(#startScreen,#statsScreen)
  .panel .peer-box .peer-values > div :is(b,strong,small,span){
- color:#EAF0F5!important;
+ color:#EAF0F5;
 }
 
 /* Classroom mode chips and Keyword Speak numeric input were the last pale controls. */
 html:root body[data-nucleo-game] :is(#startScreen,#home,#statsScreen)
  :is(.chip,button.chip,#customTime){
- background:#202A33!important;
- color:#EAF0F5!important;border:1px solid #617181!important;
- box-shadow:none!important;
+ background:#202A33;
+ color:#EAF0F5;border:1px solid #617181;
+ box-shadow:none;
 }
 html:root body[data-nucleo-game] :is(#startScreen,#home,#statsScreen)
  :is(.chip,button.chip).active{
- background:#284457!important;border-color:#8FC4E5!important;
- color:#EAF0F5!important;
+ background:#284457;border-color:#8FC4E5;
+ color:#EAF0F5;
 }
 
 /* UX correction after production screenshot audit.
@@ -348,58 +348,58 @@ html:root body[data-nucleo-game] :is(#startScreen,#home,#statsScreen)
    Earlier rules only targeted descendants of #gameScreen, leaving it visible.
    Preserve toolbar and its JSON functions outside an active game. */
 html:root body[data-nucleo-game]:has(#gameScreen:not(.hidden)) > .adrian-tools{
- display:none!important;
+ display:none;
 }
 /* The answer-stage progress ticks live inside .playfield, not directly under
    #gameScreen. Hide only decorative ticks, never engine-owned timer state. */
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)
  :is(.segments-bottom,.seconds-bar,.segments:not(.segment-buttons)){
- display:none!important;
+ display:none;
 }
 /* The previous layouts center the entire quiz in a tall flex region.
    Place the question directly below the compact header on all 4-choice games. */
 html:root body[data-nucleo-game] #gameScreen:not(.hidden){
- justify-content:flex-start!important;
- min-height:100dvh!important;
- height:100dvh!important;
- overflow:hidden!important;
+ justify-content:flex-start;
+ min-height:100dvh;
+ height:100dvh;
+ overflow:hidden;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.playfield{
- box-sizing:border-box!important;
- flex:1 1 auto!important;
- min-height:0!important;
- width:100%!important;
- margin:0!important;
- justify-content:flex-start!important;
- align-content:flex-start!important;
- align-items:stretch!important;
- padding:clamp(14px,4dvh,34px) 12px 8px!important;
- overflow-y:auto!important;
- overscroll-behavior:contain!important;
+ box-sizing:border-box;
+ flex:1 1 auto;
+ min-height:0;
+ width:100%;
+ margin:0;
+ justify-content:flex-start;
+ align-content:flex-start;
+ align-items:stretch;
+ padding:clamp(14px,4dvh,34px) 12px 8px;
+ overflow-y:auto;
+ overscroll-behavior:contain;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.playfield>.focus-stack{
- margin:0 auto!important;
- align-self:stretch!important;
- width:100%!important;
- max-width:520px!important;
+ margin:0 auto;
+ align-self:stretch;
+ width:100%;
+ max-width:520px;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.playfield>.question,
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.playfield>.answer-stage,
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.playfield> #answers{
- flex:0 0 auto!important;
+ flex:0 0 auto;
 }
 /* Footer remains available and visible for points and EXIT. Global controls
    are hidden only during play, and all their actions still exist on menus. */
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.quiz-game-footer{
- flex:0 0 auto!important;
- min-height:46px!important;
- height:auto!important;
- padding:6px 12px max(9px,env(safe-area-inset-bottom))!important;
+ flex:0 0 auto;
+ min-height:46px;
+ height:auto;
+ padding:6px 12px max(9px,env(safe-area-inset-bottom));
 }
 /* Maintain compact but comfortable 2x2 buttons: different text lengths may wrap. */
 @media(max-height:700px){
  html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.playfield{
-  padding:9px 10px 5px!important;
+  padding:9px 10px 5px;
  }
 }
 
@@ -408,32 +408,32 @@ html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.quiz-game-footer{
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) #segments.segments,
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .playfield #segments,
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) > #segments {
- display:none!important;
- height:0!important;
- min-height:0!important;
- margin:0!important;
- padding:0!important;
- visibility:hidden!important;
+ display:none;
+ height:0;
+ min-height:0;
+ margin:0;
+ padding:0;
+ visibility:hidden;
 }
 /* Guarantee readable live time digits when the old .nucleo-clock-hidden rules win. */
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) #timer #timerText {
- color:#EAF0F5!important;
- opacity:1!important;
- text-shadow:none!important;
+ color:#EAF0F5;
+ opacity:1;
+ text-shadow:none;
 }
 /* Restore the same dark score-chip visual as Grammar in footer-bearing games. */
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .quiz-game-footer
  :is(#languagePointsHud,.lp-game-score,#pointsHud.points) {
- background:#1B2228!important;
+ background:#1B2228;
 
- color:#EAF0F5!important;
- border:1px solid #414B54!important;
- box-shadow:none!important;
+ color:#EAF0F5;
+ border:1px solid #414B54;
+ box-shadow:none;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .quiz-game-footer
  :is(#languagePointsHud,.lp-game-score,#pointsHud.points)
  :is(.lp-game-main,b,small,strong,span){
- color:#EAF0F5!important;
+ color:#EAF0F5;
 }
 
 /* COMPONENT REFINEMENT: consolidated continuation of v4.4. */
@@ -447,9 +447,9 @@ html:root body[data-nucleo-game]
 :is(#startScreen,#statsScreen,#coachScreen,#leagueScreen,#errorsScreen,
 #endScreen,#resultScreen,#gameScreen,#home,#stats,#statistics,
 #quizHome,#quizModes,#quizPlay,#quizStats,#kqHome,#kqPlay,#kqFinish) {
-  background-color:var(--n45-bg)!important;
-  background-image:none!important;
-  color:var(--n45-text)!important;
+  background-color:var(--n45-bg);
+  background-image:none;
+  color:var(--n45-text);
 }
 /* Do not recolor arbitrary screens, panels or reading cards.
    Their component stylesheet owns the full surface/text contrast pair.
@@ -457,47 +457,47 @@ html:root body[data-nucleo-game]
 /* Identical count-only circular medals everywhere; sourced from existing ledger.
    Existing labels remain available in title/ARIA instead of visually repeating them. */
 html:root body[data-nucleo-game] .ad-medal-strip {
-  display:flex!important;align-items:center!important;justify-content:center!important;
-  flex-wrap:wrap!important;gap:7px!important;margin:8px 0!important;
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:7px;margin:8px 0;
 }
 html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat {
-  box-sizing:border-box!important;position:relative!important;
-  display:grid!important;place-items:center!important;
-  flex:0 0 34px!important;width:34px!important;height:34px!important;
-  min-width:34px!important;max-width:34px!important;min-height:34px!important;
-  margin:0!important;padding:0!important;border-radius:50%!important;
-  border:1.5px solid var(--ach,#414B54)!important;
-  background:var(--n45-card)!important;
-  opacity:1!important;filter:none!important;box-shadow:none!important;
+  box-sizing:border-box;position:relative;
+  display:grid;place-items:center;
+  flex:0 0 34px;width:34px;height:34px;
+  min-width:34px;max-width:34px;min-height:34px;
+  margin:0;padding:0;border-radius:50%;
+  border:1.5px solid var(--ach,#414B54);
+  background:var(--n45-card);
+  opacity:1;filter:none;box-shadow:none;
 }
 html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat > i {
-  box-sizing:border-box!important;display:grid!important;place-items:center!important;
-  width:100%!important;height:100%!important;min-width:0!important;
-  flex:none!important;border:0!important;border-radius:50%!important;
-  margin:0!important;padding:0!important;background:transparent!important;
-  color:var(--n45-text)!important;text-shadow:none!important;box-shadow:none!important;
-  font:650 14px/1 Roboto,system-ui,sans-serif!important;font-variant-numeric:tabular-nums!important;
+  box-sizing:border-box;display:grid;place-items:center;
+  width:100%;height:100%;min-width:0;
+  flex:none;border:0;border-radius:50%;
+  margin:0;padding:0;background:transparent;
+  color:var(--n45-text);text-shadow:none;box-shadow:none;
+  font:650 14px/1 Roboto,system-ui,sans-serif;font-variant-numeric:tabular-nums;
 }
 html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat > b {
-  display:none!important;
+  display:none;
 }
 html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star {
-  --ach:#E7BF57!important;
+  --ach:#E7BF57;
 }
 html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star > i {
-  display:none!important;
+  display:none;
 }
 html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star > b {
-  box-sizing:border-box!important;display:grid!important;place-items:center!important;
-  width:100%!important;height:100%!important;margin:0!important;padding:0!important;
-  background:transparent!important;
+  box-sizing:border-box;display:grid;place-items:center;
+  width:100%;height:100%;margin:0;padding:0;
+  background:transparent;
 }
 html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star > b > em {
-  display:block!important;min-width:0!important;margin:0!important;padding:0!important;
-  border:0!important;border-radius:0!important;background:none!important;
-  color:var(--n45-text)!important;text-shadow:none!important;
-  font:650 14px/1 Roboto,system-ui,sans-serif!important;
-  font-variant-numeric:tabular-nums!important;
+  display:block;min-width:0;margin:0;padding:0;
+  border:0;border-radius:0;background:none;
+  color:var(--n45-text);text-shadow:none;
+  font:650 14px/1 Roboto,system-ui,sans-serif;
+  font-variant-numeric:tabular-nums;
 }
 html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star::after {
   content:"\2605";position:absolute;right:-3px;top:-6px;
@@ -506,76 +506,76 @@ html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star::after {
 }
 /* Same restrained medal size on the level result screens. */
 html:root body[data-nucleo-game] .ad-achievement .ad-medal {
-  width:34px!important;height:34px!important;min-width:34px!important;
-  flex:0 0 34px!important;border:1.5px solid var(--ach,#414B54)!important;
-  background:var(--n45-card)!important;box-shadow:none!important;
+  width:34px;height:34px;min-width:34px;
+  flex:0 0 34px;border:1.5px solid var(--ach,#414B54);
+  background:var(--n45-card);box-shadow:none;
 }
 html:root body[data-nucleo-game] .ad-achievement .ad-medal::before,
-html:root body[data-nucleo-game] .ad-achievement .ad-medal::after {display:none!important}
+html:root body[data-nucleo-game] .ad-achievement .ad-medal::after {display:none}
 html:root body[data-nucleo-game] .ad-achievement .ad-medal i {
-  font:650 14px/1 Roboto,system-ui,sans-serif!important;color:var(--n45-text)!important;
+  font:650 14px/1 Roboto,system-ui,sans-serif;color:var(--n45-text);
 }
 /* Skill League: percent is a separate, readable grid cell, never over the track. */
 html:root body[data-nucleo-game] :is(#statsScreen,#leagueScreen,#coachScreen,#endScreen)
  .skillrow .pct {
-  box-sizing:border-box!important;display:block!important;position:relative!important;
-  z-index:1!important;min-width:0!important;margin:0!important;padding:0!important;
-  color:#EAF0F5!important;opacity:1!important;background:transparent!important;
-  font:600 13px/1.35 Roboto,system-ui,sans-serif!important;
-  font-variant-numeric:tabular-nums!important;text-align:right!important;
-  white-space:nowrap!important;text-shadow:none!important;
+  box-sizing:border-box;display:block;position:relative;
+  z-index:1;min-width:0;margin:0;padding:0;
+  color:#EAF0F5;opacity:1;background:transparent;
+  font:600 13px/1.35 Roboto,system-ui,sans-serif;
+  font-variant-numeric:tabular-nums;text-align:right;
+  white-space:nowrap;text-shadow:none;
 }
 html:root body[data-nucleo-game] .skillrow .track {
-  position:relative!important;min-width:0!important;
-  background:#2A333A!important;overflow:hidden!important;
+  position:relative;min-width:0;
+  background:#2A333A;overflow:hidden;
 }
 @media(max-width:520px){
   html:root body[data-nucleo-game] :is(#statsScreen,#leagueScreen,#coachScreen,#endScreen)
-   .skillrow {grid-template-columns:64px minmax(0,1fr) minmax(47px,.7fr) 44px!important}
+   .skillrow {grid-template-columns:64px minmax(0,1fr) minmax(47px,.7fr) 44px}
 }
 @media(max-width:360px){
   html:root body[data-nucleo-game] :is(#statsScreen,#leagueScreen,#coachScreen,#endScreen)
-   .skillrow {grid-template-columns:57px minmax(0,1fr) minmax(42px,.65fr) 44px!important;gap:5px!important}
+   .skillrow {grid-template-columns:57px minmax(0,1fr) minmax(42px,.65fr) 44px;gap:5px}
 }
 /* Cambridge multiple-choice and passage reading share the same dark palette.
    Keep marked answers, keyboard input and correct/incorrect states distinct. */
 html:root body[data-nucleo-game="cambridge"] :is(#quizPlay,#kqPlay,#quizStats)
  :is(.passage,.solution-snippet,.question-panel,.solutions-panel,.feedback,.scoreboard span) {
-  background:var(--n45-card)!important;
-  border-color:var(--n45-border)!important;color:var(--n45-text)!important;
+  background:var(--n45-card);
+  border-color:var(--n45-border);color:var(--n45-text);
 }
 html:root body[data-nucleo-game="cambridge"] :is(#quizPlay,#kqPlay)
  :is(.passage,.solution-snippet) :is(p,span,em,strong,b):not(mark) {
-  color:var(--n45-text)!important;
+  color:var(--n45-text);
 }
 html:root body[data-nucleo-game="cambridge"] #quizPlay
  :is(.passage mark,.base-word) {
-  background:#443B24!important;color:#FFE4A0!important;
-  outline-color:#BE9B4B!important;
+  background:#443B24;color:#FFE4A0;
+  outline-color:#BE9B4B;
 }
 html:root body[data-nucleo-game="cambridge"] #quizPlay
  :is(.option-btn:not(.chosen),.plain-back,.soft-btn) {
-  background:var(--n45-card)!important;
-  border-color:var(--n45-border)!important;color:var(--n45-text)!important;
+  background:var(--n45-card);
+  border-color:var(--n45-border);color:var(--n45-text);
 }
 html:root body[data-nucleo-game="cambridge"] #quizPlay
  :is(.answer-input:not(.is-correct):not(.is-incorrect),
  .inline-answer-input:not(.is-correct):not(.is-incorrect)) {
-  background:var(--n45-card)!important;color:var(--n45-text)!important;
-  border:2px solid #748796!important;
+  background:var(--n45-card);color:var(--n45-text);
+  border:2px solid #748796;
 }
 /* Keep focus and feedback visible, including reduced-motion preferences. */
 html:root body[data-nucleo-game] :is(.ad-medal-stat,.skillrow .pct) {
-  letter-spacing:normal!important;
+  letter-spacing:normal;
 }
 
-/* Category color must outrank the legacy dashboard border-color !important. */
+/* Category color must outrank the legacy dashboard border-color. */
 html:root body[data-nucleo-game]
 :is(#startScreen,#statsScreen,#coachScreen,#leagueScreen,#errorsScreen,
 #endScreen,#resultScreen,#home,#stats,#statistics,#quizHome,#quizModes,
 #quizPlay,#quizStats,#kqHome,#kqPlay,#kqFinish,#courseNow)
 .ad-medal-strip .ad-medal-stat {
-  border-color:var(--ach,#414B54)!important;
+  border-color:var(--ach,#414B54);
 }
 
 /* Fase 4: contratos internos de Coach, Study File, Skill League y quiz. */
@@ -587,19 +587,19 @@ html:root body[data-nucleo-game] :is(#coachScreen,#errorsScreen,#statsScreen,#st
  :is(.coach-card,.coach-narrative,.local-coach-hero,.mistake-card,.error-lab,.error-coach-card,.error-detail,.error-detail-body,.error-quick,.error-music>div,
  .study-file,.study-card,.study-panel,.daily-key-card,.daily-key-face,.keyring-item,.key-slide,.campaign-eta,.campaign-eta-mini,.campaign-eta aside,
  .statusbox,.formula,.error-formula,.error-example-q,.mistake-choice>div,.secret-key-copy,.coach-prompt-box textarea){
- background:#1B2228!important;background-image:none!important;border-color:#414B54!important;color:#EAF0F5!important;box-shadow:none!important;opacity:1!important;
+ background:#1B2228;background-image:none;border-color:#414B54;color:#EAF0F5;box-shadow:none;opacity:1;
 }
 html:root body[data-nucleo-game] :is(#coachScreen,#errorsScreen,#statsScreen,#startScreen,#flashScreen,#studyScreen,#study,#home)
  :is(.coach-card,.coach-narrative,.local-coach-hero,.mistake-card,.error-lab,.error-coach-card,.error-detail,.error-quick,.error-music,.study-file,
  .study-card,.study-panel,.daily-key-card,.daily-key-face,.keyring-item,.key-slide,.campaign-eta,.campaign-eta-mini,.statusbox,.formula,.error-formula)
  :is(h1,h2,h3,h4,h5,p,b,strong,label,li,summary,button,.skill-name-text,.coach-score){
- color:#EAF0F5!important;opacity:1!important;text-shadow:none!important;
+ color:#EAF0F5;opacity:1;text-shadow:none;
 }
 html:root body[data-nucleo-game] :is(#coachScreen,#errorsScreen,#statsScreen,#startScreen,#flashScreen,#studyScreen,#study,#home)
  :is(.coach-card,.coach-narrative,.local-coach-hero,.mistake-card,.error-lab,.error-coach-card,.error-detail,.error-quick,.error-music,
  .study-file,.study-card,.study-panel,.daily-key-card,.daily-key-face,.keyring-item,.key-slide,.campaign-eta,.campaign-eta-mini,.statusbox)
  :is(small,em,span,.muted,.subtle,.secondary,.coach-method,.key-slide-meta,.daily-key-head,.key-carousel-hint){
- color:#B9C5CF!important;opacity:1!important;text-shadow:none!important;
+ color:#B9C5CF;opacity:1;text-shadow:none;
 }
 html:root body[data-nucleo-game] #coachScreen
  :is(.coach-card,.coach-narrative,.local-coach-hero,.mistake-card,.resulttitle)
@@ -607,138 +607,187 @@ html:root body[data-nucleo-game] #coachScreen
 html:root body[data-nucleo-game] #coachScreen :is(.statusbox,.section,.coach-method),
 html:root body[data-nucleo-game] #errorsScreen
  :is(.error-detail-body p,.error-example-q,.error-quick span,.error-coach-head b,.error-solved,.secret-key-copy,.error-music b){
- color:#EAF0F5!important;
+ color:#EAF0F5;
 }
 html:root body[data-nucleo-game] #coachScreen
  :is(.coach-card,.coach-narrative,.local-coach-hero,.mistake-card) :is(small,em,.coach-method),
 html:root body[data-nucleo-game] #errorsScreen :is(.error-coach-head small,.error-lab-title span,.error-detail summary,.error-music small,.error-music span),
 html:root body[data-nucleo-game] .campaign-eta :is(small,span,em,.campaign-eta-range,footer),
 html:root body[data-nucleo-game] .campaign-eta-mini :is(small,span){
- color:#B9C5CF!important;
+ color:#B9C5CF;
 }
 html:root body[data-nucleo-game] :is(#coachScreen,#errorsScreen)
  .mistake-choice .correct{
- background:#153E32!important;border-color:#76D7A5!important;color:#EAF0F5!important;
+ background:#153E32;border-color:#76D7A5;color:#EAF0F5;
 }
 html:root body[data-nucleo-game] :is(#coachScreen,#errorsScreen)
  .mistake-choice .wrong{
- background:#48212D!important;border-color:#E28B9B!important;color:#EAF0F5!important;
+ background:#48212D;border-color:#E28B9B;color:#EAF0F5;
 }
 html:root body[data-nucleo-game] :is(.daily-key-card,.daily-key-face,.keyring-item,.key-slide,.study-file,.study-card,.study-panel)
  :is(b,strong,p,h2,h3,li,button){
- color:#EAF0F5!important;text-shadow:none!important;
+ color:#EAF0F5;text-shadow:none;
 }
 html:root body[data-nucleo-game] :is(.daily-key-card,.daily-key-face,.keyring-item,.key-slide,.study-file,.study-card,.study-panel)
  :is(span,small,em,.key-highlight,.key-slide-meta,.key-carousel-hint){
- color:#B9C5CF!important;text-shadow:none!important;
+ color:#B9C5CF;text-shadow:none;
 }
 /* Percent remains outside track clipping and inherits AA foreground. */
 html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#leagueScreen,#endScreen,#errorsScreen) .skillrow{
- position:relative!important;background:#1B2228!important;border-color:#414B54!important;color:#EAF0F5!important;
+ position:relative;background:#1B2228;border-color:#414B54;color:#EAF0F5;
 }
 html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#leagueScreen,#endScreen,#errorsScreen) .skillrow
  :is(.skill-name-hit,.skill-name-text,.skill-rank,.rank-move,span,b,strong,small){
- color:#EAF0F5!important;opacity:1!important;
+ color:#EAF0F5;opacity:1;
 }
 html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#leagueScreen,#endScreen,#errorsScreen) .skillrow .pct{
- position:relative!important;z-index:5!important;color:#EAF0F5!important;background:transparent!important;opacity:1!important;white-space:nowrap!important;text-shadow:none!important;
+ position:relative;z-index:5;color:#EAF0F5;background:transparent;opacity:1;white-space:nowrap;text-shadow:none;
 }
 html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#leagueScreen,#endScreen,#errorsScreen) .skillrow .track{
- position:relative!important;z-index:0!important;background:#2A333A!important;
+ position:relative;z-index:0;background:#2A333A;
 }
 /* Four-answer engine: compact standard header, visible engine-owned clock. */
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow #timer{
- display:inline-flex!important;visibility:visible!important;opacity:1!important;
- background:#121619!important;color:#EAF0F5!important;border:1px solid #414B54!important;
+ display:inline-flex;visibility:visible;opacity:1;
+ background:#121619;color:#EAF0F5;border:1px solid #414B54;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow #timerText{
- color:#EAF0F5!important;opacity:1!important;
+ color:#EAF0F5;opacity:1;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) :is(#soundBtn,.soundbtn,.focus-sound){
- display:none!important;
+ display:none;
 }
 html:root body[data-nucleo-game] #gameScreen:not(.hidden)
  #answers:has(>.answer:nth-child(4):last-child)>.answer:not(.good,.bad,.dim){
- background:#1B2228!important;color:#EAF0F5!important;border-radius:12px!important;
- min-width:0!important;min-height:clamp(88px,14dvh,128px)!important;overflow-wrap:anywhere!important;
+ background:#1B2228;color:#EAF0F5;border-radius:12px;
+ min-width:0;min-height:clamp(88px,14dvh,128px);overflow-wrap:anywhere;
 }
-html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(1):not(.good,.bad,.dim){border-color:#BA8264!important}
-html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(2):not(.good,.bad,.dim){border-color:#60AD9D!important}
-html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(3):not(.good,.bad,.dim){border-color:#829DE2!important}
-html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(4):not(.good,.bad,.dim){border-color:#B886C9!important}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(1):not(.good,.bad,.dim){border-color:#BA8264}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(2):not(.good,.bad,.dim){border-color:#60AD9D}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(3):not(.good,.bad,.dim){border-color:#829DE2}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(4):not(.good,.bad,.dim){border-color:#B886C9}
 /* Cambridge Part 1 retains a real circular clock, with the same compact header. */
 html:root body[data-nucleo-game="cambridge"] #quizPlay .play-head{
- display:flex!important;align-items:center!important;justify-content:space-between!important;
- gap:8px!important;min-height:62px!important;padding:4px 0!important;
- background:transparent!important;border:0!important;
+ display:flex;align-items:center;justify-content:space-between;
+ gap:8px;min-height:62px;padding:4px 0;
+ background:transparent;border:0;
 }
 html:root body[data-nucleo-game="cambridge"] #quizPlay .play-head .position{
- color:#EAF0F5!important;font:750 18px/1.2 Roboto,system-ui,sans-serif!important;
+ color:#EAF0F5;font:750 18px/1.2 Roboto,system-ui,sans-serif;
 }
 html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock{
- flex:0 0 60px!important;width:60px!important;height:60px!important;
- min-width:60px!important;min-height:60px!important;color:#EAF0F5!important;
- background:conic-gradient(#E7BF57 var(--fill),#414B54 var(--fill))!important;
+ flex:0 0 60px;width:60px;height:60px;
+ min-width:60px;min-height:60px;color:#EAF0F5;
+ background:conic-gradient(#E7BF57 var(--fill),#414B54 var(--fill));
 }
-html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock::before{background:#121619!important}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock::before{background:#121619}
 html:root body[data-nucleo-game="cambridge"] #quizPlay :is(#quizCountdown,#quizClock small){
- color:#EAF0F5!important;position:relative!important;z-index:2!important;
+ color:#EAF0F5;position:relative;z-index:2;
 }
 html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:not(.chosen){
- background:#1B2228!important;color:#EAF0F5!important;min-width:0!important;min-height:88px!important;
- border:2px solid #414B54!important;border-radius:12px!important;
- font:700 clamp(18px,4.65vw,22px)/1.3 Roboto,system-ui,sans-serif!important;
- overflow-wrap:anywhere!important;
+ background:#1B2228;color:#EAF0F5;min-width:0;min-height:88px;
+ border:2px solid #414B54;border-radius:12px;
+ font:700 clamp(18px,4.65vw,22px)/1.3 Roboto,system-ui,sans-serif;
+ overflow-wrap:anywhere;
 }
-html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:nth-child(1):not(.chosen){border-color:#BA8264!important}
-html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:nth-child(2):not(.chosen){border-color:#60AD9D!important}
-html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:nth-child(3):not(.chosen){border-color:#829DE2!important}
-html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:nth-child(4):not(.chosen){border-color:#B886C9!important}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:nth-child(1):not(.chosen){border-color:#BA8264}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:nth-child(2):not(.chosen){border-color:#60AD9D}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:nth-child(3):not(.chosen){border-color:#829DE2}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:nth-child(4):not(.chosen){border-color:#B886C9}
 html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn.chosen.is-correct{
- background:#153E32!important;border-color:#76D7A5!important;color:#EAF0F5!important;
+ background:#153E32;border-color:#76D7A5;color:#EAF0F5;
 }
 html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn.chosen.is-incorrect{
- background:#48212D!important;border-color:#E28B9B!important;color:#EAF0F5!important;
+ background:#48212D;border-color:#E28B9B;color:#EAF0F5;
 }
 
 /* Fase 4: dashboard flotante Phrasal / Learnings, generado fuera de #statsScreen. */
 html:root body[data-nucleo-game] #aldOverlay
  :is(.adp-card,.adp-skill,.adp-note,.adp-summary,.adp-chart,.ald-card){
- background:#1B2228!important;border-color:#414B54!important;color:#EAF0F5!important;
+ background:#1B2228;border-color:#414B54;color:#EAF0F5;
 }
 html:root body[data-nucleo-game] #aldOverlay
  :is(.adp-card,.adp-skill,.adp-note,.adp-summary,.ald-card)
  :is(b,strong,h2,h3,button,.adp-skill-name){
- color:#EAF0F5!important;opacity:1!important;
+ color:#EAF0F5;opacity:1;
 }
 html:root body[data-nucleo-game] #aldOverlay
  :is(.adp-card,.adp-skill,.adp-note,.adp-summary,.ald-card)
  :is(span,small,em,p){
- color:#B9C5CF!important;opacity:1!important;
+ color:#B9C5CF;opacity:1;
 }
 html:root body[data-nucleo-game] #aldOverlay .adp-skill b{
- position:relative!important;z-index:5!important;
- color:#EAF0F5!important;text-shadow:none!important;
+ position:relative;z-index:5;
+ color:#EAF0F5;text-shadow:none;
 }
 /* Cambridge's injected nucleo-linear-clock mode was suppressing live digits.
    Keep engine-owned countdown and conic progress; hide only the duplicate bar. */
 html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock.nucleo-linear-clock{
- display:flex!important;flex-direction:column!important;align-items:center!important;
- justify-content:center!important;position:relative!important;
- background-image:conic-gradient(#E7BF57 var(--fill),#414B54 var(--fill))!important;
+ display:flex;flex-direction:column;align-items:center;
+ justify-content:center;position:relative;
+ background-image:conic-gradient(#E7BF57 var(--fill),#414B54 var(--fill));
 }
 html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock.nucleo-linear-clock #quizCountdown{
- display:block!important;visibility:visible!important;opacity:1!important;
- font:750 22px/1.1 Roboto,system-ui,sans-serif!important;
+ display:block;visibility:visible;opacity:1;
+ font:750 22px/1.1 Roboto,system-ui,sans-serif;
 }
 html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock.nucleo-linear-clock small{
- display:block!important;visibility:visible!important;opacity:1!important;
- font-size:10px!important;
+ display:block;visibility:visible;opacity:1;
+ font-size:10px;
 }
 html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock.nucleo-linear-clock .nucleo-progress{
- display:none!important;
+ display:none;
 }
 html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn.chosen:not(.is-correct,.is-incorrect){
- background:#1B2228!important;color:#EAF0F5!important;
- border-color:#E7BF57!important;
+ background:#1B2228;color:#EAF0F5;
+ border-color:#E7BF57;
+}
+
+
+/* ============================================================
+   ERGONOMÍA LENTES RELAX & OLED DARK (REFRACTORIZACIÓN ATÓMICA)
+   ============================================================ */
+:root {
+  --bg-oled: #000000;
+  --card-surface: #1B2228;
+  --border-subtle: #414B54;
+  --text-primary: #EAF0F5;
+  --text-secondary: #9AA7B2;
+  --line-height-relax: 1.45;
+}
+
+body {
+  background-color: var(--bg-oled);
+  color: var(--text-primary);
+}
+
+/* Centro de gravedad visual: tercio inferior (área de descanso focal y pulgar) */
+.game-layout, .quiz-layout, .quiz-container, .main-board, main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: calc(100vh - 75px);
+  padding-bottom: 2rem;
+}
+
+/* Enunciados compactados hacia abajo con interlineado descansado */
+.question-box, .prompt-card, .quiz-prompt, .exercise-card {
+  background: var(--card-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  line-height: var(--line-height-relax);
+  margin-top: auto;
+  margin-bottom: 1.25rem;
+}
+
+.options-grid, .answers-grid, .choices-container {
+  margin-bottom: 1.25rem;
+}
+
+/* My Coach & Study File: fichas con interlineado descansado */
+.coach-feedback, .study-card, .explanation-card, .coach-card {
+  background: var(--card-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  line-height: var(--line-height-relax);
 }
