@@ -2,7 +2,7 @@
 'use strict';
 const $=id=>document.getElementById(id);
 const STORE='cambridgeKeywordQuizPilotV1',PREF='cambridgeKeywordQuizPreferencesV1';
-const ROUND=15,READ_MS=2800,HOLD_MS=1650;
+const ROUND=15,READ_MS=60000,HOLD_MS=1650;
 const sources=window.ADAPTIVE_EXAM_PAPERS||[];
 const drafts=window.KEYWORD_QUIZ_PILOT||{};
 const esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[ch]));
