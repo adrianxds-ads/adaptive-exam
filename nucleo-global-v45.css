@@ -577,3 +577,168 @@ html:root body[data-nucleo-game]
 .ad-medal-strip .ad-medal-stat {
   border-color:var(--ach,#414B54)!important;
 }
+
+/* Fase 4: contratos internos de Coach, Study File, Skill League y quiz. */
+html:root body[data-nucleo-game]{
+ --internal-surface:#1B2228;--internal-ink:#EAF0F5;
+ --internal-muted:#B9C5CF;--internal-border:#414B54;
+}
+html:root body[data-nucleo-game] :is(#coachScreen,#errorsScreen,#statsScreen,#startScreen,#flashScreen,#studyScreen,#study,#home)
+ :is(.coach-card,.coach-narrative,.local-coach-hero,.mistake-card,.error-lab,.error-coach-card,.error-detail,.error-detail-body,.error-quick,.error-music>div,
+ .study-file,.study-card,.study-panel,.daily-key-card,.daily-key-face,.keyring-item,.key-slide,.campaign-eta,.campaign-eta-mini,.campaign-eta aside,
+ .statusbox,.formula,.error-formula,.error-example-q,.mistake-choice>div,.secret-key-copy,.coach-prompt-box textarea){
+ background:#1B2228!important;background-image:none!important;border-color:#414B54!important;color:#EAF0F5!important;box-shadow:none!important;opacity:1!important;
+}
+html:root body[data-nucleo-game] :is(#coachScreen,#errorsScreen,#statsScreen,#startScreen,#flashScreen,#studyScreen,#study,#home)
+ :is(.coach-card,.coach-narrative,.local-coach-hero,.mistake-card,.error-lab,.error-coach-card,.error-detail,.error-quick,.error-music,.study-file,
+ .study-card,.study-panel,.daily-key-card,.daily-key-face,.keyring-item,.key-slide,.campaign-eta,.campaign-eta-mini,.statusbox,.formula,.error-formula)
+ :is(h1,h2,h3,h4,h5,p,b,strong,label,li,summary,button,.skill-name-text,.coach-score){
+ color:#EAF0F5!important;opacity:1!important;text-shadow:none!important;
+}
+html:root body[data-nucleo-game] :is(#coachScreen,#errorsScreen,#statsScreen,#startScreen,#flashScreen,#studyScreen,#study,#home)
+ :is(.coach-card,.coach-narrative,.local-coach-hero,.mistake-card,.error-lab,.error-coach-card,.error-detail,.error-quick,.error-music,
+ .study-file,.study-card,.study-panel,.daily-key-card,.daily-key-face,.keyring-item,.key-slide,.campaign-eta,.campaign-eta-mini,.statusbox)
+ :is(small,em,span,.muted,.subtle,.secondary,.coach-method,.key-slide-meta,.daily-key-head,.key-carousel-hint){
+ color:#B9C5CF!important;opacity:1!important;text-shadow:none!important;
+}
+html:root body[data-nucleo-game] #coachScreen
+ :is(.coach-card,.coach-narrative,.local-coach-hero,.mistake-card,.resulttitle)
+ :is(p,h2,h3,b,strong,.coach-score,.kicker),
+html:root body[data-nucleo-game] #coachScreen :is(.statusbox,.section,.coach-method),
+html:root body[data-nucleo-game] #errorsScreen
+ :is(.error-detail-body p,.error-example-q,.error-quick span,.error-coach-head b,.error-solved,.secret-key-copy,.error-music b){
+ color:#EAF0F5!important;
+}
+html:root body[data-nucleo-game] #coachScreen
+ :is(.coach-card,.coach-narrative,.local-coach-hero,.mistake-card) :is(small,em,.coach-method),
+html:root body[data-nucleo-game] #errorsScreen :is(.error-coach-head small,.error-lab-title span,.error-detail summary,.error-music small,.error-music span),
+html:root body[data-nucleo-game] .campaign-eta :is(small,span,em,.campaign-eta-range,footer),
+html:root body[data-nucleo-game] .campaign-eta-mini :is(small,span){
+ color:#B9C5CF!important;
+}
+html:root body[data-nucleo-game] :is(#coachScreen,#errorsScreen)
+ .mistake-choice .correct{
+ background:#153E32!important;border-color:#76D7A5!important;color:#EAF0F5!important;
+}
+html:root body[data-nucleo-game] :is(#coachScreen,#errorsScreen)
+ .mistake-choice .wrong{
+ background:#48212D!important;border-color:#E28B9B!important;color:#EAF0F5!important;
+}
+html:root body[data-nucleo-game] :is(.daily-key-card,.daily-key-face,.keyring-item,.key-slide,.study-file,.study-card,.study-panel)
+ :is(b,strong,p,h2,h3,li,button){
+ color:#EAF0F5!important;text-shadow:none!important;
+}
+html:root body[data-nucleo-game] :is(.daily-key-card,.daily-key-face,.keyring-item,.key-slide,.study-file,.study-card,.study-panel)
+ :is(span,small,em,.key-highlight,.key-slide-meta,.key-carousel-hint){
+ color:#B9C5CF!important;text-shadow:none!important;
+}
+/* Percent remains outside track clipping and inherits AA foreground. */
+html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#leagueScreen,#endScreen,#errorsScreen) .skillrow{
+ position:relative!important;background:#1B2228!important;border-color:#414B54!important;color:#EAF0F5!important;
+}
+html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#leagueScreen,#endScreen,#errorsScreen) .skillrow
+ :is(.skill-name-hit,.skill-name-text,.skill-rank,.rank-move,span,b,strong,small){
+ color:#EAF0F5!important;opacity:1!important;
+}
+html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#leagueScreen,#endScreen,#errorsScreen) .skillrow .pct{
+ position:relative!important;z-index:5!important;color:#EAF0F5!important;background:transparent!important;opacity:1!important;white-space:nowrap!important;text-shadow:none!important;
+}
+html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#leagueScreen,#endScreen,#errorsScreen) .skillrow .track{
+ position:relative!important;z-index:0!important;background:#2A333A!important;
+}
+/* Four-answer engine: compact standard header, visible engine-owned clock. */
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow #timer{
+ display:inline-flex!important;visibility:visible!important;opacity:1!important;
+ background:#121619!important;color:#EAF0F5!important;border:1px solid #414B54!important;
+}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) .toprow #timerText{
+ color:#EAF0F5!important;opacity:1!important;
+}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) :is(#soundBtn,.soundbtn,.focus-sound){
+ display:none!important;
+}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden)
+ #answers:has(>.answer:nth-child(4):last-child)>.answer:not(.good,.bad,.dim){
+ background:#1B2228!important;color:#EAF0F5!important;border-radius:12px!important;
+ min-width:0!important;min-height:clamp(88px,14dvh,128px)!important;overflow-wrap:anywhere!important;
+}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(1):not(.good,.bad,.dim){border-color:#BA8264!important}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(2):not(.good,.bad,.dim){border-color:#60AD9D!important}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(3):not(.good,.bad,.dim){border-color:#829DE2!important}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) #answers>.answer:nth-child(4):not(.good,.bad,.dim){border-color:#B886C9!important}
+/* Cambridge Part 1 retains a real circular clock, with the same compact header. */
+html:root body[data-nucleo-game="cambridge"] #quizPlay .play-head{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ gap:8px!important;min-height:62px!important;padding:4px 0!important;
+ background:transparent!important;border:0!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay .play-head .position{
+ color:#EAF0F5!important;font:750 18px/1.2 Roboto,system-ui,sans-serif!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock{
+ flex:0 0 60px!important;width:60px!important;height:60px!important;
+ min-width:60px!important;min-height:60px!important;color:#EAF0F5!important;
+ background:conic-gradient(#E7BF57 var(--fill),#414B54 var(--fill))!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock::before{background:#121619!important}
+html:root body[data-nucleo-game="cambridge"] #quizPlay :is(#quizCountdown,#quizClock small){
+ color:#EAF0F5!important;position:relative!important;z-index:2!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:not(.chosen){
+ background:#1B2228!important;color:#EAF0F5!important;min-width:0!important;min-height:88px!important;
+ border:2px solid #414B54!important;border-radius:12px!important;
+ font:700 clamp(18px,4.65vw,22px)/1.3 Roboto,system-ui,sans-serif!important;
+ overflow-wrap:anywhere!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:nth-child(1):not(.chosen){border-color:#BA8264!important}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:nth-child(2):not(.chosen){border-color:#60AD9D!important}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:nth-child(3):not(.chosen){border-color:#829DE2!important}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn:nth-child(4):not(.chosen){border-color:#B886C9!important}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn.chosen.is-correct{
+ background:#153E32!important;border-color:#76D7A5!important;color:#EAF0F5!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn.chosen.is-incorrect{
+ background:#48212D!important;border-color:#E28B9B!important;color:#EAF0F5!important;
+}
+
+/* Fase 4: dashboard flotante Phrasal / Learnings, generado fuera de #statsScreen. */
+html:root body[data-nucleo-game] #aldOverlay
+ :is(.adp-card,.adp-skill,.adp-note,.adp-summary,.adp-chart,.ald-card){
+ background:#1B2228!important;border-color:#414B54!important;color:#EAF0F5!important;
+}
+html:root body[data-nucleo-game] #aldOverlay
+ :is(.adp-card,.adp-skill,.adp-note,.adp-summary,.ald-card)
+ :is(b,strong,h2,h3,button,.adp-skill-name){
+ color:#EAF0F5!important;opacity:1!important;
+}
+html:root body[data-nucleo-game] #aldOverlay
+ :is(.adp-card,.adp-skill,.adp-note,.adp-summary,.ald-card)
+ :is(span,small,em,p){
+ color:#B9C5CF!important;opacity:1!important;
+}
+html:root body[data-nucleo-game] #aldOverlay .adp-skill b{
+ position:relative!important;z-index:5!important;
+ color:#EAF0F5!important;text-shadow:none!important;
+}
+/* Cambridge's injected nucleo-linear-clock mode was suppressing live digits.
+   Keep engine-owned countdown and conic progress; hide only the duplicate bar. */
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock.nucleo-linear-clock{
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:center!important;position:relative!important;
+ background-image:conic-gradient(#E7BF57 var(--fill),#414B54 var(--fill))!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock.nucleo-linear-clock #quizCountdown{
+ display:block!important;visibility:visible!important;opacity:1!important;
+ font:750 22px/1.1 Roboto,system-ui,sans-serif!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock.nucleo-linear-clock small{
+ display:block!important;visibility:visible!important;opacity:1!important;
+ font-size:10px!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizClock.nucleo-linear-clock .nucleo-progress{
+ display:none!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay #quizAnswerArea .option-btn.chosen:not(.is-correct,.is-incorrect){
+ background:#1B2228!important;color:#EAF0F5!important;
+ border-color:#E7BF57!important;
+}
