@@ -90,6 +90,100 @@ body.cambridge-scan-open{overflow:hidden}
 <link rel="stylesheet" href="./nucleo-quiz-refinement.css?v=4.1.0">
 <link rel="stylesheet" href="./cambridge-refinement-v42.css?v=4.2.0">
 <link rel="stylesheet" href="./nucleo-global-v45.css?v=4.5.3">
+<style id="unified-oled-relax">
+:root {
+  --bg-oled: #000000;
+  --card-surface: #1B2228;
+  --border-subtle: #414B54;
+  --text-main: #EAF0F5;
+  --timer-active: #D4B07B;
+  --timer-warning: #C97A72;
+  --timer-off: #22262B;
+}
+
+body {
+  background-color: var(--bg-oled) !important;
+  color: var(--text-main) !important;
+}
+
+main, .quiz-layout, .quiz-container, .game-layout, .main-board {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  min-height: calc(100vh - 70px) !important;
+  padding-bottom: 1.5rem !important;
+  box-sizing: border-box !important;
+}
+
+.question-box, .prompt-card, .quiz-prompt, .exercise-card, .question-card {
+  background: var(--card-surface) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 12px !important;
+  color: var(--text-main) !important;
+  line-height: 1.45 !important;
+  margin-top: auto !important;
+  margin-bottom: 1rem !important;
+  padding: 16px !important;
+}
+
+.options-grid, .answers-grid, .choices-container, .options-container, .quiz-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.options-grid > *, .answers-grid > *, .choices-container > *, .options-container > *, .quiz-grid > * {
+  background-color: var(--card-surface) !important;
+  color: var(--text-main) !important;
+  border-width: 1.5px !important;
+  border-style: solid !important;
+  border-radius: 12px !important;
+  padding: 18px 12px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+
+.options-grid > *:nth-child(1), .answers-grid > *:nth-child(1), .choices-container > *:nth-child(1), .options-container > *:nth-child(1) {
+  border-color: #E09875 !important;
+}
+.options-grid > *:nth-child(2), .answers-grid > *:nth-child(2), .choices-container > *:nth-child(2), .options-container > *:nth-child(2) {
+  border-color: #68B8A6 !important;
+}
+.options-grid > *:nth-child(3), .answers-grid > *:nth-child(3), .choices-container > *:nth-child(3), .options-container > *:nth-child(3) {
+  border-color: #7B96D4 !important;
+}
+.options-grid > *:nth-child(4), .answers-grid > *:nth-child(4), .choices-container > *:nth-child(4), .options-container > *:nth-child(4) {
+  border-color: #B18CD4 !important;
+}
+
+.quiz-segmented-timer {
+  display: flex !important;
+  gap: 5px !important;
+  width: 100% !important;
+  max-width: 380px !important;
+  margin: 12px auto 8px auto !important;
+  padding: 0 4px !important;
+  box-sizing: border-box !important;
+  height: 6px !important;
+}
+
+.quiz-segmented-timer .timer-segment {
+  flex: 1 !important;
+  height: 4px !important;
+  border-radius: 2px !important;
+  background-color: var(--timer-off) !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.quiz-segmented-timer .timer-segment.active {
+  background-color: var(--timer-active) !important;
+}
+
+.quiz-segmented-timer .timer-segment.warning {
+  background-color: var(--timer-warning) !important;
+}
+</style>
 </head>
 <body data-nucleo-game="cambridge">
 <div class="app">
@@ -133,4 +227,62 @@ body.cambridge-scan-open{overflow:hidden}
 <script src="./performance-adapter.js?v=1.1.0"></script><script src="https://adrianxds-ads.github.io/adrian-core/components/hub-quiz-ux.js?v=20261011-2"></script>
 <script src="https://adrianxds-ads.github.io/adrian-core/components/hub-nav.js?v=12-20261011"></script>
 
+<script id="unified-timer-script">
+(function() {
+  function initTimer() {
+    var grid = document.querySelector('.options-grid, .answers-grid, .choices-container, .options-container, .quiz-grid')
+               || document.querySelector('.question-box, .prompt-card, .exercise-card');
+    if (!grid) return;
+
+    var bar = document.getElementById('quiz-segmented-timer');
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.id = 'quiz-segmented-timer';
+      bar.className = 'quiz-segmented-timer';
+      for (var i = 0; i < 15; i++) {
+        var seg = document.createElement('div');
+        seg.className = 'timer-segment active';
+        bar.appendChild(seg);
+      }
+      grid.parentNode.insertBefore(bar, grid.nextSibling);
+    }
+
+    function setProgress(fraction) {
+      var segs = bar.querySelectorAll('.timer-segment');
+      var activeCount = Math.round(fraction * segs.length);
+      var isWarn = fraction <= 0.25;
+      segs.forEach(function(s, idx) {
+        if (idx < activeCount) {
+          s.className = isWarn ? 'timer-segment active warning' : 'timer-segment active';
+        } else {
+          s.className = 'timer-segment';
+        }
+      });
+    }
+
+    var timerEl = document.querySelector('.timer, #timer, [id*="timer"], [class*="timer"], .time-left, #time-left');
+    if (timerEl && !timerEl.__observed) {
+      timerEl.__observed = true;
+      var maxSec = 15;
+      var obs = new MutationObserver(function() {
+        var txt = timerEl.innerText || timerEl.textContent || '';
+        var m = txt.match(/([0-9]+(\.[0-9]+)?)/);
+        if (m) {
+          var val = parseFloat(m[1]);
+          if (val > maxSec) maxSec = val;
+          setProgress(val / maxSec);
+        }
+      });
+      obs.observe(timerEl, { childList: true, characterData: true, subtree: true });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTimer);
+  } else {
+    initTimer();
+  }
+  setInterval(initTimer, 1000);
+})();
+</script>
 </body></html>
