@@ -459,3 +459,67 @@ html body[data-nucleo-game] #errorsScreen .error-coach-card .mistake-choice .wro
   html body[data-nucleo-game] :is(#coachScreen,#errorsScreen) :is(.coach-head,.error-coach-head){flex-wrap:wrap}
   html body[data-nucleo-game] :is(#coachScreen,#errorsScreen) .mistake-choice{grid-template-columns:minmax(0,1fr)!important}
 }
+/* Núcleo Luminous 1.3 · verified Coach text audit.
+ * The campaign estimate was outside the v1.2 Coach selectors. Repaint the
+ * actual reading surfaces instead of layering pale text over a white screen.
+ */
+html body[data-nucleo-game] :is(.campaign-eta,.campaign-eta-mini){
+ background:#F2F7FA!important;background-image:none!important;
+ color:#25282C!important;border:1px solid #AFC5D3!important;
+ box-shadow:none!important;opacity:1!important;
+}
+html body[data-nucleo-game] .campaign-eta{border-left:5px solid var(--ng-accent)!important}
+html body[data-nucleo-game] .campaign-eta :is(h2,aside b){
+ color:#233E50!important;text-shadow:none!important;opacity:1!important;
+}
+html body[data-nucleo-game] .campaign-eta :is(p,aside b){
+ font-size:19px!important;line-height:1.45!important;font-weight:700!important;
+}
+html body[data-nucleo-game] .campaign-eta :is(small,aside span,aside em,.campaign-eta-range,footer){
+ color:#334554!important;font-size:16px!important;line-height:1.5!important;
+ font-weight:600!important;letter-spacing:normal!important;opacity:1!important;
+ text-shadow:none!important;
+}
+html body[data-nucleo-game] .campaign-eta p{color:#25282C!important;font-weight:600!important}
+html body[data-nucleo-game] .campaign-eta aside{
+ background:#E6F0F6!important;border:1px solid #AFC5D3!important;
+ border-radius:12px;padding:14px;min-width:0;overflow-wrap:anywhere;
+}
+html body[data-nucleo-game] .campaign-eta footer{
+ border-top:1px solid #B5C9D7!important;padding-top:12px;
+}
+html body[data-nucleo-game] .campaign-plan-scenarios span{
+ background:#E0EDF5!important;border:1px solid #AFC5D3!important;
+ color:#263E51!important;font-size:16px!important;line-height:1.4!important;
+ font-weight:700!important;letter-spacing:normal!important;
+}
+html body[data-nucleo-game] .campaign-eta-mini :is(strong,b,span,small){
+ color:#263E51!important;opacity:1!important;text-shadow:none!important;
+}
+html body[data-nucleo-game] .campaign-eta-mini :is(b,span,small){
+ font-size:16px!important;line-height:1.45!important;font-weight:650!important;
+ letter-spacing:normal!important;
+}
+/* Whole-text QA uncovered undersized Coach paragraphs and skill rows. */
+html body[data-nucleo-game] #coachScreen .resulttitle .kicker{
+ color:#263E51!important;font-size:18px!important;opacity:1!important;
+}
+html body[data-nucleo-game] #coachScreen :is(.statusbox,.coach-card p,.mistake-card p,.coach-narrative p){
+ color:#25282C!important;font-size:19px!important;
+ font-weight:550!important;line-height:1.5!important;opacity:1!important;
+}
+html body[data-nucleo-game] #coachScreen :is(.coach-card h3,.coach-narrative h3,.mistake-card>b,.section h3){
+ color:#233E50!important;font-size:20px!important;
+ font-weight:750!important;line-height:1.35!important;opacity:1!important;
+}
+html body[data-nucleo-game] #coachScreen .skillrow{
+ color:#25282C!important;font-size:17px!important;line-height:1.4!important;
+}
+html body[data-nucleo-game] #coachScreen .skillrow :is(.skill-name-text,.skill-name-hit,.pct,.skill-rank,.rank-move,span,b,small){
+ color:#263E51!important;font-size:16px!important;font-weight:650!important;opacity:1!important;
+}
+@media(max-width:560px){
+ html body[data-nucleo-game] .campaign-eta{grid-template-columns:minmax(0,1fr)!important;gap:12px}
+ html body[data-nucleo-game] .campaign-eta :is(aside,footer){grid-column:1/-1}
+ html body[data-nucleo-game] #coachScreen .skillrow{grid-template-columns:auto minmax(0,1fr) auto!important}
+}
