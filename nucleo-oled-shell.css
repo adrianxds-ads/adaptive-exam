@@ -1,0 +1,144 @@
+/* Nucleo OLED shell v1.0 (2026-10-11).
+ * Shared visual chrome only: do not change quiz engine, rewards or storage.
+ * Keep long-form Coach/error material in its verified light reading surfaces.
+ */
+html:root:has(body[data-nucleo-game]) { background:#000!important; color-scheme:dark; }
+html:root body[data-nucleo-game] {
+  --ng-bg:#000; --bg:#000; --ng-ink:#EAF0F5; --ng-muted:#BBC8D2;
+  --ng-surface:#111519; --ng-edge:#414B54; --text:#EAF0F5; --muted:#BBC8D2;
+  --line:#414B54;
+  background:#000!important; background-image:none!important;
+  color:#EAF0F5!important; color-scheme:dark;
+}
+html:root body[data-nucleo-game] .nucleo-route-nav {
+  background:#0B0F12!important; color:#EAF0F5!important;
+  border-color:#414B54!important;
+}
+html:root body[data-nucleo-game] .nucleo-route-nav :is(a,button){
+  font-size:16px!important; min-height:52px; color:#EAF0F5!important;
+  background:transparent!important; border-color:#414B54!important;
+}
+html:root body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,#resultScreen,
+#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,#study,#quiz,#stats,
+#statistics,#flash,#game,#exam,#results,#examResults,#setup,#examSetup,
+#leagueScreen,#coachScreen,#errorsScreen){
+  background-color:transparent!important; color:#EAF0F5;
+}
+html:root body[data-nucleo-game] :is(.screen .panel,.panel.hero,.paper,.kq-panel,
+#startScreen>.panel,#endScreen>.panel,#resultScreen>.panel){
+  background:#111519!important; background-image:none!important;
+  color:#EAF0F5!important; border:1px solid #414B54!important;
+  box-shadow:none!important;
+}
+html:root body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,
+#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,
+#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,
+#setup,#examSetup,#leagueScreen) :is(h1,h2,h3,.paper-title,#paperLabel){
+  color:#EAF0F5!important; text-shadow:none!important;
+}
+html:root body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,
+#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,
+#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,
+#setup,#examSetup,#leagueScreen) :is(.card,.stat,.class-card,.statusbox,
+.status,.phase-note,.kq-note,.mode-note,.dashboard-menu .menu-btn,.part-card,
+.exercise-card,.exam-tile,.mode-card,.mode){
+  background:#171C21!important; color:#EAF0F5!important;
+  border:1px solid #414B54!important; box-shadow:none!important;
+}
+html:root body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,
+#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,
+#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,
+#setup,#examSetup,#leagueScreen) :is(.card,.stat,.class-card,.statusbox,
+.mode-note,.dashboard-menu .menu-btn,.part-card,.exercise-card,.mode-card)
+:is(b,strong,span,small,p,em){
+  color:#EAF0F5!important; opacity:1!important;
+}
+html:root body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,
+#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,
+#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,
+#setup,#examSetup,#leagueScreen) :is(.subtitle,.intro,.meta,.kicker,
+.eyebrow,.progress-label,.bank-progress,.read-first-note,.chartmeta,
+.support,.speech-help,.native-hint,.mic-status,.question-no,.mode-note){
+  color:#C5D0D9!important; opacity:1!important;
+}
+html:root body[data-nucleo-game] :is(#startScreen,#statsScreen,#endScreen,
+#resultScreen,#gameScreen,#partScreen,#exerciseScreen,#paperScreen,#home,
+#study,#quiz,#stats,#statistics,#flash,#game,#exam,#results,#examResults,
+#setup,#examSetup,#leagueScreen) :is(.secondary,.ghost,.back,.soundbtn,.exit){
+  background:#161D22!important; color:#EAF0F5!important;
+  border:1px solid #53636E!important;
+}
+html:root body[data-nucleo-game] :is(.topbar,.paper-head){
+  background:#171E24!important; color:#EAF0F5!important;
+  border-color:#414B54!important;
+}
+html:root body[data-nucleo-game] #gameScreen :is(.qnum span,.qnum small,
+.leveltag,.level-target,#comboHud,#levelHud,.categoryline){
+  color:#D1DCE4!important;
+}
+html:root body[data-nucleo-game] :is(.score-float,.score-top,.points-hud){
+  background:#171E24!important; color:#EAF0F5!important;
+  border-color:#53636E!important;
+}
+html:root body[data-nucleo-game] :is(.score-float,.score-top,.points-hud)
+:is(b,span,small){color:#EAF0F5!important;}
+/* Explicitly retain pale reading areas where existing dark-ink styles are verified. */
+html:root body[data-nucleo-game] #gameScreen :is(.question,.question-card,.game-card){
+  background:#F2F7FA!important; color:#25282C!important;
+}
+html:root body[data-nucleo-game] #gameScreen :is(.question h2,.question p,.question-text){
+  color:#25282C!important;
+}
+html:root body[data-nucleo-game] :is(#coachScreen,#errorsScreen)
+:is(.coach-narrative,.coach-card,.mistake-card,.local-coach-hero,
+.error-lab,.error-coach-card,.error-detail,.error-quick,.error-music>div){
+  background:#F3F8FB!important; color:#25282C!important;
+}
+html:root body[data-nucleo-game] :is(a,button,summary,input,select,textarea):focus-visible{
+  outline:3px solid #80CBE6!important; outline-offset:3px;
+}
+@media(max-width:560px){
+  html:root body[data-nucleo-game] .nucleo-route-nav {gap:4px!important;}
+  html:root body[data-nucleo-game] .nucleo-route-nav :is(a,button) {
+    padding-inline:8px!important; min-width:0;
+  }
+}
+
+/* A course outline stays a pale document, even within the black shell. */
+html:root body[data-nucleo-game="hoti"] #courseNow :is(h1,h2,h3,h4,strong,b){
+ color:#233E50!important;
+}
+html:root body[data-nucleo-game="hoti"] .brand :is(a,span){
+ color:#EAF0F5!important;
+}
+
+/* UF titles are nested inside the intentionally light course overview. */
+html:root body[data-nucleo-game="hoti"] .course-now .course-uf .uf-title h2 {
+ color:#233E50!important;
+}
+
+/* Consistent command-label scale on the home dashboards. */
+html:root body[data-nucleo-game] button.menu-btn :is(b,strong){
+ font-size:19px!important;line-height:1.3!important;
+}
+html:root body[data-nucleo-game] button.menu-btn :is(span,small){
+ font-size:16px!important;line-height:1.35!important;
+}
+html:root body[data-nucleo-game] #gameScreen .qnum :is(span,small) {
+ font-size:16px!important;
+}
+
+/* Legacy dashboard link buttons may carry 15px inline/ID typography. */
+html:root body[data-nucleo-game] :is(#statsBtn,#coachBtn,#flashBtn,#globalJsonBtn) b{
+ font-size:19px!important;line-height:1.3!important;
+}
+
+/* #courseMap gives this light-document title precedence over screen headings. */
+html:root body[data-nucleo-game="hoti"] #courseMap .course-uf .uf-title h2{
+ color:#233E50!important;
+}
+
+/* Dual ancestor IDs protect the light course document against the screen-wide dark heading rule. */
+html:root body[data-nucleo-game="hoti"] #home #courseMap .uf-title h2{
+ color:#233E50!important;
+}
