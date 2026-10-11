@@ -1,0 +1,76 @@
+/* Cambridge Lab · v4.2 · scope styles; leave typing parts as-is. */
+html:root body[data-nucleo-game="cambridge"]{
+ --cam-v42-card:#1B2228;
+ --cam-v42-ink:#EAF0F5;
+ --cam-v42-border:#414B54;
+}
+html:root body[data-nucleo-game="cambridge"] #quizModes .mode,
+html:root body[data-nucleo-game="cambridge"] #quizModes a.mode[href$="keyword-quiz.html"],
+html:root body[data-nucleo-game="cambridge"] :is(.question-panel,.solution-card,.kq-note,.kq-panel,.kq-rewrite,.kq-read-toggle,.kq-stats .metric,.stats-grid .metric){
+ background:var(--cam-v42-card)!important;
+ background-image:none!important;color:var(--cam-v42-ink)!important;
+ border-color:var(--cam-v42-border)!important;
+ box-shadow:none!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizModes .mode :is(b,strong,small,span),
+html:root body[data-nucleo-game="cambridge"] :is(.question-panel,.solution-card,.kq-note,.kq-panel,.kq-rewrite,.stats-grid .metric)
+ :is(h1,h2,h3,h4,p,span,b,strong,small,em){
+ color:var(--cam-v42-ink)!important;
+}
+html:root body[data-nucleo-game="cambridge"] .kq-keyline b{
+ background:#DDBB61!important;color:#1E252B!important;
+ border-radius:7px;padding:6px 10px;
+}
+html:root body[data-nucleo-game="cambridge"] .kq-rewrite :is(.kq-hole,.kq-hole.kq-correct,.kq-hole.kq-wrong){
+ color:#15252A!important;
+}
+html:root body[data-nucleo-game="cambridge"] .kq-rewrite .kq-hole{
+ background:#E6C36A!important;
+}
+html:root body[data-nucleo-game="cambridge"] .kq-rewrite .kq-hole.kq-correct{
+ background:#A6E4C5!important;
+}
+html:root body[data-nucleo-game="cambridge"] .kq-rewrite .kq-hole.kq-wrong{
+ background:#EFB1BF!important;
+}
+html:root body[data-nucleo-game="cambridge"] #kqChoices:has(>.kq-choice:nth-child(4):last-child){
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:8px!important;
+}
+html:root body[data-nucleo-game="cambridge"] #kqChoices>.kq-choice,
+html:root body[data-nucleo-game="cambridge"] #quizAnswerArea>.option-btn{
+ box-sizing:border-box!important;min-width:0!important;width:100%!important;
+ min-height:clamp(94px,14dvh,130px)!important;
+ height:auto!important;padding:12px 9px!important;
+ border:2px solid var(--cam-v42-edge,#6A7C89)!important;
+ border-radius:12px!important;
+ background:#1B2228!important;background-image:none!important;
+ color:#EAF0F5!important;
+ font:730 clamp(16px,4.35vw,21px)/1.35 Roboto,system-ui,sans-serif!important;
+ overflow-wrap:anywhere!important;white-space:normal!important;
+}
+html:root body[data-nucleo-game="cambridge"] #kqChoices>.kq-choice:nth-child(1),
+html:root body[data-nucleo-game="cambridge"] #quizAnswerArea>.option-btn:nth-child(1){--cam-v42-edge:#BA8264}
+html:root body[data-nucleo-game="cambridge"] #kqChoices>.kq-choice:nth-child(2),
+html:root body[data-nucleo-game="cambridge"] #quizAnswerArea>.option-btn:nth-child(2){--cam-v42-edge:#60AD9D}
+html:root body[data-nucleo-game="cambridge"] #kqChoices>.kq-choice:nth-child(3),
+html:root body[data-nucleo-game="cambridge"] #quizAnswerArea>.option-btn:nth-child(3){--cam-v42-edge:#829DE2}
+html:root body[data-nucleo-game="cambridge"] #kqChoices>.kq-choice:nth-child(4),
+html:root body[data-nucleo-game="cambridge"] #quizAnswerArea>.option-btn:nth-child(4){--cam-v42-edge:#B886C9}
+html:root body[data-nucleo-game="cambridge"] #kqChoices>.kq-choice.selected.correct,
+html:root body[data-nucleo-game="cambridge"] #quizAnswerArea>.option-btn.chosen.is-correct{
+ background:#153E32!important;border-color:#76D7A5!important;color:#EAF0F5!important;opacity:1!important;
+}
+html:root body[data-nucleo-game="cambridge"] #kqChoices>.kq-choice.selected.wrong,
+html:root body[data-nucleo-game="cambridge"] #quizAnswerArea>.option-btn.chosen.is-incorrect{
+ background:#48212D!important;border-color:#E28B9B!important;color:#EAF0F5!important;opacity:1!important;
+}
+html:root body[data-nucleo-game="cambridge"] :is(#kqChoices>.kq-choice:disabled,#quizAnswerArea>.option-btn:disabled){
+ pointer-events:none!important;
+}
+html:root body[data-nucleo-game="cambridge"] #kqPlay .kq-panel{
+ margin-top:8px!important;padding:12px!important;
+}
+html:root body[data-nucleo-game="cambridge"] #kqPlay :is(.kq-original,.kq-rewrite){
+ margin-bottom:7px!important;
+}
