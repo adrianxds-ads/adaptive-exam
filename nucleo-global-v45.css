@@ -12,18 +12,9 @@ html:root body[data-nucleo-game]
   background-image:none!important;
   color:var(--n45-text)!important;
 }
-html:root body[data-nucleo-game] :is(#startScreen,#statsScreen,#coachScreen,
-#leagueScreen,#errorsScreen,#endScreen,#resultScreen,#quizHome,#quizModes,
-#quizPlay,#quizStats,#kqHome,#kqPlay,#kqFinish)
-:is(.panel,.section,.card,.metric,.coach-card,.stats-panel,.finish-panel,
-.question-panel,.solution-card,.mode,.stats-grid,.scoreboard span,
-.chart-shell,.bank-note,.timing-advice,.error-lab,.statusbox) {
-  background-color:var(--n45-card)!important;
-  background-image:none!important;
-  border-color:var(--n45-border)!important;
-  color:var(--n45-text)!important;
-  box-shadow:none!important;
-}
+/* Do not recolor arbitrary screens, panels or reading cards.
+   Their component stylesheet owns the full surface/text contrast pair.
+   Shared tokens are above; only component-specific quiz/medal rules follow. */
 /* Identical count-only circular medals everywhere; sourced from existing ledger.
    Existing labels remain available in title/ARIA instead of visually repeating them. */
 html:root body[data-nucleo-game] .ad-medal-strip {
@@ -70,7 +61,7 @@ html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star > b > em {
   font-variant-numeric:tabular-nums!important;
 }
 html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star::after {
-  content:"★";position:absolute;right:-3px;top:-6px;
+  content:"\2605";position:absolute;right:-3px;top:-6px;
   font:850 10px/1 system-ui,sans-serif;color:#E7BF57;
   text-shadow:0 1px 2px #000;pointer-events:none;
 }
@@ -133,10 +124,6 @@ html:root body[data-nucleo-game="cambridge"] #quizPlay
  .inline-answer-input:not(.is-correct):not(.is-incorrect)) {
   background:var(--n45-card)!important;color:var(--n45-text)!important;
   border:2px solid #748796!important;
-}
-html:root body[data-nucleo-game="cambridge"] :is(#quizPlay,#kqPlay)
- :is(.option-btn,.question-panel,.mode) :is(b,small,strong,span,p) {
-  color:var(--n45-text)!important;
 }
 /* Keep focus and feedback visible, including reduced-motion preferences. */
 html:root body[data-nucleo-game] :is(.ad-medal-stat,.skillrow .pct) {

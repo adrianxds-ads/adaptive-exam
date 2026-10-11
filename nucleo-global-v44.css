@@ -131,25 +131,8 @@ html:root body[data-nucleo-game] #gameScreen:not(.hidden) .question{
 html:root body[data-nucleo-game] #gameScreen:not(.hidden) .question :is(h1,h2,h3,p,span,strong,b){
  color:var(--n44-ink)!important;
 }
-/* Global dark reading and charts on dashboards, Coach and Study File.
-   Careful: inputs retain their own borders and important feedback colors. */
-html:root body[data-nucleo-game] :is(#startScreen,#statsScreen,#coachScreen,#errorsScreen,#endScreen,#resultScreen,#leagueScreen,#home,#stats,#statistics,#quizHome,#kqHome,#kqFinish,#courseNow)
- :is(.adp-summary,.adp-card,.adp-note,.adp-chart,.hub-chart,.stats-focus-panel,.focus-panel,.chart-section,
-     .score-section,.score-chart,.chart-shell,.chart-card,.chart-container,.stats-grid,.metric,.card,
-     .coach-card,.coach-narrative,.mistake-card,.local-coach-hero,.error-lab,.error-detail,.error-coach-card,
-     .study-file,.study-card,.study-panel,.daily-key-card,.daily-key-face,.keyring-item,.key-slide,
-     .ai-handoff-card,.campaign-eta,.statusbox,.skillrow,.modal-card,.hc-modal-card,.score-modal-card){
- background:var(--n44-surface)!important;background-image:none!important;
- border-color:var(--n44-line)!important;color:var(--n44-ink)!important;
- box-shadow:none!important;
-}
-html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#errorsScreen,#startScreen,#endScreen,#resultScreen,#leagueScreen,#quizHome,#kqHome,#kqFinish)
- :is(.adp-summary,.adp-card,.adp-note,.hub-chart,.adp-chart,.chart-section,.score-section,.coach-card,
- .coach-narrative,.mistake-card,.local-coach-hero,.error-lab,.study-file,.daily-key-face,.keyring-item,
- .campaign-eta,.statusbox,.skillrow,.metric,.card)
- :is(h1,h2,h3,h4,h5,p,small,span,b,strong,em,li,label){
- color:var(--n44-ink)!important;text-shadow:none!important;
-}
+/* Coach, Study File and diary reading cards preserve their component-owned
+   ink/background pairing. Broad forced-dark overrides removed in rescue audit. */
 html:root body[data-nucleo-game] :is(#statsScreen,#coachScreen,#errorsScreen,#quizHome,#kqHome)
  :is(.hub-chart,.adp-chart,.adp-summary,.adp-card,.chart-section)
  :is(button,a:not(.primary)){
@@ -199,7 +182,7 @@ html:root body[data-nucleo-game]
  :is(.ad-medal-stat,.ai-valuation-box,.learning-score-box,.peer-box,.lp-homebar,
      .lp-homecell,.error-session-handoff,.ald-score,.ad-medal-summary,
      .readiness-box,.target-stats-section,.learning-target,.valoration-card,
-     .stats-summary,.rank-card,.streak-card,.daily-key-card){
+     .stats-summary,.rank-card,.streak-card){
  background:#1B2228!important;background-image:none!important;
  border-color:#414B54!important;color:#EAF0F5!important;
  box-shadow:none!important;
@@ -208,7 +191,7 @@ html:root body[data-nucleo-game]
  :is(.ad-medal-stat,.ai-valuation-box,.learning-score-box,.peer-box,.lp-homebar,
      .lp-homecell,.error-session-handoff,.ald-score,.ad-medal-summary,
      .readiness-box,.target-stats-section,.learning-target,.valoration-card,
-     .stats-summary,.rank-card,.streak-card,.daily-key-card)
+     .stats-summary,.rank-card,.streak-card)
  :is(span,b,strong,p,small,em,li,h1,h2,h3,h4){
  color:#EAF0F5!important;opacity:1!important;text-shadow:none!important;
 }
@@ -253,8 +236,7 @@ html:root body[data-nucleo-game]
  :is(#startScreen,#statsScreen,#coachScreen,#errorsScreen,#endScreen,#resultScreen,#home,#quizHome,#kqHome,#kqFinish,#courseNow,#examSetup,#stats)
  :is(.ad-medal-stat,.ai-valuation-box,.learning-score-box,.peer-box,.lp-homebar,
  .lp-homecell,.error-session-handoff,.ald-score,.readiness-box,.target-stats-section,
- .course-final-test,.deadline-row,.progress-report,.learning-target,.ai-handoff-card,
- .key-slide,.daily-key-card){
+ .course-final-test,.deadline-row,.progress-report,.learning-target,.ai-handoff-card){
  background:#1B2228!important;background-image:none!important;
  color:#EAF0F5!important;border-color:#414B54!important;
  box-shadow:none!important;
