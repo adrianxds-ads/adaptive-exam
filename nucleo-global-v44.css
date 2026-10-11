@@ -354,3 +354,96 @@ html:root body[data-nucleo-game] :is(#startScreen,#home,#statsScreen)
  background:#284457!important;border-color:#8FC4E5!important;
  color:#EAF0F5!important;
 }
+
+/* UX correction after production screenshot audit.
+   The global utility toolbar is OUTSIDE #gameScreen in 4 quiz applications.
+   Earlier rules only targeted descendants of #gameScreen, leaving it visible.
+   Preserve toolbar and its JSON functions outside an active game. */
+html:root body[data-nucleo-game]:has(#gameScreen:not(.hidden)) > .adrian-tools{
+ display:none!important;
+}
+/* The answer-stage progress ticks live inside .playfield, not directly under
+   #gameScreen. Hide only decorative ticks, never engine-owned timer state. */
+html:root body[data-nucleo-game] #gameScreen:not(.hidden)
+ :is(.segments-bottom,.seconds-bar,.segments:not(.segment-buttons)){
+ display:none!important;
+}
+/* The previous layouts center the entire quiz in a tall flex region.
+   Place the question directly below the compact header on all 4-choice games. */
+html:root body[data-nucleo-game] #gameScreen:not(.hidden){
+ justify-content:flex-start!important;
+ min-height:100dvh!important;
+ height:100dvh!important;
+ overflow:hidden!important;
+}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.playfield{
+ box-sizing:border-box!important;
+ flex:1 1 auto!important;
+ min-height:0!important;
+ width:100%!important;
+ margin:0!important;
+ justify-content:flex-start!important;
+ align-content:flex-start!important;
+ align-items:stretch!important;
+ padding:clamp(14px,4dvh,34px) 12px 8px!important;
+ overflow-y:auto!important;
+ overscroll-behavior:contain!important;
+}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.playfield>.focus-stack{
+ margin:0 auto!important;
+ align-self:stretch!important;
+ width:100%!important;
+ max-width:520px!important;
+}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.playfield>.question,
+html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.playfield>.answer-stage,
+html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.playfield> #answers{
+ flex:0 0 auto!important;
+}
+/* Footer remains available and visible for points and EXIT. Global controls
+   are hidden only during play, and all their actions still exist on menus. */
+html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.quiz-game-footer{
+ flex:0 0 auto!important;
+ min-height:46px!important;
+ height:auto!important;
+ padding:6px 12px max(9px,env(safe-area-inset-bottom))!important;
+}
+/* Maintain compact but comfortable 2x2 buttons: different text lengths may wrap. */
+@media(max-height:700px){
+ html:root body[data-nucleo-game] #gameScreen:not(.hidden)>.playfield{
+  padding:9px 10px 5px!important;
+ }
+}
+
+/* Final cascade correction: legacy #segments selectors had higher specificity
+   and still painted the lower dotted strip. The timer remains functional. */
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) #segments.segments,
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) .playfield #segments,
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) > #segments {
+ display:none!important;
+ height:0!important;
+ min-height:0!important;
+ margin:0!important;
+ padding:0!important;
+ visibility:hidden!important;
+}
+/* Guarantee readable live time digits when the old .nucleo-clock-hidden rules win. */
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) #timer #timerText {
+ color:#EAF0F5!important;
+ opacity:1!important;
+ text-shadow:none!important;
+}
+/* Restore the same dark score-chip visual as Grammar in footer-bearing games. */
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) .quiz-game-footer
+ :is(#languagePointsHud,.lp-game-score,#pointsHud.points) {
+ background:#1B2228!important;
+ background-image:none!important;
+ color:#EAF0F5!important;
+ border:1px solid #414B54!important;
+ box-shadow:none!important;
+}
+html:root body[data-nucleo-game] #gameScreen:not(.hidden) .quiz-game-footer
+ :is(#languagePointsHud,.lp-game-score,#pointsHud.points)
+ :is(.lp-game-main,b,small,strong,span){
+ color:#EAF0F5!important;
+}
