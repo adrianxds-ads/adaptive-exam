@@ -7,4 +7,10 @@ async function releaseValid(req,r){
  return !expected||await releaseDigest(await r.clone().arrayBuffer())===expected;
 }
 async function releaseFetch(req,init){const r=await fetch(req,init);if(r.ok&&!await releaseValid(req,r))throw Error('Release fingerprint mismatch: '+(req.url||req));return r;}
-async function releaseMatch(cache,req){const r=await cache.match(req);return await releaseValid(req,r)?r:undefined;}
+async function releaseMatch(cache,req){
+ const exact=await cache.match(req);
+ if(await releaseValid(req,exact))return exact;
+ // Integrity-checked canonical assets may be stored without the cache-busting query.
+ const byPath=await cache.match(req,{ignoreSearch:true});
+ return await releaseValid(req,byPath)?byPath:undefined;
+}
