@@ -1,0 +1,153 @@
+/* Núcleo visual v4.5 — canonical additive CSS for all educational PWAs.
+   Layout only: never change scoring, clocks, answers, data, JSON or persistence. */
+html:root body[data-nucleo-game] {
+  --n45-bg:#000000;--n45-card:#1B2228;--n45-border:#414B54;
+  --n45-text:#EAF0F5;--n45-muted:#C3CED7;
+}
+html:root body[data-nucleo-game]
+:is(#startScreen,#statsScreen,#coachScreen,#leagueScreen,#errorsScreen,
+#endScreen,#resultScreen,#gameScreen,#home,#stats,#statistics,
+#quizHome,#quizModes,#quizPlay,#quizStats,#kqHome,#kqPlay,#kqFinish) {
+  background-color:var(--n45-bg)!important;
+  background-image:none!important;
+  color:var(--n45-text)!important;
+}
+html:root body[data-nucleo-game] :is(#startScreen,#statsScreen,#coachScreen,
+#leagueScreen,#errorsScreen,#endScreen,#resultScreen,#quizHome,#quizModes,
+#quizPlay,#quizStats,#kqHome,#kqPlay,#kqFinish)
+:is(.panel,.section,.card,.metric,.coach-card,.stats-panel,.finish-panel,
+.question-panel,.solution-card,.mode,.stats-grid,.scoreboard span,
+.chart-shell,.bank-note,.timing-advice,.error-lab,.statusbox) {
+  background-color:var(--n45-card)!important;
+  background-image:none!important;
+  border-color:var(--n45-border)!important;
+  color:var(--n45-text)!important;
+  box-shadow:none!important;
+}
+/* Identical count-only circular medals everywhere; sourced from existing ledger.
+   Existing labels remain available in title/ARIA instead of visually repeating them. */
+html:root body[data-nucleo-game] .ad-medal-strip {
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  flex-wrap:wrap!important;gap:7px!important;margin:8px 0!important;
+}
+html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat {
+  box-sizing:border-box!important;position:relative!important;
+  display:grid!important;place-items:center!important;
+  flex:0 0 34px!important;width:34px!important;height:34px!important;
+  min-width:34px!important;max-width:34px!important;min-height:34px!important;
+  margin:0!important;padding:0!important;border-radius:50%!important;
+  border:1.5px solid var(--ach,#414B54)!important;
+  background:var(--n45-card)!important;background-image:none!important;
+  opacity:1!important;filter:none!important;box-shadow:none!important;
+}
+html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat > i {
+  box-sizing:border-box!important;display:grid!important;place-items:center!important;
+  width:100%!important;height:100%!important;min-width:0!important;
+  flex:none!important;border:0!important;border-radius:50%!important;
+  margin:0!important;padding:0!important;background:transparent!important;
+  color:var(--n45-text)!important;text-shadow:none!important;box-shadow:none!important;
+  font:650 14px/1 Roboto,system-ui,sans-serif!important;font-variant-numeric:tabular-nums!important;
+}
+html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat > b {
+  display:none!important;
+}
+html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star {
+  --ach:#E7BF57!important;
+}
+html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star > i {
+  display:none!important;
+}
+html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star > b {
+  box-sizing:border-box!important;display:grid!important;place-items:center!important;
+  width:100%!important;height:100%!important;margin:0!important;padding:0!important;
+  background:transparent!important;
+}
+html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star > b > em {
+  display:block!important;min-width:0!important;margin:0!important;padding:0!important;
+  border:0!important;border-radius:0!important;background:none!important;
+  color:var(--n45-text)!important;text-shadow:none!important;
+  font:650 14px/1 Roboto,system-ui,sans-serif!important;
+  font-variant-numeric:tabular-nums!important;
+}
+html:root body[data-nucleo-game] .ad-medal-strip .ad-medal-stat-star::after {
+  content:"★";position:absolute;right:-3px;top:-6px;
+  font:850 10px/1 system-ui,sans-serif;color:#E7BF57;
+  text-shadow:0 1px 2px #000;pointer-events:none;
+}
+/* Same restrained medal size on the level result screens. */
+html:root body[data-nucleo-game] .ad-achievement .ad-medal {
+  width:34px!important;height:34px!important;min-width:34px!important;
+  flex:0 0 34px!important;border:1.5px solid var(--ach,#414B54)!important;
+  background:var(--n45-card)!important;box-shadow:none!important;
+}
+html:root body[data-nucleo-game] .ad-achievement .ad-medal::before,
+html:root body[data-nucleo-game] .ad-achievement .ad-medal::after {display:none!important}
+html:root body[data-nucleo-game] .ad-achievement .ad-medal i {
+  font:650 14px/1 Roboto,system-ui,sans-serif!important;color:var(--n45-text)!important;
+}
+/* Skill League: percent is a separate, readable grid cell, never over the track. */
+html:root body[data-nucleo-game] :is(#statsScreen,#leagueScreen,#coachScreen,#endScreen)
+ .skillrow .pct {
+  box-sizing:border-box!important;display:block!important;position:relative!important;
+  z-index:1!important;min-width:0!important;margin:0!important;padding:0!important;
+  color:#EAF0F5!important;opacity:1!important;background:transparent!important;
+  font:600 13px/1.35 Roboto,system-ui,sans-serif!important;
+  font-variant-numeric:tabular-nums!important;text-align:right!important;
+  white-space:nowrap!important;text-shadow:none!important;
+}
+html:root body[data-nucleo-game] .skillrow .track {
+  position:relative!important;min-width:0!important;
+  background:#2A333A!important;overflow:hidden!important;
+}
+@media(max-width:520px){
+  html:root body[data-nucleo-game] :is(#statsScreen,#leagueScreen,#coachScreen,#endScreen)
+   .skillrow {grid-template-columns:64px minmax(0,1fr) minmax(47px,.7fr) 44px!important}
+}
+@media(max-width:360px){
+  html:root body[data-nucleo-game] :is(#statsScreen,#leagueScreen,#coachScreen,#endScreen)
+   .skillrow {grid-template-columns:57px minmax(0,1fr) minmax(42px,.65fr) 44px!important;gap:5px!important}
+}
+/* Cambridge multiple-choice and passage reading share the same dark palette.
+   Keep marked answers, keyboard input and correct/incorrect states distinct. */
+html:root body[data-nucleo-game="cambridge"] :is(#quizPlay,#kqPlay,#quizStats)
+ :is(.passage,.solution-snippet,.question-panel,.solutions-panel,.feedback,.scoreboard span) {
+  background:var(--n45-card)!important;background-image:none!important;
+  border-color:var(--n45-border)!important;color:var(--n45-text)!important;
+}
+html:root body[data-nucleo-game="cambridge"] :is(#quizPlay,#kqPlay)
+ :is(.passage,.solution-snippet) :is(p,span,em,strong,b):not(mark) {
+  color:var(--n45-text)!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay
+ :is(.passage mark,.base-word) {
+  background:#443B24!important;color:#FFE4A0!important;
+  outline-color:#BE9B4B!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay
+ :is(.option-btn:not(.chosen),.plain-back,.soft-btn) {
+  background:var(--n45-card)!important;background-image:none!important;
+  border-color:var(--n45-border)!important;color:var(--n45-text)!important;
+}
+html:root body[data-nucleo-game="cambridge"] #quizPlay
+ :is(.answer-input:not(.is-correct):not(.is-incorrect),
+ .inline-answer-input:not(.is-correct):not(.is-incorrect)) {
+  background:var(--n45-card)!important;color:var(--n45-text)!important;
+  border:2px solid #748796!important;
+}
+html:root body[data-nucleo-game="cambridge"] :is(#quizPlay,#kqPlay)
+ :is(.option-btn,.question-panel,.mode) :is(b,small,strong,span,p) {
+  color:var(--n45-text)!important;
+}
+/* Keep focus and feedback visible, including reduced-motion preferences. */
+html:root body[data-nucleo-game] :is(.ad-medal-stat,.skillrow .pct) {
+  letter-spacing:normal!important;
+}
+
+/* Category color must outrank the legacy dashboard border-color !important. */
+html:root body[data-nucleo-game]
+:is(#startScreen,#statsScreen,#coachScreen,#leagueScreen,#errorsScreen,
+#endScreen,#resultScreen,#home,#stats,#statistics,#quizHome,#quizModes,
+#quizPlay,#quizStats,#kqHome,#kqPlay,#kqFinish,#courseNow)
+.ad-medal-strip .ad-medal-stat {
+  border-color:var(--ach,#414B54)!important;
+}
