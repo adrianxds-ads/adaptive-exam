@@ -10,14 +10,20 @@
  --nucleo-font:Roboto,"Segoe UI",Arial,system-ui,sans-serif;
  --nucleo-reading-size:19px;--nucleo-reading-line:1.35;
 }
-body[data-nucleo-game="english"]{--ng-accent:#24628E;--ng-wash:#D6EFFF}
-body[data-nucleo-game="phrasal"]{--ng-accent:#336B42;--ng-wash:#DCF2DB}
-body[data-nucleo-game="pizarras"]{--ng-accent:#785610;--ng-wash:#FFF1C8}
-body[data-nucleo-game="cloze"]{--ng-accent:#655099;--ng-wash:#EAE1FF}
-body[data-nucleo-game="cambridge"]{--ng-accent:#435FA3;--ng-wash:#DCE8FF}
-body[data-nucleo-game="keyword"]{--ng-accent:#955449;--ng-wash:#FFE3E0}
-body[data-nucleo-game="catala"]{--ng-accent:#855623;--ng-wash:#FFE9CB}
-body[data-nucleo-game="hoti"]{--ng-accent:#236D72;--ng-wash:#D5F1EF}
+body[data-nucleo-game="english"]{--ng-brand:#4A90E2;--ng-accent:color-mix(in srgb,var(--ng-brand) 50%,#142938);--ng-wash:color-mix(in srgb,var(--ng-brand) 14%,#EAF0F5);--ng-halo:color-mix(in srgb,var(--ng-brand) 18%,transparent)}
+body[data-nucleo-game="phrasal"]{--ng-brand:#9B59B6;--ng-accent:color-mix(in srgb,var(--ng-brand) 50%,#142938);--ng-wash:color-mix(in srgb,var(--ng-brand) 14%,#EAF0F5);--ng-halo:color-mix(in srgb,var(--ng-brand) 18%,transparent)}
+body[data-nucleo-game="pizarras"]{--ng-brand:#F29E4C;--ng-accent:color-mix(in srgb,var(--ng-brand) 50%,#142938);--ng-wash:color-mix(in srgb,var(--ng-brand) 14%,#EAF0F5);--ng-halo:color-mix(in srgb,var(--ng-brand) 18%,transparent)}
+body[data-nucleo-game="cloze"]{--ng-brand:#37BFB5;--ng-accent:color-mix(in srgb,var(--ng-brand) 50%,#142938);--ng-wash:color-mix(in srgb,var(--ng-brand) 14%,#EAF0F5);--ng-halo:color-mix(in srgb,var(--ng-brand) 18%,transparent)}
+body[data-nucleo-game="cambridge"]{--ng-brand:#E66F8D;--ng-accent:color-mix(in srgb,var(--ng-brand) 50%,#142938);--ng-wash:color-mix(in srgb,var(--ng-brand) 14%,#EAF0F5);--ng-halo:color-mix(in srgb,var(--ng-brand) 18%,transparent)}
+body[data-nucleo-game="keyword"]{--ng-brand:#A9CE5E;--ng-accent:color-mix(in srgb,var(--ng-brand) 50%,#142938);--ng-wash:color-mix(in srgb,var(--ng-brand) 14%,#EAF0F5);--ng-halo:color-mix(in srgb,var(--ng-brand) 18%,transparent)}
+body[data-nucleo-game="catala"]{--ng-brand:#F1C40F;--ng-accent:color-mix(in srgb,var(--ng-brand) 50%,#142938);--ng-wash:color-mix(in srgb,var(--ng-brand) 14%,#EAF0F5);--ng-halo:color-mix(in srgb,var(--ng-brand) 18%,transparent)}
+body[data-nucleo-game="hoti"]{--ng-brand:#D6A26B;--ng-accent:color-mix(in srgb,var(--ng-brand) 50%,#142938);--ng-wash:color-mix(in srgb,var(--ng-brand) 14%,#EAF0F5);--ng-halo:color-mix(in srgb,var(--ng-brand) 18%,transparent)}
+/* Identidad cromática corporativa: tono exacto en el borde de portada.
+   Los botones usan una versión oscurecida para conservar contraste en texto blanco.
+   Preservar respuestas, temporizadores, medallas y colores de corrección. */
+html body[data-nucleo-game] :is(#startScreen>.panel,#home>.panel,.panel.hero) {
+ border-top:3px solid var(--ng-brand)!important;
+}
 html:has(body[data-nucleo-game]){background:var(--ng-bg);color-scheme:light}
 body[data-nucleo-game]{
  --bg:#EAF0F5;--text:#25282C;--muted:#46596B;--line:#B5C9D7;
