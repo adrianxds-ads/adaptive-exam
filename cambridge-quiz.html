@@ -27,8 +27,8 @@ body[data-nucleo-game="cambridge"] #quizHome .intro{color:#34444e;font-size:19px
 <link rel="stylesheet" href="./nucleo-quiz-refinement.css?v=4.1.0">
 <link rel="stylesheet" href="./cambridge-refinement-v42.css?v=4.2.0">
 <link rel="stylesheet" href="./nucleo-global-v45.css?v=4.5.3">
-</head>
-<body data-nucleo-game="cambridge">
+<link rel="stylesheet" href="/adrian-core/design/integrated-v11/integrated-theme.css"></head>
+<body data-nucleo-game="cambridge" data-integrated-app="cambridge" style="--integrated-tint:#E4D3DA;--integrated-accent:#E66F8D">
 <div class="app">
 <header class="topbar">
   <a class="study-link" href="./index.html" aria-label="Volver a los exámenes">← Modo Estudio</a>
@@ -114,13 +114,13 @@ body[data-nucleo-game="cambridge"] #quizHome .intro{color:#34444e;font-size:19px
 </main>
 </div>
 <script src="./learning-feedback.js?v=1.0.0"></script>
-<script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-sync.js?v=1.0.8-0d4fa97"></script>
-<script src="https://adrianxds-ads.github.io/adrian-core/design/adrian-visual-system.js?v=core-20261004b"></script>
-<script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-achievements.js?v=stars4"></script>
-<script src="https://adrianxds-ads.github.io/adrian-core/components/hub-charts.js?v=1.0.0"></script>
+<script src="/adrian-core/components/adrian-sync.js?v=1.0.8-0d4fa97"></script>
+<script src="/adrian-core/design/adrian-visual-system.js?v=core-20261004b"></script>
+<script src="/adrian-core/components/adrian-achievements.js?v=stars4"></script>
+<script src="/adrian-core/components/hub-charts.js?v=1.0.0"></script>
 <script src="./data/cambridge-quiz-transcribed.js?v=0.5.0"></script>
 <script src="./data/engexam-bank.js"></script>
-<script src="https://adrianxds-ads.github.io/adrian-core/components/adrian-keyboard.js?v=4.1.3-20261009"></script>
+<script src="/adrian-core/components/adrian-keyboard.js?v=4.1.3-20261009"></script>
 <script src="./cambridge-quiz.js?v=1.3.2"></script>
 <script id="cambridge-background-update">
 /* Refresh the integrity-checked SW in the background; never interrupt a round. */
@@ -162,7 +162,7 @@ if("serviceWorker" in navigator && location.protocol==="https:"){
  queue();
 })();
 </script>
-<script src="https://adrianxds-ads.github.io/adrian-core/components/hub-quiz-ux.js?v=20261011-2"></script>
-<script src="https://adrianxds-ads.github.io/adrian-core/components/hub-nav.js?v=12-20261011"></script>
-</body>
+<script src="/adrian-core/components/hub-quiz-ux.js?v=20261011-2"></script>
+<script src="/adrian-core/components/hub-nav.js?v=12-20261011"></script>
+<script src="/adrian-core/design/integrated-v11/integrated-view.js"></script></body>
 </html>
